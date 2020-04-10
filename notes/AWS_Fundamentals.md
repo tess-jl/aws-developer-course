@@ -164,5 +164,32 @@ HOW TO: Connect our EC2 instance to elastic IP
 -"echo "Hello World from $(hostname -f)" > /var/www/html/index.html" --> hostname -f is the internal DNS 
 
 -can automate this installation using EC2 user data, see: 
-### EC3 User Data
+### EC2 User Data
 
+-possible to bootstrap our instances using an EC2 User data script
+-bootstrapping = launching commands when the machine starts 
+-EC2 user data made to automate boot tasks (e.g. installing updates, software, whatever!)
+-these scripts run with the root user--> any command will have the sudo rights 
+
+-want this EC2 instance to have an Apache HTTP server installed on it--> so that we can display a web page --> going to use a user data script for this 
+-script will be executed when the instance first boots 
+
+-terminate instance
+-launch a new instance--> under "configure instance" tab look at Advanced Details and find "User data"
+-paste a script to automate 
+```
+#!/bin/bash
+# install httpd (Linux 2 version)
+yum update -y
+yum install -y httpd.x86_64
+systemctl start httpd.service
+systemctl enable httpd.service
+echo "Hello World from $(hostname -f)" > /var/www/html/index.html"
+```
+keep moving until "Configure Security Group" tab--> select the existing security group i've already made 
+
+--> can NOW go to the public IP and see that the script was run because the boot time script launched the web page
+-can ssh into this EC2 with the updated public IP address 
+-to verify that all was done properly "cat /var/www/html/index.html" and we see the content of the webpage 
+
+### EC2 Launch Modes
