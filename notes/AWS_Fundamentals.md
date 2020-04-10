@@ -64,6 +64,19 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 -In instance console--> public IP, public DNS--> how we can connect over the web! --> copy the public IP address--> click on security group--> inbound rules--> check tcp protocol 
 -open a terminal 
 -"ssh ec2-user@" followed by IP --> see that permission is denied --> because we need to use the key pair file that downloaded immediately after I launched the instance 
+-**"AWS course Tess$ ssh -i EC2tutorial.pem ec2-user@[IP address]"**
+-get a warning about unprotected private key file --> permission is 0644 --> private key can link --> will say bad permissions
+-to fix: "chmod 0400 EC2tutorial.pem" and then rerun "ssh -i EC2tutorial.pem ec2-user@[IP address]" in CL --> NOW have SSH'd into the Amazon Linux 2 AMI, we're in the machine 
+-we will run lots of commands from our EC2 machine/server! 
+-to exit: control-d or write "exit" 
+
+### EC2 Instance Connect (alternative to SSH from the CLI)
+-go to EC2 console on AWS --> click connect button next to launch instance --> see options for how to connect and select EC2 instance connection, a browser-based instance connection --> ec2-user --> click connect --> in! 
+-from the browser we can do the same sort of thing!!no terminal and no keys--> AWS handles keys behind the scenes 
+-STILL need SSH port 22 rule in instance for this to work
+-only works with Amazon Linux 2 AMI!
+
+### 
 
 
 
