@@ -76,7 +76,21 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 -STILL need SSH port 22 rule in instance for this to work
 -only works with Amazon Linux 2 AMI!
 
-### 
+### Intro to Security Groups
+-fundamental of AWS network security--> control how traffic will be allowed into my EC2 machines
+-controls inbound and outbound traffic 
+-big part of amazon cloud 
+-use "allow", "inbound", "outbound" ports 
+-go to security group page to see the rules for what traffic is allowed in or out 
+-inbound has our SSH rule
+-default all traffic is allowed outbound
+
+-if delete the inbound SSH rule--> not allowed anything to go through port 22 and will have a timeout when you try to SSH
+
+-click edit --> add custom TCP rule--> to add back the inbound SSH rule! 
+-ANYTIME you get a timeout on any machine, on any port--> Most likely a security group issue!
+
+### Deeper Dive into Security Groups 
 
 
 
