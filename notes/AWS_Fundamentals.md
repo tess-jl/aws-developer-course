@@ -61,6 +61,7 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 -SSH works for Mac, Linux, and newer windows operating systems 
 -SHH is a function--> control a remote machine/server using a CL 
 -we have our EC2 machine via AWS with a public IP address and port 22--> want to access it with my machine--> we will access via CLI and port 22 
+HOW TO:
 -In instance console--> public IP, public DNS--> how we can connect over the web! --> copy the public IP address--> click on security group--> inbound rules--> check tcp protocol 
 -open a terminal 
 -"ssh ec2-user@" followed by IP --> see that permission is denied --> because we need to use the key pair file that downloaded immediately after I launched the instance 
@@ -71,6 +72,7 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 -to exit: control-d or write "exit" 
 
 ### EC2 Instance Connect (alternative to SSH from the CLI)
+HOW TO:
 -go to EC2 console on AWS --> click connect button next to launch instance --> see options for how to connect and select EC2 instance connection, a browser-based instance connection --> ec2-user --> click connect --> in! 
 -from the browser we can do the same sort of thing!!no terminal and no keys--> AWS handles keys behind the scenes 
 -STILL need SSH port 22 rule in instance for this to work
@@ -91,7 +93,21 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 -ANYTIME you get a timeout on any machine, on any port--> Most likely a security group issue!
 
 ### Deeper Dive into Security Groups 
+-act as firewalls for EC2 instances - these groups live outside the EC2!!
+-regulate access to ports, authorized IP ranges 
 
+-security groups can be attached to multiple instances
+-an instance can also have multiple security groups 
+-security groups are locked to a region/VPC combo
 
+-good practice to have one separate security group specfically for SSH access!! since SSH is more complicated 
+
+-if NO timeout and there is a "connected refused" error then the security group worked! the traffic went through the security group and the app itself has an error 
+
+-default: all inbound traffic blocked, all outbound traffic allowed
+
+HOW TO: reference security groups from other security groups 
+-attach security groups according to how you want the instances to communicate
+-why? we can allow instances to connect straight through via matching security groups--> directionality of connectivity is determined this way (a lot like a very simple neural network!)
 
 
