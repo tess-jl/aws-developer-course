@@ -110,4 +110,34 @@ HOW TO: reference security groups from other security groups
 -attach security groups according to how you want the instances to communicate
 -why? we can allow instances to connect straight through via matching security groups--> directionality of connectivity is determined this way (a lot like a very simple neural network!)
 
+### Private vs Public IPv4)
+-issue of security 
+-neworking --> 2 sorts of IP--> IPv4 and IPV3
+-IPv4 --> 4 #s separated by 3 dots --> most common 
+-IPv6 --> less common --> long strange of numbers and then letters --> more for IoT
+-we will use only IPv4 in this course but AWS supports IPv6 too!
+-IPv4 --> 3.7 billion addresses in public space
 
+-public server--> public IP
+-private network (like a company) --> private IP range --> all computers in the private network can talk to one another using the private IP 
+-the private network can also talk to other public networks
+-public IP unique across whole internet, can be access across the whole internet--> public IPs can be geolocate easily 
+VS
+-private IP can only be identified on the private network BUT two companies can have the SAME IP
+-private network machines usually connect to interet via internet gateway (a proxy)
+-only a specified range of IPs can be used as private IPs 
+
+Elastic IPs --> when you start/stop Ec2 instance it can change it's public IP!!--> if we need a fixed public IP for the instance--> need something called an Elastic IP address --> a public IPv4 IP can own as long as it is not deleted --> can attach it to only one instance at a time 
+-can mask the failure of an instance or software by rapidly remapping the address to another instance in your account 
+-can only have 5 elastic IPs in the AWS account
+-overall, try to avoid using, poor architectural choice
+INSTEAD:
+-use random public IP and register a DNS name to it! 
+OR
+-load balancer and no public IP at all (see later notes) --> best pattern for AWS
+
+default: private IP on EC2 machine for internal AWS network AND a public IP for the internet 
+
+-when SSH into EC2 machines can't use private IP because we're not on the same network (unless have a VPN) --> can only use public but if my computer is stopped / started the public IP can change! 
+
+### Private vs. Public vs. Elastic IP Hands On 
