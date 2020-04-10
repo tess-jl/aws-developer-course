@@ -141,3 +141,12 @@ default: private IP on EC2 machine for internal AWS network AND a public IP for 
 -when SSH into EC2 machines can't use private IP because we're not on the same network (unless have a VPN) --> can only use public but if my computer is stopped / started the public IP can change! 
 
 ### Private vs. Public vs. Elastic IP Hands On 
+-been using a public IP to SSH 
+-private IP cannot be used to SSH--> b/c not in the same network as EC2 instance 
+-when we stop the EC2 instance--> public IP not shown at all--> private is the same --> restart the instance --> public IP has changed therefore need to update the SSH command
+
+HOW TO: Connect our EC2 instance to elastic IP
+-elastic IPs in the bottom left--> allocate a new address--> IP is not attached to anything --> right click and associate the elastic IP with the instance that is running--> now the public IP listed on the instance is our elastic IP
+-this elastic IPv4 will remain even if the instance is stopped!
+
+### Install Apache on EC2
