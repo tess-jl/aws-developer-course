@@ -192,4 +192,14 @@ keep moving until "Configure Security Group" tab--> select the existing security
 -can ssh into this EC2 with the updated public IP address 
 -to verify that all was done properly "cat /var/www/html/index.html" and we see the content of the webpage 
 
-### EC2 Launch Modes
+### EC2 Launch Types
+-NEED to know all of them for the exam
+1. **On Demand Instances** (short workload, predictable pricing)--> pay per second
+1. **Reserved Instances** (long workloads) --> need a database for 1 or 3 years, much cheaper than On Demand, can select instance type, good for steady state
+1. **Convertable Reserved Instances** (long workloads, flexible instances) --> can change EC2 instance type (slightly more expensive than Reserved)
+1. **Schedule Reserved Instances** (only launch within window reserved, maybe only 1x/week)
+1. **Spot Instances** (show workloads, cheap, can lose instances) --> 90% off, bid price, get unit as long as not much demand, can be lost when someone buys it--> good for any resilient workloads, NOT database
+1. **Dedicated Instances** (no other customers will share hardware, most expensive) --> NOT full control over instance, might move between different hardware, can share with another AWS customer
+1. **Dedicated Hosts** (entire physical server dedicated to you --> full control over instance, visibility to sockets/cores, useful for BYOLntrol the instance placement, expensive)
+
+### EC2 Good Things to Know / Checklist
