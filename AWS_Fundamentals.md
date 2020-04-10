@@ -57,6 +57,13 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 -once instance is going, if it's not free, billing starts
 -can right click--> access instance state--> start/stop/terminate
 
+### SSH 
+-SSH works for Mac, Linux, and newer windows operating systems 
+-SHH is a function--> control a remote machine/server using a CL 
+-we have our EC2 machine via AWS with a public IP address and port 22--> want to access it with my machine--> we will access via CLI and port 22 
+-In instance console--> public IP, public DNS--> how we can connect over the web! --> copy the public IP address--> click on security group--> inbound rules--> check tcp protocol 
+-open a terminal 
+-"ssh ec2-user@" followed by IP --> see that permission is denied --> because we need to use the key pair file that downloaded immediately after I launched the instance 
 
 
 
