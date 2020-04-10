@@ -150,3 +150,19 @@ HOW TO: Connect our EC2 instance to elastic IP
 -this elastic IPv4 will remain even if the instance is stopped!
 
 ### Install Apache on EC2
+-Apache web server to display a webpage--> create an index.html that shows the hostname of our machine
+-"sudo su" --> elevates rights on machine 
+-"yum update -y" --> forces machine to update itself  
+-install httpd "yum install -y httpd.x86_64" --> start this service --> "systemctl start httpd.service" --> enabled across reboots --> "systemctl enable httpd.service"
+-"curl localhost:80" --> get giant html page in CLI --> we want to have this in a web browser --> if we go to the public IP address on port 80 we see that it looks like a timeout--> THEREFORE probably an error with the security group!
+-because security group only allows port 22 but our apache server was started on port 80 it will not be able to access the EC2! So go into security group and add a new rule to make HTTP traffic via port 80 able to be inbound on our EC2
+-should see the Apache test page! this page says how we can now add content to the directory /var/www/html/
+-"echo "Hello World" > /var/www/html/index.html"
+
+-just displayed our first webpage!! 
+
+-"echo "Hello World from $(hostname -f)" > /var/www/html/index.html" --> hostname -f is the internal DNS 
+
+-can automate this installation using EC2 user data, see: 
+### EC3 User Data
+
