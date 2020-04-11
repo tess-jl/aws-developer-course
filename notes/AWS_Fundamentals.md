@@ -203,3 +203,32 @@ keep moving until "Configure Security Group" tab--> select the existing security
 1. **Dedicated Hosts** (entire physical server dedicated to you --> full control over instance, visibility to sockets/cores, useful for BYOLntrol the instance placement, expensive)
 
 ### EC2 Good Things to Know / Checklist
+-pricing = per hour 
+https://aws.amazon.com/ec2/pricing/on-demand/
+
+-What's an AMI ? Amazon Machine Image --> we've been using Amazon Linux 2 --> can be customized at runtime using EC2 User data
+-can create a custom AMI --> for Linux or Windows machines --> may want to use to have faster boot time, pre-installed packages, security issues, etc. etc... 
+-when build an AMI it is built for a specific AWS region!!
+
+Instances have types--> 5 distinct characteristics
+1. The RAM
+1. The CPU
+1. The I/O
+1. The Network
+1. The GPU
+
+over 50 different instance types! https://ec2instances.info/ for more info... 
+e.g. M = balanced, good at everything
+T2/T3 instance types are burstable--> meaning that instance is OK but when it needs to do something suddenly the CPU can burst--> uses burst credits then has bad CPU --> see "Cloud Watch" to monitor the burst credit usage and load change in a GUI :) 
+
+-CPU credits --> can look at how fast credits are accumulated
+-T2 unlimited --> unlimited burst credits
+
+### Need to know: 
+* SSH into EC2 (and change .pem file permissions)
+* Properly use security groups (right ports, right IPs)
+* Fundamental differences between Private, Public, Elastic IPs
+* how to use User Data to customize EC2 instance at boot time 
+* that can build custom AMI to enhance OS
+
+* EC2 instances are billed by the second and can be easily created and thrown away--> welcome to the cloud
