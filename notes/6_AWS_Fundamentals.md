@@ -104,3 +104,8 @@ Hands On:
 -creating a very simple S3 static website 
 -go to permissions and add static website hosting for index.html --> get 403!
 -need to add bucket policy!!!
+
+### S3 CORS (Cross Origin Resource Sharing)
+**CORS** = allows me to limit the nymber of websites that can request my files in S3 (and limit my costs)
+- CORS MUST be enabled if data is requested from another S3 bucket! popular question
+- if client (browser) is on site and tries to access file from another bucket and it's not working it's likely that CORS is not enabled properly or not at all
