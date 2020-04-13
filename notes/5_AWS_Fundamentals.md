@@ -92,7 +92,7 @@ standard create vs easy create
 -**SQL electron** = DB client, GUI to connect to DB --> .dmg package to install on Mac --> can connect to our RDS via the SQL Electron GUI with name/password
 
 ### ElastiCache Overview 
--ElastiCache is used to manage Redis or Memcached technologies
+-ElastiCache is used to manage Redis or Memcached technologies (cluster engines)
 -caches = in-memory dbs with really high performance, low latency --> help reduce load off of dbs for read-intensive workloads
 -helps make app stateless --> stores state in cache 
 - **write scaling** via sharding 
@@ -125,3 +125,6 @@ Memcached Overview
 -Redis is really preferable but AWS still supports Memcached
 
 ### ElastiCache Hands On
+-create a Redis cluster on AWS by searching for ElastiCache and setting up all the config
+-use the t2 micro or else will get charged 
+-use 0 read replicas or else will get charged
