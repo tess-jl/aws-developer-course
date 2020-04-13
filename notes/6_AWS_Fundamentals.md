@@ -132,3 +132,15 @@ cont.
 -can use **CloudFront** to cache S3 objects around the world therefore improves reads
 -can use **S3 Transfer Acceleration** (uses edge location) --> just need to change the endpoint you write to, not the code
 -**if have SSE-KMS encryption --> may be throttled, NOT by S3, but KMS service is throttling you** --> cannot keep up with the rate at which need to encrypt or decrypt data --> therefore need to change the KMS limits!
+
+### Glacier SQL Select 
+-theory 
+-Glacier = another S3 storage tier that is meant for longterm archival of files 
+-retrieve data from S3 in glacier --> may want only a subset of it, NOT all of it or else network cost is high 
+-use S3 select aka Glacier select --> use SQL SELECT queries to let S3 or Glacier know exactly which attributes / filters you want
+-80% of cost saved, performance increase of 400%
+-select happens within S3 or Glacier
+-works with CSV, JSON, or Parquet files 
+-files can be compressed with GZIP or BZIP2
+-No subqueries or Joins supported
+-Have to do this within code, not code
