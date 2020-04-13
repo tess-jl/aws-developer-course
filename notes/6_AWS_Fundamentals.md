@@ -115,3 +115,20 @@ Hands On:
 1. **Read after write for PUTS of new objects**--> as soon as the object is written we can retrieve it (e.g. PUT 200 and then GET 200) --> true EXCEPT for when we do GET before to see if object existed (GET 404 --> PUT 200 --> GET 404 because eventually consistent (will need to wait for cache))
 1. **Eventual Consistency for DELETES and PUTS of existing objects** --> if we read an object after updating, might get older version (PUT 200, PUT 200, GET 200 could be older version) --> also if we delete an object might still be able to GET it for a short time afterward (DELETE 200, GET 200 ... GET 404)
 
+### S3 Performance 
+- historically, > 100 transaction/second S3 performance degredation 
+- behind the scenes each object --> S3 partition --> want highest partition distribution
+- used to be recommended to have random chars in front of key name (**prefix key**) to optimize performance --> forces AWS to partition data correctly 
+- recommended to NEVER use dates as prefix keys 
+
+NOW can scale up to 3500 RPS / PUT and 5500 RPS / GET for EACH prefix! therefore don't need to randomize object prefixes anymore to get faster performance 
+
+cont. 
+-faster upload of large objects (>= 100MB) --> use **multipart upload**
+* parallelizes PUTs for greater throughput 
+* maximize network bandwidth and efficiency 
+* decrease time to retry in case of fail
+* MUST use if size > 5MB
+-can use **CloudFront** to cache S3 objects around the world therefore improves reads
+-can use **S3 Transfer Acceleration** (uses edge location) --> just need to change the endpoint you write to, not the code
+-**if have SSE-KMS encryption --> may be throttled, NOT by S3, but KMS service is throttling you** --> cannot keep up with the rate at which need to encrypt or decrypt data --> therefore need to change the KMS limits!
