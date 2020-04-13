@@ -63,3 +63,33 @@ Encryption in transit (SSL)
 -HTTPS mandatory for SSE-C
 
 -Encryption in flight = **SSL / TLS**
+
+### S3 Security and Bucket Policies
+**User-based** --> IAM policies - which API calls should be allowed for a specific user from IAM console
+**Resource-based** --> more popular, done via: * **Bucket Policies** = bucket-wide rules from the S3 console, allows cross account 
+* **Object Access Control List (ACL)** --> finer grain 
+* **Bucket Access Control List (ACL)** --> less common
+
+S3 Bucket Policies 
+-JSON-based policies need:
+1. Resources: buckets and objects 
+1. Actions: set of API to allow or deny 
+1. Effect: allow/deny
+1. Principal: account or user to apply policy to
+-can use to: 
+1. Grant public access to bucket 
+1. Force objects to be encrypted at upload
+1. Grant access to another account (cross account)
+
+S3 Security cont. 
+* **Networking** --> supports VPC endpoints (for instances in VPC without www internet)
+* Logging and Auditing --> S3 access logs can be stored in another S3 bucket (NOT in same bucket due to recursion issues) --> API calls can be logged in AWS CloudTrail
+* User Security --> enable MFA can be used in versioned buckets to delete objects 
+* **Signed URLs** --> URLs that are valid only for a limited time (e.g. premium video service)
+
+Hands On
+-want to make it so bucket rejects a file that is not encrypted 
+-Bucket Policy Editor --> need to type some JSON --> can use policy generator to write JSON from a UI 
+-bucket policy = good way to ensure that encryption is happening 
+
+### S3 Websites
