@@ -146,3 +146,13 @@ ASG summary:
 * if LB says instance !== healthy --> ASG will auto terminate and spin up new instance to replace instance
 
 ### ASG Hands On 
+- go to ASG tab on AWS --> create a launch template --> very similar to creating an EC2 with the User Data etc. :) 
+-Use existing security group etc etc. 
+-NOW create ASG --> default network and all subnets for the region --> create scaling policy based on CPU --> etc.
+
+-in ASG GUI --> activity history tells us the history!
+
+-can see that LB is spreading load between two instances!
+-trigger a scale out --> trigger a scale in by changing desired instances # in ASG configs
+
+### EBS Volumes Overview
