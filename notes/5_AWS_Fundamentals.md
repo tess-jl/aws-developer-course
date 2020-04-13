@@ -90,3 +90,38 @@ RDS va Aurora
 standard create vs easy create 
 --> standard --> 6 different engine types --> MySQL for this hands on --> templates etc.
 -**SQL electron** = DB client, GUI to connect to DB --> .dmg package to install on Mac --> can connect to our RDS via the SQL Electron GUI with name/password
+
+### ElastiCache Overview 
+-ElastiCache is used to manage Redis or Memcached technologies
+-caches = in-memory dbs with really high performance, low latency --> help reduce load off of dbs for read-intensive workloads
+-helps make app stateless --> stores state in cache 
+- **write scaling** via sharding 
+- **read scaling** via read replicas 
+- **multi AZ** with failover 
+- AWS takes care of OS maintenance, patching, optimization, setip, config, failure recovery, backups --> a lot like RDS
+-pretty much an RDS for caches (see bold above)
+
+Solution architecture - DB cache fits in how? 
+-apps query Elasticache first (if there cache hit) --> if query not availabe (a cache miss) then it gets it from RDS (reads from DB) and stores it in ElastiCache (writes to cache)
+-helps relieve load in RDS
+-cache must have invalidation strategy to make sure most current data used (app considers this)
+
+Another architecture consideration: User Session Store 
+-app is stateless --> user logs in --> app writes session data into ElastiCache --> user hits another EC2 instance --> app needs to know that user is logged in so it retrieves the user session off of ElastiCache to check that user is in fact logged in 
+-so app can be stateless because the logged in state is managed by ElastiCache
+
+Redis Overview
+-in-memory key-value store 
+-super low latency 
+-cache can surive reboots (persistence)
+-great to host user sessions, leaderboards, distributed state, relieve pressure on dbs, pb/sub for messaging
+-multi AZ with auto failover for DR if don't want to lose cache data 
+-support for read replicas 
+
+Memcached Overview
+-in-memory object store 
+-cache !== survie reboots
+-great for quick retrieval of objects from memory, cache objects
+-Redis is really preferable but AWS still supports Memcached
+
+### ElastiCache Hands On
