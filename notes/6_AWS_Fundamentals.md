@@ -93,3 +93,14 @@ Hands On
 -bucket policy = good way to ensure that encryption is happening 
 
 ### S3 Websites
+-can set up static websites that are accessible to anyone on the web 
+-URL will be either: 
+1. [bucket-name].s3-website-[AWS-region].amazonaws.com
+1. [bucket-name].s3-website.[AWS-region].amazonaws.com
+-depends on region 
+-if get a 403 forbidden error --> make sure bucket policy allows public reads 
+
+Hands On: 
+-creating a very simple S3 static website 
+-go to permissions and add static website hosting for index.html --> get 403!
+-need to add bucket policy!!!
