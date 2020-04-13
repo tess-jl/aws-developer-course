@@ -128,3 +128,34 @@ Memcached Overview
 -create a Redis cluster on AWS by searching for ElastiCache and setting up all the config
 -use the t2 micro or else will get charged 
 -use 0 read replicas or else will get charged
+
+### ElastiCache Strategies
+Use cases
+* helpful for read-heavy app workload (i.e. social networks, gaming, media sharing, Q&A portals)
+* helpful for comute-intensive worklad (recommendation engines)
+Need to write some code to set up cache strategy for ElastiCache (does NOT happen automatically) --> 2 patterns:
+1. **Lazy Loading** --> load only when necessary
+1. **Write Through** --> add or update cache whenever the DB is updated
+-could use one or other or both together
+
+Lazy Loading 
+-load the data only when it's needed
+-when read req --> always looks into ElastiCache to check if its been read before --> if cache miss (elasticache returns null) --> THEN app needs to query the db, read from DB to get the info --> app will write to the cache and then user will get the cache 
+PROS
+* only requested data is cached, cache not filled with unused data 
+* Node failures are not fatal (just increased latency to warm the cache)
+CONS
+* cache miss --> big penalty, 3 round tris therefore noticable delay (Read penalty)
+* if data in DB gets updated in DB it won't necessarily get written back into elasticache, so cache can be outdated (can implement a TTL (time to live, max time data can be stale))
+
+Write Through 
+-update cache whenever data in DB is updated 
+-likely will not be a cache miss since cache will be updated after DB is
+PROS
+* data in cache is never stale 
+* write penalty (write requires 2 calls), but this penalty matches better with user experience
+CONS 
+* data will be missing in ElastiCache until it is updated in the DB --> mitigate by implementing lazy loading as well 
+* lotta chum (uesless data that isn't read)--> big cache
+
+### VPC and 3 tier Architecture 
