@@ -109,3 +109,9 @@ Hands On:
 **CORS** = allows me to limit the nymber of websites that can request my files in S3 (and limit my costs)
 - CORS MUST be enabled if data is requested from another S3 bucket! popular question
 - if client (browser) is on site and tries to access file from another bucket and it's not working it's likely that CORS is not enabled properly or not at all
+
+### S3 Consistency Model 
+2 types of consistency: 
+1. **Read after write for PUTS of new objects**--> as soon as the object is written we can retrieve it (e.g. PUT 200 and then GET 200) --> true EXCEPT for when we do GET before to see if object existed (GET 404 --> PUT 200 --> GET 404 because eventually consistent (will need to wait for cache))
+1. **Eventual Consistency for DELETES and PUTS of existing objects** --> if we read an object after updating, might get older version (PUT 200, PUT 200, GET 200 could be older version) --> also if we delete an object might still be able to GET it for a short time afterward (DELETE 200, GET 200 ... GET 404)
+
