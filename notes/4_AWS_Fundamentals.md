@@ -2,7 +2,7 @@
 -how to scale an app in AWS
 
 ### Load Balancing Overview 
--load balancers (ELBs, EC2 load balancers)= server that will front my app --> forward all traffic to instances (multiple servers) downstream
+-load balancers (**ELBs, EC2 load balancers**)= server that will front my app --> forward all traffic to instances (multiple servers) downstream
 -EC2 instances have our app --> users connect to load balancer and then balancer connects the user to one EC2 instnce on the backend--> user load is balancer between the EC2 instances so that one instance is not overwhelmed 
 -WHY use? 
 * scale instances downstream but with one point of access, therefore if an EC2 instance fails users can still connect to app 
@@ -88,3 +88,61 @@ Trick with Security Groups: allow LB to access EC2 instance and nothing else (vi
 * go to Security Groups --> want to allow inbound traffic of Security Group only coming from the LB! 
 * Edit Inbound Rule for Security Group and delete the 0s that indicate we can access EC2 directly via IP --> now only via load balancer
 * therefore, a very secure set up because we know that only the LB can talk to EC2 on port 80 
+
+### Auto Scaling Groups (ASGs) Overview 
+- diff load for websites --> site may grow popular
+- in cloud can create and get rid of servers very quickly
+
+**ASGs**
+-groups of EC2 instances (one or more) that scale dynamically depending on load --> works hand-in-hand with the LB!
+- Scale out to match increased load --> add EC2s!
+- Scale in to match decreased load --> remove EC2s!
+- Ensure we have a min and max number of machines running (i.e. can only grow/shrink certain amount of EC2s running in an ASG)
+- Auto register new EC2 instances to a LB
+
+AGS parameters:
+-Min size = min amount of EC2s
+-Actual size / Desired Capacity = how many are running in the ASG in the current moment 
+-Max size = how many EC2s can be added
+
+AGS attributes: 
+* Launch configuration --> mostly the same as when we launched an EC2 instance manually (i.e. AMI and instance type, User Data, EBS volumes, Security Groups, SSH Key Pair)
+* Min size
+* Max size
+* Initial Capacity 
+* Desired Capacity 
+* Network and Subnets info 
+* LB info, target group info
+* Scaling policies (what will trigger scale out or in)
+
+Auth Scaling Alarms
+-possible to scale ASGs based on CloudWatch alarms
+-Cloudwatch Alarms measure some metrics --> anything you want, av CPU 
+-Alarms always average (OVERALL ASG instances)
+-Based on alarm --> scale in or out policies 
+
+Auto Scaling New Rules (built in)
+-possible to define better rules directly managed by EC2s
+* target av CPU usage
+* number of req on ELB / instance 
+* average Network In
+* average Network Out
+
+Auto Scaling Custom Metric 
+* num of connected users 
+* schedule of when expecting a lot of traffic
+1. have to create custom metric on EC2 to CloudWatch (PutMetric API)
+2. create CloudWatch alarm to react to low/high values of the metric
+3. Alarms from CloudWatch will trigger the scaling policy for ASG
+--> therefore, ASG isn't tied to the metrics AWS exposes, can be any metric
+
+ASG summary:
+* a friend of a LB and vice versa
+* scaling policies can be based on CPU, Network, or custom 
+* ASGs use Launch configs and you update ASG by providing a new lauch config 
+* IAM role assigned to ASG --> assigned to EC2s in that ASG
+* ASGs are free! but gotta pay for the EC2s ;) 
+* having EC2 instance part of an ASG means that if they get terminated --> ASG will auto restart them, extra security!
+* if LB says instance !== healthy --> ASG will auto terminate and spin up new instance to replace instance
+
+### ASG Hands On 
