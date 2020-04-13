@@ -155,4 +155,57 @@ ASG summary:
 -can see that LB is spreading load between two instances!
 -trigger a scale out --> trigger a scale in by changing desired instances # in ASG configs
 
-### EBS Volumes Overview
+### EBS (Elastic Block Store) Volumes Overview
+- when we terminate EC2 machine --> loses root volume (main drive) when manually terminated
+- unexpected terms may happen
+- need way to store instance data somewhere on external drive --> an **Elastic Block Store** (EBS) volume = network drive you can attach to your instances while they run, allows them to persist data
+
+-network drive !== physical drive --> uses network to communicate the instance, some latency b/c network 
+-can be detached from EC2 instance and attached to another quickly 
+-EBS volume = locked to availability zone (AZ)
+-need to shapshot volume to move it across AZs
+-EBS volumes have capacity (size in GBs or IOPs (I/O operations / second)) --> get billed for ALL the provisioned capacity regardless of use, can increase capacity over time 
+
+-can attach multiple EBS volumes to the same instance 
+-EBS volumes = tied to specific AZ 
+
+EBS Volume Types 
+* **GP2** --> general purpose SSD vol 
+* **IO1** --> highest performance SSD vol (expensive, usually dbs)
+* **ST1** --> low cost HDD vol, freq-accessed, big data app
+* **SC1** --> big data apps but not frequently accessed
+-generally characterized in size, throughput, IOPs
+-so far I have only used GP2
+
+EBS vol resizing
+-can increase for size, IOPS --> need to repartition drive 
+
+EBS Snapshots
+-backing up of EBS vol 
+-only take the actual space of the blocks on the vol --> snapshot 100GB drive with only 5GB data on it then EBS snapshot will be 5GB 
+-use for ensuring save data in catastrophe
+-use for volume migration(resize down, change vol type, encrypt a vol)
+-can schedule snapshots
+
+**EBS Encryption**
+-encrypted EBS vol --> get: 
+* data at rest is encrypted inside the vol--> encrypted when written
+* all data in flight moving between the instance and volume is encrypted
+* all snapshots are encrypted 
+* all vols created from snapshots are encrypted 
+-all encryption and decryption are handled by AWS
+-Encryption !== impact on latency 
+-EBS encryption leverages keys from KMS (AES-256 for strength)
+-copying an unencrypted shapshot allows encryption 
+
+EBS vs Instance Store 
+- some instances can create with no Root EBS vol --> instead come with an **Instance Store**
+- instance store = physically attached to the machine (not via network) --> better I/O preformance --> CONS: on term, store lost, can't resize, backups operated by user
+-EBS vols = generally the way to go 
+
+EBS Summary: 
+* EBS can be attached to only 1 instance at a time 
+* EBS locked at AZ
+* Want EBS vol in another AZ? need to backup with snapshot then recreate in the other AZ
+* EBS backups use I/O, don't run when app handling lots of traffic 
+* Root EBS volumes of instances get terminated by defult if the EC2 instance gets terminated (but can change configs so it doesn't)
