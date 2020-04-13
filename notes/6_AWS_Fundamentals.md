@@ -22,3 +22,11 @@ Create a bucket--> add coffee file to it
 -have two keys --> coffee.jpg and Image folder with coffee.jpg
 
 ### S3 Versioning 
+-Versioning = bucket-level setting --> means that if we overwrite a file we will update its version 
+-best practice to version buckets(protect against deletes, roll back is possible)
+-any file that was not versioned prior to enabling versioning will have the version null
+
+Hands on
+-if delete file looks like it's gone but if you show versions see that there is a delete marker on it (not truly deleted)
+
+### S3 Encryption 
