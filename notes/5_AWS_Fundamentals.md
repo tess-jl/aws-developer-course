@@ -16,3 +16,13 @@
 -Route 53 can use public domain names (own or buy) OR private domain names (resolved by instanes in your VPCs)
 -Route 53 has Load Balancing --> through DNS aka **client-side load balancing**, health checks, routing policy
 -**use Alias records over CNAME records for AWS resources (for performance reasons)**
+
+### Route 53 Hands On 
+-in browser where we have the long URL from our LB and EC2--> don't want this crazy URL, want a nice one tht makes sense 
+- need to register a domain name (cost money!! see video)
+- hosted zone was created for us b/c domain name created via AWS
+- NOW create a record --> go to LB --> LB's DNS name --> change this to the domain name
+-DNS name in EC2 console is an A record and BEST practice is to set up an Alias record over CNAME!
+-Choose A record --> say Alias --> redirects to LB as an Alias --> whatever.com --> value is an alias for the LB 
+
+### RDS Overview
