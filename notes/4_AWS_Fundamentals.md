@@ -71,3 +71,20 @@ LBs general good to know:
 * res with 4xx = client-induced errors
 * res with 5xx = app-induced errors (503 = LB at capacity or no registered targets)
 * if LB can't connect to app ==> check security groups 
+
+### LBs Hands On 
+-go to Load Balancer tab on AWS --> create ALB with Scheme internet-facing because we want it to be public --> IPv4
+-Listeners = list of Ports that we will listen on --> want Port 80 with HTTP protocol 
+-Configure a new Security Group to handle the ALB --> make it type HTTP, protocol TCP, Port 80 source all (0s)
+-Configure routing --> create a new target group --> HTTP port 80 b/c our instance is accessible for that port --> health check will be HTTP at path / (don't have a /health route) (can customize health check if you want)
+-Register Targets --> add the instance to the registered Targets
+-create LB 
+
+-wait for provisioning --> then make sure everything works
+-could go straight to the DNS name and copy into browser --> should see the Apache web app we created! 
+-ALB makes the DNS name --> never going to change, internet facing
+
+Trick with Security Groups: allow LB to access EC2 instance and nothing else (via the fact that Security Groups can reference Security Groups)!
+* go to Security Groups --> want to allow inbound traffic of Security Group only coming from the LB! 
+* Edit Inbound Rule for Security Group and delete the 0s that indicate we can access EC2 directly via IP --> now only via load balancer
+* therefore, a very secure set up because we know that only the LB can talk to EC2 on port 80 
