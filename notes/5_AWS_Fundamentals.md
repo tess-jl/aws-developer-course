@@ -85,3 +85,8 @@ RDS va Aurora
 -can have 15 replicas instead of just 5 (and replication is faster)
 -failover is instantaneous for Aurora (high availability native, multi AZ)
 -cost more than RDS, but more efficient so should even out theoretically 
+
+### RDS Hands On 
+standard create vs easy create 
+--> standard --> 6 different engine types --> MySQL for this hands on --> templates etc.
+-**SQL electron** = DB client, GUI to connect to DB --> .dmg package to install on Mac --> can connect to our RDS via the SQL Electron GUI with name/password
