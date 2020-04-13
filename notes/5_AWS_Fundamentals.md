@@ -159,3 +159,23 @@ CONS
 * lotta chum (uesless data that isn't read)--> big cache
 
 ### VPC and 3 tier Architecture 
+**Virtual Private Cloud (VPC)** = within a region can create a VPC --> each VPC contains subnets (networks) --> each subnet mapped to AZ
+-common to have public subnet (public IP) and common to have private subnet (private IP)
+-common to have many subnets/AZ
+
+-default VPC --> default subnets available  **public subnets** = where LBs, static websites, fies, public Auth layers
+**private subnets** = where web app servers, DBs
+-Public and private can communicate if they're in the same VPC!
+
+VPC summary
+* all new accounts come with default VPC
+* possible to use a VPN to connect to a VPC (and access all the private IP from my laptop)
+* **VPC Flow Logs** = monitoring of traffic within and in/out of VPC (useful for security etc.)
+* VPC at account / region
+* subnets in 1 VPC only, one AZ only
+* some AWS can be deployed in VPC, others can't 
+* can peer VPC (within or across account) to make them appear part of the same network
+
+Typical Archiecture of a 3 tier web app: 
+-all of the building blocks make something complicated and secure! 
+-user queries Route 53 for Alias record --> Elastic Load Balancer (in public subnet) --> behind ELB is an ASG in multiple AZ (in private subnet) --> spin up EC2 instances scaled accordingly --> instances talk directly to RDS --> RDS has cross AZ replication (read replica) for security --> we have an ElastiCache cluster that will allow for reading for user --> (RDS and Elasticache in data / private subnet)
