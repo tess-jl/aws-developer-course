@@ -26,3 +26,62 @@
 -Choose A record --> say Alias --> redirects to LB as an Alias --> whatever.com --> value is an alias for the LB 
 
 ### RDS Overview
+-db service 
+-relational db service --> db is managed by AWS --> allows us to create dbs with SQL --> can create Portgres, Oracle, MySQL, MariaDB, Microsoft SQL, Aurora (AWS proprietary db)
+
+Why use RDS vs deploying DB on an EC2? 
+-managed service
+* OS patching
+* continuous backups (point in time restore)
+* monitoring dashboards
+* read replicas 
+* multi AZ setup for disaster recovery (DR)
+* maintenance windows for upgrades 
+* scaling vertically or horizontally 
+-BUT cannot SSH into instances, don't interact with them directly 
+
+Read Replicas for read scalability 
+- DB maybe needs to read to app a lot! --> creates up to 5 read replicas
+-can be within AZ, cross AZ, or cross region 
+-replication is async, reads eventually consistent but not right away 
+- replicas could be promoted to their own DB if you want 
+- **apps must update the connection string to leverage read replicas** --> only one instance takes the writes 
+
+Multi AZ (for DR)
+-sync replication --> one DNS Name (represented by RDS DB) in one AZ will hve an auto app failover to a standby in another AZ
+-increases availability in case loss of AZ, loss of network, loss of instance or storage issue
+-failover from master to standby --> auto, app still reads and writes to one DB 
+-NOT used for scaling 
+
+RDS Backups
+-auto for RDS
+-every night, full snapshot of DB
+-capture transaction logs in RT 
+-ability to restore to any point in time 
+-7 day retention (up to 35 day if want)
+-manual DB snapshot --> can retain backup for as long as want 
+
+RDS Encryption
+-encryption at rest via KMS - AES-256 encryption 
+-SSL certificates to encrypt data to RDS in flight 
+-**enforcing SSL** 
+* PostgreSQL --> rds.force_ssl=1 in the AWS RDS Console (Parameter Groups)
+* MySQL --> GRANT USAGE ON *.* TO 'mysqluser'@%' REQUIRE SSL;
+- to connect using SSL: provide SSL trust cert (downloaded from AWS) and provide SSL options when connecting to DB 
+
+-connecting via SSL !== enforcing SSL necessarily --> there is a difference
+
+RDS Security 
+- RDS dbs usually deployed within private subnet
+- security works by leveraging security groups --> controls who (which IP, with other security groups, etc.) can communicate with RDS 
+- IAM policies help control who can manage AWS RDS
+- traditional username/password can be used to login to db --> ALSO for login, IAM user can be used for MySQL or Aurora 
+
+RDS va Aurora 
+-not open source 
+-compatible with postgres and mySQL --> drivers will work as if Aurora was Postgres or MySQL
+-Aurora = AWS cloud optimized, claims 5x performance boost compared to MySQL, 3x compared to Postgres on RDS
+-Aurora storgae auto grows increments of 10GB, up to 64 TB 
+-can have 15 replicas instead of just 5 (and replication is faster)
+-failover is instantaneous for Aurora (high availability native, multi AZ)
+-cost more than RDS, but more efficient so should even out theoretically 
