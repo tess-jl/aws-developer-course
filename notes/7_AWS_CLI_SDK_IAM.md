@@ -72,3 +72,46 @@ Hands on
 -can click on the role and add another policy --> such as S3 Full Access --> with this policy we can now make a bucket 
 
 ### IAM Roles and Policies Hands On
+-can either attach a built-in policy (AWS-managed and auto updated) or can create our own with these parameters:
+* Service
+* Actions 
+* Resources 
+* Request conditions
+
+-can also add an in-line policy (on top of what I already have for policies) --> unique to ONE role only, not as nice b/c better to manage policies globally
+
+This s3 read-only policy: 
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+^JSON like this says that for ANY AWS S3 resource (*) this policy on the role allows the resource to perform an API calls that start with "Get" or "List" --> see ListBucket API 
+
+This s3 full access: 
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*"
+        }
+    ]
+}
+
+
+Building our own Custom Policy: many options for an S3 policy! many API calls --> can add a specific ARN for a policy just for a bucket 
+* did this on the standard visual editor 
+* can also use AWS policy generator GUI 
+
+Advantage of custom policies: can see who is using it and the versions of the policy --> because managed by me I can make it more specific to my EC2 instance the security can be even better!
