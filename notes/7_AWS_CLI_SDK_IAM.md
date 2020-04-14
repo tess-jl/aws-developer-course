@@ -11,3 +11,4 @@ Can be done in serveral ways:
 * AWS Instance Metadata Service for EC2
 
 ### CLI Setup 
+https://docs.aws.amazon.com/cli/latest/userguide/install-macos.html#install-bundle-macos
