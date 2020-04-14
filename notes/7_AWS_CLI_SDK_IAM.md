@@ -46,3 +46,29 @@ aws s3 cp s3://[nameOfBucket]/[nameOfFile] [nameOfFile]
 Most commands make sense intuitively 
 
 ### AWS CLI on EC2
+-common to run the CLI on EC2--> there's bad way and good way 
+1. Bad way: if we run aws configure on EC2 --> BUT it's super insecure, NEVER EVER put personal credentials on an EC2 (we never own an EC2, don't want ANYTHING personal on any EC2)
+1. Good way: via IAM roles 
+
+IAM roles cna be attached to EC2 instances
+-roles can come with a policy--> the policy can define exactly what the EC2 instance should be able to do (default is no rights)
+-with instance having its own role it's way more secure 
+-onlu 1 IAM role at a time (but role can have many policies)
+
+Hands on
+-go to EC2 console on AWS
+-SSH into the EC2 instance 
+-aws configure once in EC2 instance but DO NOT put any access key or secret! just enter default region name 
+-if try to run any command it will try to point us to aws configure but really we should be using Instance IAM Roles! 
+
+--> go to IAM --> Roles --> create role --> want AWS Service as entity since we want to attach it to an EC2 
+
+-roles make it so that any service can have its own set of permissions
+
+-create role (use built in policy for read-only amazon s3)
+-go back to EC2 instance --> right click to role settings--> add new role 
+-NOW when go back to CLI can do aws s3 ls and the command works! 
+--> but if we try to create a random bucket in the CLI --> WILL NOT WORK b/c EC2 role is not permissioned enough to do a make bucket operation 
+-can click on the role and add another policy --> such as S3 Full Access --> with this policy we can now make a bucket 
+
+### IAM Roles and Policies Hands On
