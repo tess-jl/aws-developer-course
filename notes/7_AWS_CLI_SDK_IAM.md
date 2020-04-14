@@ -121,3 +121,21 @@ Advantage of custom policies: can see who is using it and the versions of the po
 -Policy Simulator tool https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html
 - simulation of what can be done --> kind of similar to postman but simulation of what is allowed
 -easiest way to test policies!
+
+### AWS CLI Dry Run 
+-don't want to run the actual commands, just want to make sure we have the permissions
+-some commands (not all) have a --dry-run option to simular API calls
+e.g. 
+```
+aws ec2 run-instances help
+```
+shows us docs on this command
+```
+aws ec2 run-instances --dry-run --image-id ami-[id number] --instance-type t2.micro
+```
+--> will show that not auth to use this command!
+so, add permission to make it so that we can run-instances by editing the custom policy we made
+-make sure custom policy is attached to the role 
+-should see (DryRunOperation) in CLI that indicates we could run that op but we won't due to the --dry-run 
+
+### AWS CLI STS Decode
