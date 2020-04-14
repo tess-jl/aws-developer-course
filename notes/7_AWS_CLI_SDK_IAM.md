@@ -115,3 +115,9 @@ Building our own Custom Policy: many options for an S3 policy! many API calls --
 * can also use AWS policy generator GUI 
 
 Advantage of custom policies: can see who is using it and the versions of the policy --> because managed by me I can make it more specific to my EC2 instance the security can be even better!
+
+### AWS Policy Simulator 
+-want to test the S3 read-only policy we have 
+-Policy Simulator tool https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html
+- simulation of what can be done --> kind of similar to postman but simulation of what is allowed
+-easiest way to test policies!
