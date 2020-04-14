@@ -12,3 +12,12 @@ Can be done in serveral ways:
 
 ### CLI Setup 
 https://docs.aws.amazon.com/cli/latest/userguide/install-macos.html#install-bundle-macos
+
+### CLI Config
+-CLI will allow my laptop to access the AWS Network
+-learn how to get access creds and protect them 
+
+Use IAM service to get access cred to config CLI!
+-"aws configure" command in CLI --> enter id and secret key --> creates 2 files --> one config and one credentials 
+
+### CLI Practice with S3 
