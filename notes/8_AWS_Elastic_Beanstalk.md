@@ -29,3 +29,31 @@ what can we deploy?
 -can also write own custom platform (advanced)
 
 ## EB First Environment
+-deleted EC2, DBs, LBs to prep 
+-3 steps 
+1. Select platform 
+1. upload an app or use a sample 
+1. run it 
+
+--> when create app in beanstalk console and it is in process of deploying it--> says using S3 bucket for it (can see it in S3 console btw)
+-when done deploying --> click events to see all of the events that auto happened --> bucket, security group, created in elastic IP, etc. 
+
+-can click link on EB console and it gives links for what's next
+-running in simpliest way--> dev mode therefore 1 EC2 --> if move to another env EC2 will update to multiple instances
+
+left side menu--> logs--> request last 100 lines of log--> can see what happens on EC2 machine when app is deployed 
+--> health = health of the app 
+--> monitoring = how many CPUs etc. graphs 
+--> manage updates 
+--> events 
+--> tags 
+
+left hand menu for this app:
+* envs
+* app versions 
+* saved configs 
+
+on All Environments page --> can create a new env, revert to prior, swipe env URLs, or delete an app 
+-each app can have many environments, each environment can be applied to an app version 
+
+### EC Deployment Modes
