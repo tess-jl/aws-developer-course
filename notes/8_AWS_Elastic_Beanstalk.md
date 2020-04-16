@@ -56,4 +56,13 @@ left hand menu for this app:
 on All Environments page --> can create a new env, revert to prior, swipe env URLs, or delete an app 
 -each app can have many environments, each environment can be applied to an app version 
 
-### EC Deployment Modes
+### EB Second Environment
+on Environments page--> orange create environment button
+* select web server env
+* fill in form for new Node.js env--> click configure more options --> can select config presets as high availability (not free) --> can create a RDS via this --> BUT if created in EB then it will be delete with the EB too, sometimes better to do it externally and connect it 
+
+-with high availability setup --> more components created! more security groups
+-LB created for us auto 
+-full-blown env created via EB 
+
+### EB Deployment Modes 
