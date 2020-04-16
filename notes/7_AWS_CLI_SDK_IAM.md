@@ -147,3 +147,32 @@ sts decode-authorization-message --encoded-message [value]
 -get access denied --> because IAM role is not auth to preform operation --> go to custom policy and update it with STS action--> write decodeauth --> returns JSON that can be prettified into a nice error message! 
 
 ### EC2 Instance Metadata
+-least known 
+-allows EC2 instances to learn about themselves --> don't need to use an IAM role for that purpose
+-URL is **http://169.254.169.254/latest/meta-data**
+-this IP is an internal IP to AWS --> does not work from computer, just works from within EC2 
+-cannot get content of the IAM policy 
+-**metadata** = info on EC2
+-**userdata** = launch script of the EC2
+
+Hands on
+```
+curl http://169.254.169.254
+```
+version of API call we're using --> we just want latest meta data so: 
+``
+curl http://169.254.169.254/latest/meta-data/
+```
+gives us list of data--> / means there is more
+``
+curl [thingFromList]
+```
+returns the data 
+
+ANY EC2 instance, even without IAM role can get this metadata this way 
+```
+curl http://169.254.169.254/latest/meta-data/iam/security-credentials/[nameOfRole]
+```
+shows access key and secret--> SO behind the scenes--> EC2 role gets temporary creds via role attached
+
+### AWS SDK Overview
