@@ -160,11 +160,11 @@ Hands on
 curl http://169.254.169.254
 ```
 version of API call we're using --> we just want latest meta data so: 
-``
+```
 curl http://169.254.169.254/latest/meta-data/
 ```
 gives us list of data--> / means there is more
-``
+```
 curl [thingFromList]
 ```
 returns the data 
@@ -176,3 +176,30 @@ curl http://169.254.169.254/latest/meta-data/iam/security-credentials/[nameOfRol
 shows access key and secret--> SO behind the scenes--> EC2 role gets temporary creds via role attached
 
 ### AWS SDK Overview
+-if want to preform actions on AWS directly from app's codebase (i.e. no CLI)?
+-**Software Development Kit (SDK)** 
+-official SDK:
+* Java 
+* .NET
+* Node.js
+* PHP 
+* Python (renamed boto3/botocore)
+* Go 
+* Ruby
+* C++
+-most languages support AWS SDK
+
+-SDK useful when start coding against AWS service like DynamoDB
+-AWS CLI is a wrapper around Python SDK (boto3) (hence download with python in it)
+-exam expects I know when to use SDK
+-with the SDK --> if no region specified default is us-east-1
+
+CDK Credentials Security 
+-recommended use **default credential provider chain** --> works perfectly with aws credentials --> will auto look for credentials in this file on my machine
+* can also use **Instance Profile Credentials** --> use IAM Role for EC2 machines etc.
+* can also use .env vars, less-recommended!!
+
+**Exponential Backoff** = a retiring strategy of any API that has failed because of too many calls (only applies to rate-limited APIs) --> strategy = wait 2x as long for each API call on retry, ensures not overloading API 
+-retry mechanism is included in SDK API calls
+
+### AWS CLI Profiles 
