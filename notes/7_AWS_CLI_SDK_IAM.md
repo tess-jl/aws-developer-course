@@ -139,3 +139,11 @@ so, add permission to make it so that we can run-instances by editing the custom
 -should see (DryRunOperation) in CLI that indicates we could run that op but we won't due to the --dry-run 
 
 ### AWS CLI STS Decode
+-we can get a long error message in the CLI --> how do we decode it? Using the **STS command line**
+-need to run:
+```
+sts decode-authorization-message --encoded-message [value]
+```
+-get access denied --> because IAM role is not auth to preform operation --> go to custom policy and update it with STS action--> write decodeauth --> returns JSON that can be prettified into a nice error message! 
+
+### EC2 Instance Metadata
