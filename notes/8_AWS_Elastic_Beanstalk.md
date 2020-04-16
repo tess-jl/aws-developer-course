@@ -159,3 +159,34 @@ EB deployment mechanism
 --> optimization in case of long deployments: package dependencies with source code in one zip file (my practice anyway)!
 
 ### EB Additional Exam Tips
+* **EB can work with HTTPS** (need to load an SSL certificate onto the LB, can be done from the EB console OR the .ebextensions/securelistener-alb.config in code) and SSL cert can be provisioned by ACM (AWS cert manager) or CLI, ALSO need to make a security group rule to allow the HTTPS port (443) for incoming traffic!
+* **EB redirect from HTTP to HTTPS** how? by either (1) configuring instances to redirect (see docs for details for each language) or (2) can config ALB with a rule! if so, make sure health checks are not redirected
+
+**EB Lifecycle Policy**
+-EB can store 1000 app versions at most 
+-to phase out old versions--> write **lifecyle policy** either:
+* based on time (when a time is reached)
+* based on space (when have too many versions)
+-any versions currently used will not be removed
+-if version deleted from EB can still keep the underlying source bundle in S3 and can restore 
+
+**Web server vs worker environment**
+-worker env = when app performs tasks that are long to complete these tasks should be offloaded to a worker env
+-by offloading app = in 2 tiers (this decoupling is common)
+-e.g. processing a video is something would want to decouple
+-can also use a cron.yaml file to define periodic tasks 
+
+Decoupling hands on: 
+in EB console--> create new env--> select worker env tier 
+
+**RDS with EB**
+-RDS can be provisioned via EB --> good for dev / test BUT not as good for prod b/c DB lifecycle is tied to EB env lifecycle 
+-BEST to create separate RDS and provide it to EB app via **connection string** --> decouple RDS from EB for prod!
+-how do we migrate / do decoupling? 
+* take RDS DB snapshot (DR purposes)
+* enable deletion protection in RDS 
+* in EB create a new env that does NOT have an RDS but instead points to the existing RDS we want
+* do a blue/green deployment to swap new/old envs
+* terminate the old env (but the RDS won't get deleted b/c we added the protection!)
+* delete CloudFormation stack (DELETE_FAILED state b/c of the RDS DB)
+--> migration is a lot but works well!
