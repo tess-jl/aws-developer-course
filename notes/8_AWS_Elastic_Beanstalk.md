@@ -129,3 +129,33 @@ see AWS docs for summary on EB --> shows a nice table
 -EB handles all the complexity for us!
 
 ### EB Advanced Concepts 
+-**zip** --> when want to deploy code to EB need to zip it! zip file MUST contain the code 
+
+* code required to live in directory called **.ebextentions/** in the root 
+* formats must be **YAML or JSON**
+* files need **.config** extension 
+* able to modify default settings using the **option_settings** parameter 
+* able to add resources, i.e. RDS, ElastiCache, DynamoDB, etc. 
+--> ALL resources managed by .ebextensions folder will get deleted if the env goes away!
+
+**EB CLI** = makes working with EB from CLI easier
+-basic commands follow format: 
+```
+eb [action]
+```
+e.g. eb create, eb health, eb open, eb deploy etc.
+
+Why use EB CLI? b/c helpful for automated deployment pipelines!! can just run a script with these CLI commands to deploy 
+
+Under the Hood how does it work? 
+-relies on **CloudFormation** (AWS service, will cover later on)
+-see the CloudFormation console --> can see cloud formation stacks! can see from desc that the stack is from EBenv etc. --> this is what triggers changes in env when things update --> can look at outputs, events, etc. 
+
+EB deployment mechanism 
+-need to describe dependencies (requirements.txt for Python, package.json for Node.js)
+-package all code as zip 
+-zip uploaded to EC2 machines 
+-each EC2 will resolve dependencies (slow if a lot of dependencies or very big dependencies)
+--> optimization in case of long deployments: package dependencies with source code in one zip file (my practice anyway)!
+
+### EB Additional Exam Tips
