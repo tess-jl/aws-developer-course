@@ -66,3 +66,56 @@ on Environments page--> orange create environment button
 -full-blown env created via EB 
 
 ### EB Deployment Modes 
+-very popular question- which deployment mode is better for which situation?! 
+recall:
+* **single instance deployment** = good for dev b/c one EC2, one AZ, one LB
+* **LB and ASG** = good for prod or pre-prod web-apps --> elastic LB, ASG spanning across multiple AZ, each instance own SGs (ELB will expose a DNS name which is wrapped by the elastic beanstalk DNS name)
+* **AGS only** = good for non-web apps in prod
+
+What about when we want to update a deployment?
+Options for update: 
+1. **All at once (deploy all in one go)** = fastest, but instances down temp 
+1. **Rolling** = update a few instances at a time (bucket) --> once bucket healthy, move onto the next bucket
+1. **Rolling with additional batches** = like rolling but spins up new instances to move the batch (therefore old app still available)
+1. **Immutable** = spins up new instances in a new ASG, deplpus version to these instances and then swaps all instances when all is healthy 
+
+**All at once (deploy all in one go)**
+-good for quick iterations
+-no additional cost 
+
+**Rolling**
+-app running below capacity 
+-can set bucket size (i.e. capacity)
+-app runs both versions simultaneously 
+-no additional cost 
+-could be a long deployment, tho 
+
+**Rolling with additional batches**
+-app running at (or sometimes over) capacity
+-can set bucket size 
+-running both simultaneously 
+-small extra cost 
+-additional batches removed at end 
+-longer deployment 
+-good for prod 
+
+**Immutable** 
+-zero downtime
+-new code deployed to NEW instances on a temporary ASG 
+-double capacity therefore high cost
+-longest deployment
+-quick rollback in case of failures (just terminate new ASG)
+-great choice for prod 
+
+**Blue/Green**
+-not direct feature of EB 
+-zero downtime and release facility 
+-create a new "stage" env --> deploy v2 from there 
+-new env = GREEN --> can be validated independently and rollback if issues 
+-Route 53 an be setup using weighted policies to redirect a bit of traffic to the stage env to test everything
+-when happy with the test env can just go ahead and swap URLs in EB so that test (GREEN) becomes the new env
+--> very manual, not really embedded in EB
+
+see AWS docs for summary on EB --> shows a nice table
+
+### EB Deployment Hands On 
