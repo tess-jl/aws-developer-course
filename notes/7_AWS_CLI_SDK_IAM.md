@@ -203,3 +203,23 @@ CDK Credentials Security
 -retry mechanism is included in SDK API calls
 
 ### AWS CLI Profiles 
+-manage multiple AWS accounts? 
+-need to use a **profile** --> need to define a name for a new profile, configure it, can then use it from any CLI 
+```
+aws configure --profile [profileName]
+```
+then prompted with new form --> enter our special AWS credentials from our new account
+
+```
+cat credentials
+```
+shows all accounts credentials 
+```
+cat config
+```
+lists both accounts
+
+to execute a command for that other account need to use:
+```
+[command] --profile [accountName]
+```
