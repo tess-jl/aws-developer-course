@@ -119,3 +119,13 @@ Options for update:
 see AWS docs for summary on EB --> shows a nice table
 
 ### EB Deployment Hands On 
+-see EB config--> deployment--> default = all at once but can choose any
+-if select rolling --> can select 30 therefore 70% of fleet is always up 
+-config updates (not asked about on exam)
+-preferences
+
+-can google EB sample app and download a Node.js sample app file --> update the sample for the redeployment--> zip it back up
+-deploy for updates with immutable strategy--> events show us how temp ASG is created! etc. etc. --> new instance added to LB, once pass health check the new instances are then let off of temp ASG and moves instances to the original ASG 
+-EB handles all the complexity for us!
+
+### EB Advanced Concepts 
