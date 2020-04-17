@@ -165,5 +165,23 @@ how it works?
 * can be run on own computer but need to install Docker --> leverge **CodeBuild Agent** 
 
 ### CodeBuild Hands on part 1
+-e.g. want to test that 
+-choose source (in our case CodeCommit, but many other AWS services abailable)
+-codebuild runs a docker image that will run our test --> 2 kinds of Docker Image: 
+1. Managed Image (by AWS CodeBuild)
+1. Custom Image (perhaps more specific for company)
+-env--> OP = unbuntu, standard, latest image, type=Linux 
+-service role--> new service role auto creates a new IAM service role for us 
+-some extra config (optional, lots of stuff including env vars)
+
+-MOST important = **build spec** = build specification, a file that tells code build how to build our project
+* use a buildspec file --> by default will look in root 
+
+-artifacts
+-can enable cache (S3 or local)
+-create build
+
+-try build with code as-is (no spec!) --> fails as expected
+
 
 ### CodeBuild Hands on part 2
