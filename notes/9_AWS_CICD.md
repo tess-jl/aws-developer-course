@@ -91,3 +91,18 @@ just like with the URL from github!
 * remember both ways are supported, just used the HTTPS way
 
 ### CodePipeline Overview
+-visual tool for continuous delivery 
+-integrates **sources** (GitHub, CodeCommit, Amazon S3) with **builds** (CodeBuild, Travis, etc.)
+-also does load testing with 3rd party tools 
+-also does deploy (AWS CodeDeploy, EB, CloudFormation, ECS, etc.)
+STAGES
+* each with sequential and/or parallel 
+* manual approval can be defined at any state 
+
+**artifacts** = created by each stage, files that are passed and stored via S3 and passed onto next stage
+
+troubleshooting 
+* **state change in pipeline** generates a CloudWatch Event rule --> return SNS notifcations --> I can create events for whatever I want to do troubleshooting
+* if pipeline fails a stage or doesn't deploy anything --> get info from console
+* can audit API calls to CloudWatch via **CloudTrial** (used to audit ANY API calls across AWS)
+* if pipeline can't preform an action make sure IAM Service Role attached has right permissions (Policy)
