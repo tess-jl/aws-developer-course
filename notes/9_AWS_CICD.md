@@ -219,3 +219,60 @@ How do we integrate this build project into our code deploy?
 -build fails --> tells us why! THEREFORE EB does NOT have the bad code we changed
 --> change code back to including the congratulations and now it does work! 
 * see build history for entire history of builds!
+
+### CodeDeploy Overview 
+-most obscure 
+-want to deploy app auto to many EC2 instances (not managed by EB)
+-can do this deploy with open source tools (ansible, terraform, cheft, Puppet) --> CodeDeploy is the AWS in-house version, managed service
+
+How to make it work? 
+* Each EC2 Machine (or On Promise machine) MUST be running the **CodeDeploy Agent** 
+* agent is continously polling CodeDeploy for work to do 
+* CodeDeploy sends **appspec.yml** file 
+* app pulled from GitHub or S3 
+* EC2 will run the deployment instructions from appsepc.yml 
+* agent will report if there was success/failure on instance 
+--> have source code with appspec.yml file at root --> push code to Github or S3 --> triggered a deployment --> agent polling sees the trigger --> code downloaded onto EC2 instances and agent will run what is on appspec.yml to deploy code correctly 
+
+Other things to know: 
+* EC2s are grouped by deployment group (dev, prod, etc.)
+* lots of flexibility to define what kind of deployments (more flexible than EB, more complex too)
+* can integrate with CodePipeline!
+* can re-use existing sets tools, any kind of app, auto scaling integration 
+* can do blue/green but only works with EC2 instances (not on premise)
+* support for lambda deployments
+* only deploys, does not provision resources (i.e. assumes EC2s exist already)
+
+CodeDeploy Primary Components
+* **application** (with unqiue name)
+* **compute platform** = EC2/Om-Premise or Lambda
+* **Deployment configuration** = rules for success or failure (i.e. for EC2/On-Premise can specify min num of healthy instances, for lambda how want traffic routed)
+* **Deployment group** = group of tagged instances (allows gradual deploy)
+* **Deployment type** = in-place deployment or blue/green deploymenet 
+* **IAM instance profile** --> need to give EC2 permissions to pull from S3/ GitHub 
+* **Application revision** = app's code and the appspec.yml file 
+* **service role** = role for CodeDeploy to perform what it needs 
+* **Target revision** = app version of target deployment 
+
+**appspec.yml**
+-2 sections: 
+* **file section** = how to source and copy from S3 / GitHub to filesystem 
+* **Hooks** = instructions on how to deploy the new version (can have timeouts), order of hook events is: 
+1. ApplicationStop 
+1. DownloadBundle 
+1. BeforeInstall --> then app installs
+1. AfterInstall
+1. ApplicationStart
+1. **ValidateService** = like a health check
+
+CodeDeploy deployment config 
+* can deploy to one EC2 at a time, if one fails deployment stops 
+* half at a time 
+* all at once (good for dev)
+* custom
+-with failures instances stay in failed state and new deployments will first be deployed to failed state instances 
+-to rollback--> redeploy old deployment or enable auto rollback for failures
+-**deployment targets** can be set of EC2 instances with tags OR deploy directly to ASG OR mix with deployment segments OR customization via scripts (**DEPLOYMENT_GROUP_NAME** env var)
+
+### CodeDeploy Hands On 
+
