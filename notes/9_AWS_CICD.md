@@ -183,5 +183,39 @@ how it works?
 
 -try build with code as-is (no spec!) --> fails as expected
 
-
 ### CodeBuild Hands on part 2
+-creating file in browser
+```
+version: 0.2
+
+phases: 
+    install:
+        runtime-versions:
+            nodejs: 10
+        commands:
+            - echo "installing something"
+    pre_build:
+        commands: 
+            - echo "we are in the pre build phase"
+    build:
+        commands:
+            - echo "we are in the build block"
+            - echo "we will run some tests"
+            - grep -Fq "Congratulations" index.html
+    post_build:
+        commands:
+            - echo "we are in the post build phase"
+```
+yml file = key/value pair file--> note all of the sequential phases 
+
+-re-run build --> can look at **phase details** to show ALL the steps and how long each phase takes! 
+-**build log** can click to see all of the logs from CloudWatch logs--> see the echos from the buildspec.yml 
+
+How do we integrate this build project into our code deploy? 
+-edit pipeline to include a testing stage between Source and Deploy to dev --> see BuildAndTest stage added with source as AWS CodeBuild
+
+-can edit out the "congratulations" in index.html to see the test we made fail! 
+-source changes
+-build fails --> tells us why! THEREFORE EB does NOT have the bad code we changed
+--> change code back to including the congratulations and now it does work! 
+* see build history for entire history of builds!
