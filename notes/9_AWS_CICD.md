@@ -29,3 +29,38 @@ PHASES:
 --> orchestration for all done by **AWS CodePipeline** on cloud
 
 ### CodeCommit Overview
+**version control** = tracks changes
+-repo can live on any machine but there is centralized repo online
+**AWS CodeCommit** 
+* private Git repos 
+* no size limit 
+* fully managed 
+* code only in AWS cloud account 
+* secure (ecrypted etc.)
+* Integrated with 3rd party CI tools 
+
+CodeCommit Security 
+* interactions are done using git 
+* **authentication** with Commit --> need SSH keys (AWS user can configure SSH keys in IAM console) OR can use HTTPS creds via AWS CLI Auth helper --> can also use MFA for extra security 
+* **authorization** eith IAM policies manager user / roles rights to repos 
+* **Encrytion** = repos are automatically encrypted at rest using KMS  --> encrypted in transit (via HTTPS or SSH) 
+* **Cross Account access** NEVER share SSH keys! NEVER shar AWS creds --> instead use IAM Role in AWS account and use AWS STS (cross account AssumeRole API call)
+
+CodeCommit vs GitHub 
+-both git repos 
+-both support PRs
+-both integrated with CodeBuild
+-both support HTTPS and SSH auth 
+BUT
+-Github has GitHub Users Security while CodeCommit uses AWS IAM roles and users 
+-Github hosted by GitHub (and GitHub Enterprise hosted on your own servers) while CodeCommit is managed and hosted by AWS
+-UI of GitHub is better 
+
+**CodeCommit Notifications**
+-can trigger notifs using **AWS SNS (Simple Notification Service)** or **AWS Lambda** or **AWS CloudWatch Event Rules**
+* want SNS or Lambda when delete branches, trigger for pushes on master, notify external build, trigger lambda to preform code analysis (ANYTIME SOMETHING ADDED TO CODE)
+* want to use CloudWatch Event Rules when issues with PRs --> trigger for PR updates, comments on code --> will trigger a notif into a thing called an **SNS topic** 
+
+### CodeCommit Hands On part 1 
+
+### CodeCommit Hands On part 2
