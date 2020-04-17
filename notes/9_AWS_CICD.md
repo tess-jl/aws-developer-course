@@ -106,3 +106,18 @@ troubleshooting
 * if pipeline fails a stage or doesn't deploy anything --> get info from console
 * can audit API calls to CloudWatch via **CloudTrial** (used to audit ANY API calls across AWS)
 * if pipeline can't preform an action make sure IAM Service Role attached has right permissions (Policy)
+
+### CodePipeline Hands On 
+-create pipeline--> name it--> create service role (IAM role) with right permissions (req.)
+-choose source (codeCommit repo)
+-choose build (optional)
+-choose deploy stage (can be many things)--> we chose EB
+
+-now running a new EB version via the pipeline
+-note, app need to have a package.json or equivalent to be deployed 
+-can add state to deploy to prod stage --> add action group "Manual approval" , can specify SNS topic etc. can add ANOTHER action groups 
+-Stages have multiple **action groups** 
+-this next stage is the prod deployment as seen in the pipeline
+-code change is propogated across pipeline!
+
+### CodeBuild Overview
