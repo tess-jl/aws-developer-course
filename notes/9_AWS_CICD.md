@@ -75,3 +75,19 @@ BUT
 * can also add **triggers** = events more related to people doing things to code to repo --> can have SNS be triggered or Lambda be triggered by these triggers
 
 ### CodeCommit Hands On part 2
+-how to push code directly into codecommit
+-go to IAM --> users --> myself --> security credentials --> see access keys
+**SSH keys for AWS Code Commit** - can just upload keys here and copy SSH clone etc. 
+**HTTPS Git credentials for AWS Code Commit** --> doing this in hands on:
+* generate HTTPS keys
+* go back to dev tools --> clone URL --> (make sure Git is installed on my laptop) --> the clone HTTPS URL from dev tools is copied --> 
+```
+git clone [url]
+```
+just like with the URL from github!
+* enter username/password from the IAM credentials downloaded!
+* use this just like git regularly except online host is CodeCommit
+
+* remember both ways are supported, just used the HTTPS way
+
+### CodePipeline Overview
