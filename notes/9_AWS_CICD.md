@@ -121,3 +121,49 @@ troubleshooting
 -code change is propogated across pipeline!
 
 ### CodeBuild Overview
+-used for building/testing --> provide commands to server and server does something for both 
+
+OVERVIEW
+-fully managed service 
+-alternative to tools like Jenkins
+-continuous scaling (no build queue)
+-pay for usage of CodeBuild, not if have it or not (1 min/day then pay for that one min)
+-leverages Docker under the hood for reproducible builds
+-possible to extend capabilities leveraging our own base Docker images 
+-secure(integration with KMS = for build artifacts, IAM = for build permissions, VPC = for network security, CloudTRail = for API call logging)
+
+What does it do? 
+* can source code from different places (i.e. Github, CodeCommit, S3 etc.)
+* **buildspec.yml** file in the code = build instructions
+* outputs logs to S3 and AWS CloudWatch 
+* metrics to monitor CodeBuild statistics
+* can use CloudWatch Alarms to detect failed builds and trigger notifications
+* CloudWatch Events / Lambda as glue 
+* SNS notifs 
+* can reproduce CodeBuild locally to troubleshoot 
+* builds defined within CodePipeline or CodeBuild itself 
+
+What can it build? 
+* most code --> supports many languages! 
+* can also use Docker to extend any environment you like 
+
+how it works? 
+1. source code with buildspec.yml at root AND build Docker Image 
+1. code build triggered --> **CodeBuild Container** starts on Docker Image, uses run instructions from the buildspec.yml 
+1. (OPTIONAL) AWS S3 cache bucket to cache dependencies, artifacts, etc. to increase preformance 
+1. If build passes --> output sent to S3 bucket (artifacts bucket) --> artifact then to S3 bucket 
+1. if build passes --> logs saved to CloudWatch or S3 
+
+**buildspec.yml**
+* must be at root 
+* define env vars (plaintext OR **SSM parameter store**) 
+* phases (commands to run) --> (1) **install** = install parameters for build, (2) **pre-build** = final commands to execute before build, (3) **build** = actual build commands, (4) **post-build** = finishing touches like .zip creation 
+* **artifacts** are then defined --> uploaded to S3 and encrypted with KMS 
+* cache to S3 defined --> usually dependencies 
+
+**local build** = can be done on CodeBuild, done for troubleshooting beyond logs
+* can be run on own computer but need to install Docker --> leverge **CodeBuild Agent** 
+
+### CodeBuild Hands on part 1
+
+### CodeBuild Hands on part 2
