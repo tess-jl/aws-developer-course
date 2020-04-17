@@ -62,5 +62,16 @@ BUT
 * want to use CloudWatch Event Rules when issues with PRs --> trigger for PR updates, comments on code --> will trigger a notif into a thing called an **SNS topic** 
 
 ### CodeCommit Hands On part 1 
+-part of the AWS dev tools for cloud
+-create a repo 
+-can connect to repo via HTTPS or SSH 
+-commit index.html to master 
+-can make a PR, can comment
+-have a cool commit visualizer!
+-can create a branch, tags
+-SETTINGS:
+* can rename repo --> gets ID, ARN 
+* can setup **notifications** = events that users can get emails about repo events --> CloudWatch Event Rules sends into to SNS topic --> events are related to CODE MANAGEMENT 
+* can also add **triggers** = events more related to people doing things to code to repo --> can have SNS be triggered or Lambda be triggered by these triggers
 
 ### CodeCommit Hands On part 2
