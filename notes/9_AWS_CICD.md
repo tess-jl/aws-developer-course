@@ -317,3 +317,19 @@ revision location = path copied from bucket
 -can check the public IP and get the congrats message
 
 ### AWS CodeStar
+-what is diff between and CodeCommit? 
+**CodeStar** = integrated solution that regroups things like GitHub, CodeCommit, CodeBuild etc.. CICD services 
+-wrapper around everything--> one dashboard
+-helps quickly create CICD-ready projects for EC2, Lambda, Beanstalk 
+-supports many languages 
+-issue-tracking integration 
+-ability to integrate with Cloud9
+-one dashboard for all components one stop for all management
+-free service (only pay for underlying usage of services)
+-limited customization 
+
+Hands on
+-go to CodeStar --> select Node --> name it --> create project--> select key pair 
+-pick how to edit code 
+-dashboard shows nice viz! 
+-codestar is linked to all underlying services
