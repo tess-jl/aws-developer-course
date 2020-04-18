@@ -275,4 +275,45 @@ CodeDeploy deployment config
 -**deployment targets** can be set of EC2 instances with tags OR deploy directly to ASG OR mix with deployment segments OR customization via scripts (**DEPLOYMENT_GROUP_NAME** env var)
 
 ### CodeDeploy Hands On 
+-need to create 2 new IAM roles--> one for CodeDeploy another for EC2 instance 
 
+-then create a CodeDeploy 
+-create a deployment group BUT first need to make sure we have our EC2 instances for it 
+-set up new EC2 instance and for IAM role attach the EC2InstanceForCodeDeploy we just made
+-launch EC2
+
+-ssh into the new EC2
+-install CodeDeploy Agent on this EC2!!
+```
+# Installing CodeDeploy Agent
+sudo yum update
+sudo yum install ruby
+
+# Download the agent (replace the region)
+wget https://aws-codedeploy-eu-west-3.s3.eu-west-3.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+sudo service codedeploy-agent status
+```
+after running all those commands on EC2: 
+-back to CodeDeploy --> create **deployment group** --> can be sets of EC2 instances
+-first need to tag our EC2 instances!
+-then go back to deployment group--> name it --> select IAM role --> select deployment type (in place for this) --> env configs (use the tag from EC2 we just set!) --> deployment settings --> don't need a LB for now 
+-create deployment group 
+-ready to do first CodeDeploy deployments!
+
+-go back to Application in dev tools 
+-create deployment 
+-select deployment group 
+
+-create S3 bucket for this deployment! deploying a sample linux app (see SampleApp_Linux in code dir) with the appspec.yml (files and hook)
+-upload .zip of that app to the bucket 
+-copy path 
+
+back in CodeDeploy: 
+revision location = path copied from bucket 
+-deploy 
+
+-can check the public IP and get the congrats message
+
+### AWS CodeStar
