@@ -11,7 +11,7 @@
 **Objects** = files 
 * identified by a **key** = FULL, absolute path
 * no actual concept of directories that objects live in but UI will make it seem that way (it's actually a very very long key name, lots of /)
-* **Object Values** = the content of the file, the body --> max size 5TB, if uploading more than 5GB need to use "multi-part upload" 
+* **Object Values** = the content of the file, the body --> max size 5TB, **if uploading more than 5GB need to use "multi-part upload"** 
 * **Metadata** = list of text key/value pairs - system or user metadata
 * **Tags** = key/value pair, unicode, up to 10, useful for security or lifecyle
 * **Version ID** only if versioning is enabled
@@ -37,6 +37,7 @@ Hands on
 1. **SSE-C** --> you manage your own keys via AWS
 1. **Client-side** --> manage everything client-side
 
+**SSE (server-side encryption)**
 **SSE-S3** --> object encrypted server side, we never see the keys, handled by AES-256
 * MUST set header **"x-amz-server-side-encryption":"AES256"** on the HTTP/HTTPS req to S3, creates S3 managed data key --> encrypted--> put into the bucket
 
@@ -59,15 +60,15 @@ Encryption in transit (SSL)
 -S3 exposes: 
 * HTTP endpoints for non-encrypted traffic
 * HTTPS endpoints when encryption is in flight 
--HTTPS is recommended
+-HTTPS is recommended (happening via SSL)
 -HTTPS mandatory for SSE-C
 
--Encryption in flight = **SSL / TLS**
+-Encryption in flight = **SSL (Secure Sockets Layer) / TLS (Transport Layer Security)**
 
 ### S3 Security and Bucket Policies
 **User-based** --> IAM policies - which API calls should be allowed for a specific user from IAM console
 **Resource-based** --> more popular, done via: * **Bucket Policies** = bucket-wide rules from the S3 console, allows cross account 
-* **Object Access Control List (ACL)** --> finer grain 
+* **Object Access Control List (ACL)** --> finer grain, only certain people need access to certain objects in bucket
 * **Bucket Access Control List (ACL)** --> less common
 
 S3 Bucket Policies 
@@ -98,7 +99,7 @@ Hands On
 1. [bucket-name].s3-website-[AWS-region].amazonaws.com
 1. [bucket-name].s3-website.[AWS-region].amazonaws.com
 -depends on region 
--if get a 403 forbidden error --> make sure bucket policy allows public reads 
+-if get a **403 forbidden error --> make sure bucket policy allows public reads**
 
 Hands On: 
 -creating a very simple S3 static website 
@@ -107,7 +108,7 @@ Hands On:
 
 ### S3 CORS (Cross Origin Resource Sharing)
 **CORS** = allows me to limit the nymber of websites that can request my files in S3 (and limit my costs)
-- CORS MUST be enabled if data is requested from another S3 bucket! popular question
+- **CORS MUST be enabled if data is requested from another S3 bucket!** popular question
 - if client (browser) is on site and tries to access file from another bucket and it's not working it's likely that CORS is not enabled properly or not at all
 
 ### S3 Consistency Model 
@@ -144,3 +145,12 @@ cont.
 -files can be compressed with GZIP or BZIP2
 -No subqueries or Joins supported
 -Have to do this within code, not code
+
+REVIEW
+SSL / TLC
+How Computers Work by Ron White 
+S3 --> **Simple Storage Service** --> S3 objects can be accessed from any EC2 instance (S3 is just storage, no processing power)
+Edge locations (kinda between regions)
+Bucket Policy vs IAM policy 
+
+recommend multi-part for over 100MB 

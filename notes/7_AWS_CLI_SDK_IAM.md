@@ -6,8 +6,8 @@
 Can be done in serveral ways: 
 * AWS CLI on local computer 
 * AWS CLI on EC2 machine 
-* AWS SDK on local computer 
-* AWS SDK on EC2 machin
+* AWS SDK (Software Development Kit) on local computer 
+* AWS SDK on EC2 machine
 * AWS Instance Metadata Service for EC2
 
 ### CLI Setup 
@@ -48,9 +48,9 @@ Most commands make sense intuitively
 ### AWS CLI on EC2
 -common to run the CLI on EC2--> there's bad way and good way 
 1. Bad way: if we run aws configure on EC2 --> BUT it's super insecure, NEVER EVER put personal credentials on an EC2 (we never own an EC2, don't want ANYTHING personal on any EC2)
-1. Good way: via IAM roles 
+1. **Good way: via IAM roles**
 
-IAM roles cna be attached to EC2 instances
+IAM roles can be attached to EC2 instances
 -roles can come with a policy--> the policy can define exactly what the EC2 instance should be able to do (default is no rights)
 -with instance having its own role it's way more secure 
 -onlu 1 IAM role at a time (but role can have many policies)
@@ -151,7 +151,7 @@ sts decode-authorization-message --encoded-message [value]
 -allows EC2 instances to learn about themselves --> don't need to use an IAM role for that purpose
 -URL is **http://169.254.169.254/latest/meta-data**
 -this IP is an internal IP to AWS --> does not work from computer, just works from within EC2 
--cannot get content of the IAM policy 
+-**cannot get content of the IAM policy but can get role name**
 -**metadata** = info on EC2
 -**userdata** = launch script of the EC2
 
@@ -174,6 +174,8 @@ ANY EC2 instance, even without IAM role can get this metadata this way
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/[nameOfRole]
 ```
 shows access key and secret--> SO behind the scenes--> EC2 role gets temporary creds via role attached
+
+-useful for automation of EC2 instances
 
 ### AWS SDK Overview
 -if want to preform actions on AWS directly from app's codebase (i.e. no CLI)?
@@ -223,3 +225,8 @@ to execute a command for that other account need to use:
 ```
 [command] --profile [accountName]
 ```
+
+REVIEW 
+aws configure and credentials --> Q3 quiz
+-can't attach EC2 IAM roles to on-premise servers
+-policy simulator great for comparing policies

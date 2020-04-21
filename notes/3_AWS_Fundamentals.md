@@ -22,7 +22,7 @@ AWS regions --> each region has availability zone (e.g. us-east-1 a), represents
 -multifactor auth can be set up 
 -best to give users minimal amount of permissions needed to do job (least privilege principles)--> don't over power any person, app, or server 
 
--Big enterprises use IAM Federation (when a company uses AWS)--> one can log in with company credentials --> identity feds use the SAML standard(active directory)
+-Big enterprises use IAM Federation (when a company uses AWS)--> one can log in with company credentials --> identity feds use the SAML (security assertion markup language) standard(active directory)
 
 1 IAM user / physical person 
 1 IAM role / app
@@ -199,7 +199,7 @@ keep moving until "Configure Security Group" tab--> select the existing security
 1. **Convertable Reserved Instances** (long workloads, flexible instances) --> can change EC2 instance type (slightly more expensive than Reserved)
 1. **Schedule Reserved Instances** (only launch within window reserved, maybe only 1x/week)
 1. **Spot Instances** (show workloads, cheap, can lose instances) --> 90% off, bid price, get unit as long as not much demand, can be lost when someone buys it--> good for any resilient workloads, NOT database
-1. **Dedicated Instances** (no other customers will share hardware, most expensive) --> NOT full control over instance, might move between different hardware, can share with another AWS customer
+1. **Dedicated Instances** (no other customers will share hardware, most expensive) --> NOT full control over instance, might move between different hardware, can share hardware with another AWS customer with instances in same account
 1. **Dedicated Hosts** (entire physical server dedicated to you --> full control over instance, visibility to sockets/cores, useful for BYOLntrol the instance placement, expensive)
 
 ### EC2 Good Things to Know / Checklist
@@ -232,3 +232,11 @@ T2/T3 instance types are burstable--> meaning that instance is OK but when it ne
 * that can build custom AMI to enhance OS
 
 * EC2 instances are billed by the second and can be easily created and thrown away--> welcome to the cloud
+
+___
+
+IAM Users are defined on a global basis! but security groups are per region!
+
+EC2 compute only paying when running 
+
+CIDR Block = IPv6 related 

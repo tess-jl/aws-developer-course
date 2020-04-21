@@ -2,7 +2,7 @@
 -how to structure app in a 3 tier web app formation 
 
 ### AWS Route 53 Overview 
--**Route 53** = managed DNA (Domain Name System)
+-**Route 53** = managed DNS (Domain Name System)
 -collection of rules, records --> help clients understand how to reach a server through URLs 
 -most common **records** are: 
 * **A** = URL to IPv4
@@ -45,7 +45,7 @@ Read Replicas for read scalability
 -can be within AZ, cross AZ, or cross region 
 -replication is async, reads eventually consistent but not right away 
 - replicas could be promoted to their own DB if you want 
-- **apps must update the connection string to leverage read replicas** --> only one instance takes the writes 
+- **apps must update the SQL connection string to leverage read replicas** --> only one instance takes the writes 
 
 Multi AZ (for DR)
 -sync replication --> one DNS Name (represented by RDS DB) in one AZ will hve an auto app failover to a standby in another AZ
@@ -77,7 +77,7 @@ RDS Security
 - IAM policies help control who can manage AWS RDS
 - traditional username/password can be used to login to db --> ALSO for login, IAM user can be used for MySQL or Aurora 
 
-RDS va Aurora 
+RDS vs Aurora 
 -not open source 
 -compatible with postgres and mySQL --> drivers will work as if Aurora was Postgres or MySQL
 -Aurora = AWS cloud optimized, claims 5x performance boost compared to MySQL, 3x compared to Postgres on RDS
@@ -145,7 +145,7 @@ PROS
 * only requested data is cached, cache not filled with unused data 
 * Node failures are not fatal (just increased latency to warm the cache)
 CONS
-* cache miss --> big penalty, 3 round tris therefore noticable delay (Read penalty)
+* cache miss --> big penalty, 3 round tris therefore noticable delay (**Read penalty**)
 * if data in DB gets updated in DB it won't necessarily get written back into elasticache, so cache can be outdated (can implement a TTL (time to live, max time data can be stale))
 
 Write Through 
@@ -153,7 +153,7 @@ Write Through
 -likely will not be a cache miss since cache will be updated after DB is
 PROS
 * data in cache is never stale 
-* write penalty (write requires 2 calls), but this penalty matches better with user experience
+* **write penalty** (write requires 2 calls), but this penalty matches better with user experience
 CONS 
 * data will be missing in ElastiCache until it is updated in the DB --> mitigate by implementing lazy loading as well 
 * lotta chum (uesless data that isn't read)--> big cache
@@ -163,15 +163,15 @@ CONS
 -common to have public subnet (public IP) and common to have private subnet (private IP)
 -common to have many subnets/AZ
 
--default VPC --> default subnets available  **public subnets** = where LBs, static websites, fies, public Auth layers
+-default VPC --> default subnets available  **public subnets** = where LBs, static websites, files, public Auth layers
 **private subnets** = where web app servers, DBs
--Public and private can communicate if they're in the same VPC!
+-**Public and private can communicate if they're in the same VPC**!
 
 VPC summary
 * all new accounts come with default VPC
 * possible to use a VPN to connect to a VPC (and access all the private IP from my laptop)
 * **VPC Flow Logs** = monitoring of traffic within and in/out of VPC (useful for security etc.)
-* VPC at account / region
+* one VPC at account / region default
 * subnets in 1 VPC only, one AZ only
 * some AWS can be deployed in VPC, others can't 
 * can peer VPC (within or across account) to make them appear part of the same network
@@ -179,3 +179,11 @@ VPC summary
 Typical Archiecture of a 3 tier web app: 
 -all of the building blocks make something complicated and secure! 
 -user queries Route 53 for Alias record --> Elastic Load Balancer (in public subnet) --> behind ELB is an ASG in multiple AZ (in private subnet) --> spin up EC2 instances scaled accordingly --> instances talk directly to RDS --> RDS has cross AZ replication (read replica) for security --> we have an ElastiCache cluster that will allow for reading for user --> (RDS and Elasticache in data / private subnet)
+
+REVIEW
+Route 53 global
+read replicas are in same AZ, need multi AZ set up 
+multi az is just a backup 
+updates are written first to the master DB and then written to read replicas afterwards--> **eventual consistency**
+
+Redis cluster 
