@@ -44,7 +44,7 @@ CodeCommit Security
 * **authentication** with Commit --> need SSH keys (AWS user can configure SSH keys in IAM console) OR can use HTTPS creds via AWS CLI Auth helper --> can also use MFA for extra security 
 * **authorization** eith IAM policies manager user / roles rights to repos 
 * **Encrytion** = repos are automatically encrypted at rest using KMS  --> encrypted in transit (via HTTPS or SSH) 
-* **Cross Account access** NEVER share SSH keys! NEVER shar AWS creds --> instead use IAM Role in AWS account and use AWS STS (cross account AssumeRole API call)
+* **Cross Account access** NEVER share SSH keys! NEVER shar AWS creds --> instead use **IAM Role in AWS account and use AWS STS (Security Token Service) (cross account AssumeRole API call)**
 
 CodeCommit vs GitHub 
 -both git repos 
@@ -80,7 +80,7 @@ BUT
 **SSH keys for AWS Code Commit** - can just upload keys here and copy SSH clone etc. 
 **HTTPS Git credentials for AWS Code Commit** --> doing this in hands on:
 * generate HTTPS keys
-* go back to dev tools --> clone URL --> (make sure Git is installed on my laptop) --> the clone HTTPS URL from dev tools is copied --> 
+* go back to dev tools --> clone URL --> (make sure Git is installed on my laptop) --> the clone HTTPS URL? from dev tools is copied --> 
 ```
 git clone [url]
 ```
@@ -105,7 +105,7 @@ troubleshooting
 * **state change in pipeline** generates a CloudWatch Event rule --> return SNS notifcations --> I can create events for whatever I want to do troubleshooting
 * if pipeline fails a stage or doesn't deploy anything --> get info from console
 * can audit API calls to CloudWatch via **CloudTrial** (used to audit ANY API calls across AWS)
-* if pipeline can't preform an action make sure IAM Service Role attached has right permissions (Policy)
+* **if pipeline can't preform an action make sure IAM Service Role attached has right permissions (Policy)**
 
 ### CodePipeline Hands On 
 -create pipeline--> name it--> create service role (IAM role) with right permissions (req.)
@@ -333,3 +333,13 @@ Hands on
 -pick how to edit code 
 -dashboard shows nice viz! 
 -codestar is linked to all underlying services
+
+REVIEW
+authentication = showing your id --> token
+authorization = wristband --> cookies
+Cloudwatch alarms vs Events vs Notifications
+-what does on premise mean? 
+-primary components of code deploy
+-SNS notif, SES email? upcoming
+
+-CodeBuild can run any commands, so you can use it to run commands and copy your static web files to Amazon S3.

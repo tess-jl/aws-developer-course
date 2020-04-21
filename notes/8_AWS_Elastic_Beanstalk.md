@@ -12,7 +12,7 @@
 -has 3 architecture models 
 * **single instance deployment** = good for dev 
 * **LB and ASG** = good for prod or pre-prod web-apps
-* **AGS only** = good for non-web apps in prod
+* **AGS only** = good for non-web apps in prod (worker)
 
 Elastic Beanstalk has 3 components: 
 1. App
@@ -66,10 +66,10 @@ on Environments page--> orange create environment button
 -full-blown env created via EB 
 
 ### EB Deployment Modes 
--very popular question- which deployment mode is better for which situation?! 
+-very popular question- **which deployment mode is better for which situation?!** 
 recall:
 * **single instance deployment** = good for dev b/c one EC2, one AZ, one LB
-* **LB and ASG** = good for prod or pre-prod web-apps --> elastic LB, ASG spanning across multiple AZ, each instance own SGs (ELB will expose a DNS name which is wrapped by the elastic beanstalk DNS name)
+* **LB and ASG** = good for prod or pre-prod web-apps --> elastic LB, ASG spanning across multiple AZ, each instance own SGs (**ELB will expose a DNS name which is wrapped by the elastic beanstalk DNS name**)
 * **AGS only** = good for non-web apps in prod
 
 What about when we want to update a deployment?
@@ -89,6 +89,7 @@ Options for update:
 -app runs both versions simultaneously 
 -no additional cost 
 -could be a long deployment, tho 
+-lower capacity, so performance issues possibly
 
 **Rolling with additional batches**
 -app running at (or sometimes over) capacity
@@ -98,6 +99,7 @@ Options for update:
 -additional batches removed at end 
 -longer deployment 
 -good for prod 
+-higher capacity (always amount of instances running, maybe even more)
 
 **Immutable** 
 -zero downtime
@@ -112,7 +114,7 @@ Options for update:
 -zero downtime and release facility 
 -create a new "stage" env --> deploy v2 from there 
 -new env = GREEN --> can be validated independently and rollback if issues 
--Route 53 an be setup using weighted policies to redirect a bit of traffic to the stage env to test everything
+-Route 53 an be setup (because we have two URLs!!) using weighted policies to redirect a bit of traffic to the stage env to test everything
 -when happy with the test env can just go ahead and swap URLs in EB so that test (GREEN) becomes the new env
 --> very manual, not really embedded in EB
 
@@ -159,7 +161,7 @@ EB deployment mechanism
 --> optimization in case of long deployments: package dependencies with source code in one zip file (my practice anyway)!
 
 ### EB Additional Exam Tips
-* **EB can work with HTTPS** (need to load an SSL certificate onto the LB, can be done from the EB console OR the .ebextensions/securelistener-alb.config in code) and SSL cert can be provisioned by ACM (AWS cert manager) or CLI, ALSO need to make a security group rule to allow the HTTPS port (443) for incoming traffic!
+* **EB can work with HTTPS** (need to load an SSL certificate onto the LB, can be done from the EB console OR the .ebextensions/securelistener-alb.config in code) and SSL cert can be provisioned by ACM (AWS cert manager) or CLI, ALSO need to make a security group rule to **allow the HTTPS port (443) for incoming traffic!**
 * **EB redirect from HTTP to HTTPS** how? by either (1) configuring instances to redirect (see docs for details for each language) or (2) can config ALB with a rule! if so, make sure health checks are not redirected
 
 **EB Lifecycle Policy**
@@ -190,3 +192,10 @@ in EB console--> create new env--> select worker env tier
 * terminate the old env (but the RDS won't get deleted b/c we added the protection!)
 * delete CloudFormation stack (DELETE_FAILED state b/c of the RDS DB)
 --> migration is a lot but works well!
+
+REVIEW 
+-workers
+-LB vs route 53
+-cron.yml convention
+-runtime
+-custom platform question 3
