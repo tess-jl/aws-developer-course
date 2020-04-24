@@ -102,3 +102,34 @@ FAQs
 can create dynamic amount of resource? No- everything has to be declared, can't preform code generatation 
 
 is every AWS service support? Almost, only a few that are not (work around AWS Lambda Custom Resources)
+
+### CloudFormation Parameters 
+**Parameters** = way to provide inputs to template 
+-important for reusing templates across the company, accounts, region 
+-some inputs cannot be determined ahead of time
+-powerful, controlled, can prevent error from happening in template due to types
+
+When do I use? 
+-if CloudFormation resource config is likely to change in the future 
+-parameters mean we don't have to reupload a template to change content
+
+
+Settings
+* **type** --> data type, either string, commadelimitedList, List<type>, AWS param
+* **description** --> constraints, constraintDescription (string), min/max length for string, min/max value for number, defaults, allowedValues (array), AllowedPattern(regex), NoEcho(Boolean)
+
+How do we reference a parameter? 
+-need to use the function "Ref" **Fn::Ref**
+-shorthand for this in YAML = **!Ref**
+-can be used to reference other elements in the template
+
+**Pseudo Parameters**
+-AWS-offered params we can use 
+-enabled by default 
+-can use at any time
+e.g. AWS::AccountId, AWS::Region, etc.
+
+### CloudFormation Mapping 
+
+
+
