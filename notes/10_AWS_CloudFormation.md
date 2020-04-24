@@ -144,3 +144,13 @@ IF values needs to be user-specific and don't know exactly what it will be in ad
 -returns named value from a specific key 
 
 ### CloudFormation Outputs
+-declares optional **outputs** values that can be imported into other stacks (if exported first)
+-for linking templates, therefore collaboration across stacks
+e.g. network CloudFormation template and output vars are VPC ID and subnets ID
+**CANNOT delete CloudFormation Stack if outputs are referenced by another stack!**
+
+**Outputs:** in YAML
+-Export block is optional! for other stacks to import --> via **FN::ImportValue** or **!ImportValue**
+CROSS STACK REFERENCE
+
+### CloudFormation Conditions 
