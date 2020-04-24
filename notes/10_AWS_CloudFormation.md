@@ -185,3 +185,12 @@ Must know for exam:
 * **!Or** 
 
 ### CloudFormation Rollbacks
+-if **stack creation fails** --> default = everything just rolls back (gets deleted), can look at log 
+-also option to disable rollback and troubleshoot what happened 
+-if **stack update fails** --> auto rollback to previous known working state 
+-can see in log what happened via error messages
+
+see "UPDATE_FAILED" error message that tells us exactly why and then update rollback goes into progress--> all resources that were created in update are then deleted with the failure of the update
+-therefore CloudFormation is quite safe
+
+-cannot update a stack once it has failed in creation (via update, etc.)
