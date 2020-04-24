@@ -154,3 +154,20 @@ e.g. network CloudFormation template and output vars are VPC ID and subnets ID
 CROSS STACK REFERENCE
 
 ### CloudFormation Conditions 
+-based on a **condition**, the creation of resources or outputs is controlled
+e.g. to control if in __ env, don't create ___
+-each condition can reference another condition, parameter value, or mapping 
+
+**Conditions:** block
+-see !Equals implemented in example
+-logical functions used: 
+* **!Equals**
+* **!And**
+* **!If**
+* **!Not**
+* **!Or** 
+
+when using the condition:
+-in Resources, e.g.--> Condition: [nameOfCondition] --> only created resource if condition is true
+
+### CloudFormation Intrinsic Functions
