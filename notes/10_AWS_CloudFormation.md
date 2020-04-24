@@ -43,3 +43,19 @@ Building Blocks
 1. **Functions** 
 
 exam does not require us to write cloudFormation but I am expected to read cloud formation, what features should be used, etc. 
+
+### Create Stack Hands On 
+-create EC2
+-add elastic IP to it 
+-add 2 security groups 
+
+-since cloudformation is the backbone of EB there should already be stacks in our cloudformation console --> one for each EB env 
+
+cloudformation Designer for viz 
+
+-create a stack 
+-can select template for CloudFormation
+-using template 0-just-ec2.yaml --> keeping with all default settings
+-can use the price estimation tool 
+-create stack 
+-most important tab in stack console is the template 
