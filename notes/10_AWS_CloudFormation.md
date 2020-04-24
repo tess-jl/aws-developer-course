@@ -72,3 +72,17 @@ cloudformation Designer for viz
 -resources are prefixed by stack name
 
 -if want to delete go to actions --> delete --> resources deleted in the right order too! 
+
+### YAML 
+-used all across AWS 
+-scripting language, data language --> like JSON --> both can be used on CloudFormation
+-JSON is horrible for cloud formation tho 
+
+-a lot of key/value pairs, objects, also:
+* nested objects
+* arrays aka lists (see - )
+* multiline string (see | )
+* comments 
+
+### CloudFormation Resources 
+
