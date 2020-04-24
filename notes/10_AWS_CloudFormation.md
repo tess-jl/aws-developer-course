@@ -84,5 +84,21 @@ cloudformation Designer for viz
 * multiline string (see | )
 * comments 
 
-### CloudFormation Resources 
+### CloudFormation Resources (components)
+-core of cloudformation template, mandatory 
+-represent the different AWS components 
+-are declared 
+-can reference each other 
+-AWS knows how to create them in cloudformation 
+-224+ resources! **AWS: :aws-product-name: :data-type name**
 
+documentation online at AWS
+-can find JSON and YAML forms for each resource, shows what is customizable 
+-docs show up how to write the template for CloudFormation
+-everything that can be configured through UI can be written as code for cloudformation template
+-all of the code goes under the YAML block **Resources**
+
+FAQs
+can create dynamic amount of resource? No- everything has to be declared, can't preform code generatation 
+
+is every AWS service support? Almost, only a few that are not (work around AWS Lambda Custom Resources)
