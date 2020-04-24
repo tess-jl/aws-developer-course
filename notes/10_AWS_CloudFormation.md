@@ -59,3 +59,16 @@ cloudformation Designer for viz
 -can use the price estimation tool 
 -create stack 
 -most important tab in stack console is the template 
+
+### Update and Delete Stack Hands On 
+-remember that have to provide an entirely new cloudformation template to actually update an existing one 
+-using 1-ec2-with-sg-eip.yml 
+
+-at stack --> action --> update stack 
+-cannot change name of already-created cloudFormation template!
+
+-check replacement true column--> code handles infastructure and implementation of making the infastructure! 
+-all aspects of the template are re-added and previous resources deleted
+-resources are prefixed by stack name
+
+-if want to delete go to actions --> delete --> resources deleted in the right order too! 
