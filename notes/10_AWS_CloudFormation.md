@@ -194,3 +194,6 @@ see "UPDATE_FAILED" error message that tells us exactly why and then update roll
 -therefore CloudFormation is quite safe
 
 -cannot update a stack once it has failed in creation (via update, etc.)
+
+Review
+-templates need to be uploaded in S3 before being used in CloudFormation 
