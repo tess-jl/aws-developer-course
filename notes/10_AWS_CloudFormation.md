@@ -130,6 +130,17 @@ How do we reference a parameter?
 e.g. AWS::AccountId, AWS::Region, etc.
 
 ### CloudFormation Mapping 
+**Mappings** = fixed variables within template, need to be hard coded
+-good for differentiating between envs (dev vs prod), regions, AMI types, etc. 
+-all under a Mappings section in YMAL 
 
+when will we use mappings vs params? 
+-mappings when know all values that can be deduced from variables
+-safer control of templates
+IF values needs to be user-specific and don't know exactly what it will be in advance then use params 
 
+**Fn::FindInMap** aka **!FindInMap** 
+-needs **[ MapName, TopLevelKey, SecondLevelKey ]**
+-returns named value from a specific key 
 
+### CloudFormation Outputs
