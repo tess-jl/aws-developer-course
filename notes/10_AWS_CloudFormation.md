@@ -171,3 +171,17 @@ when using the condition:
 -in Resources, e.g.--> Condition: [nameOfCondition] --> only created resource if condition is true
 
 ### CloudFormation Intrinsic Functions
+Must know for exam: 
+* **!Ref** --> returns val of param, returns ID of resource
+* **!GetAtt** --> returns list of attributes of a resource
+* **!FindInMap** --> returns named value from a specific key (need to specify MapName, TopLevelKey and SecondLevelKey)
+* **!ImportValue** --> returns value exported from another template (need to give it name)
+* **!Join** --> returns joined values (need to give delimiter name and comma-delimited list of values as args)
+* **!Sub** --> aka Substitue --> allows to subsitute vars within strings, customize templates --> returns subsituted value (string must contain ${VarName} syntax for subsitution)
+* **!Equals**
+* **!And**
+* **!If**
+* **!Not**
+* **!Or** 
+
+### CloudFormation Rollbacks
