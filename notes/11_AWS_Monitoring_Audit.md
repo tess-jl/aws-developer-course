@@ -56,3 +56,21 @@ Hands On
 
 detailed monitoring--> EC2 console--> ASGs --> monitoring tab --> can "Enable Group Metrics Collection"
 --> click on instance --> monitoring tab --> "Enable Detailed Monitoring" 
+
+### CloudWatch Alarms 
+**alarms** = used to trigger notifs for any metric 
+-can be attached to ASG, EC2 actions, SNS notifs
+-customizable 
+-states: 
+* **OK** --> no alarm
+* **INSUFFICIENT_DATA** --> unsure if OK or ALARM 
+* **ALARM** --> alarm in place, actions happening/happened
+-period of alarm (see Alarm preview when creating alarm) --> time (s) to evaluate metric
+-high res custom metrics --> either 10 or 30 s
+
+Hands On 
+-CloudWatch dash --> Alarms portion
+-e.g. alarm for scaling down ASG, when look at scaling policy we see how the alarm is related 
+-when creating alarm can control if email is sent
+
+### CloudWatch Logs 
