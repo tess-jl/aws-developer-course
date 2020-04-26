@@ -196,3 +196,33 @@ running a sample app:
 -distributed traces = very cool 
 
 ## X-ray additional exam tips 
+* **X-ray daemon / agent has a config to send traces not only within account but alsocross account** --> need to make sure IAM perms allow agent to assume role --> this allows to have central account for all app tracing 
+
+**segments** = sent by each app/service to x-ray, all segments together = end-to-end **trace**
+
+**sampling** = way to decrease the amount of req to X-ray, reduces cost 
+
+**annotations** = key/value pairs that can add to traces/segments used to index traces and used to do filtering
+
+**metadata** = key/value pairs, NOT indexed, NOT used for searching 
+
+Code must be instrumented to use X-ray SDK 
+-(Interceptors, handlers, http clients)
+-IAM role must be correct to send traces to x-ray 
+
+X-ray on EC2 OR on-premise
+-both need to be set up to run, either by IAM roles (EC2), some AWS creds on machine (on-premise)
+
+X-ray on Lambda 
+-make sure X-ray integration is checked on Lambda service (lambda itself runs the daemon)
+-IAM role is a Lambda role 
+
+X-ray on EB 
+-set config on EB console 
+-OR use.ebextensions/xray-daemon.config and have IAM role 
+
+X-ray on ECS/EKS/Fargate(Docker)
+-create a Docker image that runs on Daemon/use official X-Ray Docker Image 
+-make sure port mappings and network settings are correct, IAM roles there
+
+
