@@ -109,3 +109,16 @@ Hands On
 -can see these logs in the cloudwatch logs console 
 
 ### CloudWatch Events
+-can define an event aka a scheduled **cron job**
+-can also have an **event pattern** --> rules to react to a service doing something (e.g. code pipeline state changes)
+-can do **triggers to Lambda functions, SQS/SNS/Kinesis messages**
+-events creates a small JSON doc as output to give info about the change
+
+Hands On 
+cloudwatch --> events --> **rules**
+-targets = most things we would want 
+-event pattern --> list of services --> choose code pipeline --> anytime code pipeline fails --> add target SNS with Alarm triggered and create rule 
+
+-some rules auto created
+
+### X-Ray Overview
