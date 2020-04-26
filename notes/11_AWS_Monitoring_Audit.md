@@ -242,5 +242,20 @@ Hands On
 -can look at **event history** and query for anything, e.g. deletes 
 
 ### CloudTrail vs. CloudWatch vs. X-Ray 
+**cloudTrail** = to audit API calls made by users/services/AWS console 
+* useful for when detecting unauthorized calls or root cause of changes 
+
+**CloudWatch**
+* metrics for monitoring
+* logs for storing app logs 
+* alarms for sending notifs in case of unexpected metrics 
+
+**X-ray** 
+-auto trace analysis and central service map viz
+-great for debugging, latency, errors, fault analysis 
+-req tracking accross distributed systems 
+-more granular than the other services
+
+
 
 
