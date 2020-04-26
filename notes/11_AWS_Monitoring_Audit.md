@@ -225,4 +225,22 @@ X-ray on ECS/EKS/Fargate(Docker)
 -create a Docker image that runs on Daemon/use official X-Ray Docker Image 
 -make sure port mappings and network settings are correct, IAM roles there
 
+### CloudTrail 
+-way to observe API calls 
+-enabled by default 
+-gives history of events/API calls within account by: 
+* console
+* SDK 
+* CLI 
+* AWS services 
+
+-can put logs from Cloudtrail into CloudWatch logs
+-**if resource is deleted in AWS, look to cloudtrail first**
+
+Hands On 
+-can view events in AWS account
+-can look at **event history** and query for anything, e.g. deletes 
+
+### CloudTrail vs. CloudWatch vs. X-Ray 
+
 
