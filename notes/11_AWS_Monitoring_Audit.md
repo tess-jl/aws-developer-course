@@ -122,3 +122,56 @@ cloudwatch --> events --> **rules**
 -some rules auto created
 
 ### X-Ray Overview
+-for debugging in production, traditional way is arduous, hard to centralize 
+-**X-ray** = visual analysis of our apps 
+
+-trace exactly what happens when we talk to one service on the cloud 
+
+-can identify bottlenecks
+-understand dependencies 
+-pinpoint service issues 
+-review req behavior 
+-find errors and expections 
+-where throttled
+-meeting time SLA 
+-identify users impacted 
+
+compatibility 
+-Lambda
+-EB
+-ECS
+-ELB 
+-API Gateway 
+-EC2 (or any app server, even on-premis)
+
+How does it work? 
+-leverages **tracing** = end to end way to follow a req
+-each component dealing with req adds own **trace**
+* each trace made of **segments** --> each segment made of **subsegments** 
+* **annotations** can be added to traces to provide extra info 
+-together --> able to trace every req or sample req
+
+How to enable? 
+-(e.g. Java, Python, Go, Node.js, .NET) **code MUST import x-ray SDK** (a tiny bit of code modification)
+-SDK will then capture: 
+* calls to AWS
+* HTTP/HTTPS req 
+* DB calls (mySQL, PostgresSQL, DynamoDB)
+* Queue calls (SQS)
+-Install X-ray daemon or enable X-ray AWS integration 
+* **x-ray daemon** = little program that works as low level UDP packet interceptor, sends batch every 1s to x-ray 
+* if using Lambda or other AWS services that already run the X-Ray daemon for me 
+* **each app must have IAM rights to write data to x-ray** 
+
+--> if x-ray works locally but not on EC2--> b/c of IAM rights for x-ray daemon
+
+What does it do?
+-collects data from services 
+-service map is computed from all the segments and traces 
+-visually-oriented
+
+Troubleshooting
+-X-ray not working on EC2 --> IAM role and/or need to have instance running X-ray daemon 
+-X-ray not working on Lambda --> ensure it has IAM execution role with the proper policy (**AWAX-RayWriteOnlyAccess**) AND that X-ray vode is imported in code 
+
+### X-Ray Hands On 
