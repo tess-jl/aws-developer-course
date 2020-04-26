@@ -255,7 +255,3 @@ Hands On
 -great for debugging, latency, errors, fault analysis 
 -req tracking accross distributed systems 
 -more granular than the other services
-
-
-
-
