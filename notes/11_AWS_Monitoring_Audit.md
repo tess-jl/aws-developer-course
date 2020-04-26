@@ -175,3 +175,24 @@ Troubleshooting
 -X-ray not working on Lambda --> ensure it has IAM execution role with the proper policy (**AWAX-RayWriteOnlyAccess**) AND that X-ray vode is imported in code 
 
 ### X-Ray Hands On 
+x-ray console --> US east N virgina region
+-X-ray SDK --> does not send directly to X-ray service INSTEAD it sends to daemon, which uploads in batches (avoids throttling)
+
+daemon can be enabled on: 
+* EC2 (linux)
+* EC2 (windows)
+* ECS
+* EB (via **ebextensions/xray-daemon.config**)
+* Lambda
+
+running a sample app: 
+-via cloudformation template --> with roles, policies, EB app, etc. 
+-many resources created
+-go to outputs --> EB URL --> go to URL in browser --> see welcome to X-ray app, each min there is a duplicate sign up, should trigger an error 
+- **service map** in x-ray computed --> see visual of what is happening
+-click on one thing and get extra viz 
+-can use console to drill down into traces--> click on trace to see how FE makes req --> response 400 from dynamoDB, etc. 
+
+-distributed traces = very cool 
+
+## X-ray additional exam tips 
