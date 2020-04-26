@@ -74,3 +74,38 @@ Hands On
 -when creating alarm can control if email is sent
 
 ### CloudWatch Logs 
+-apps can send logs to CloudWatch via **SDK**
+-collections from: 
+* EB (from app)
+* ECS (from containers)
+* Lambda (from function logs)
+* VPC flow logs (VPC-specific)
+* API Gateway
+* CloudTrail based on filter
+* CloudWatch Log Agents (on ANY machines, EC2, on-premise..)
+* Route 53 (DNS queries)
+-**logs can go**:
+* batch exporter to S3 (archival)
+* stream to ElasticSearch cluster for further analytics (opensource tech)
+
+Logs
+-can use filter expressions 
+-**storage architecture** 
+* **log groups** = arbitrary name, representing app usually 
+* **Log streams** = instances in app, log files, containers 
+-can define log expiration policies
+-can use CLI to watch logs 
+-**need to make sure IAM perms correct to send logs!**
+-**security - encyrption of logs using KMS at Group level!**
+
+Hands On 
+-Cloudwatch--> logs --> log from codebuild 
+-can click on Expire Events After value in column to set retention policy for a Log Group 
+
+-in log group can see log stream --> can even search/filter to see specific logs 
+
+-EB --> can **set Health Event Streaming to cloudWatch logs** is important 
+-creates cloudwatch log groups for our application 
+-can see these logs in the cloudwatch logs console 
+
+### CloudWatch Events
