@@ -136,3 +136,31 @@ Hands On
 send message to FIFO queue
 
 ### SQS Advanced
+**extended client** = JAVA library for sending larger messages (>256KB)
+* leverages S3 on top of SQS queue --> send large message to bucket 
+* producer will send a small metadata message to queue instead
+* using library, consumer receives metadata and then consumer gets message from S3
+
+SECURITY 
+-encryption in flight using HTTPS endpoint 
+-can enable SSE using KMS
+* can set own **customer master key (CMK)** to use 
+* can set data key reuse period (1min-24hr, less reuse means KMS API used a lot, pay more VS. more reuse, opposite, slightly less security) --> default = 5min 
+* **SSE only encrypts the body, not metadata** 
+-IAM policy must allow usage of SQS
+**IAM gives perms for all API calls in account** 
+-**SQS queue access policy** = finer grain control, can use IP address to decide who can access
+-**no VPC endpoint** therefore must have wifi for accessing SQS
+
+APIs to know for exam
+* CreateQueue
+* DeleteQueue
+* PurgeQueue (to delete all messages in queue, takes up to a min)
+* SendMessage
+* ReceiveMessage
+* DeleteMessage
+* ChangeMessageVisibility (change timeout)
+
+* Batch processing options for: SendMessage, DeleteMessage, ChangeMessageVisibility --> cheaper 
+
+### SNS 
