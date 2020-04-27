@@ -97,3 +97,20 @@ configure queue action --> redrive policy set
 -see the redrive policy tab for policy 
 
 ### SQS CLI Practice
+CLI can take many commands relating to SQS, many APIs that can be called 
+-**aws sqs list-queues** --> will return nothing if CLI not configured with same region as SQS queue 
+fix: **aws sqs list-queues --region [regionName]** 
+
+--region allows for API calls against another region 
+
+```
+aws sqs [command] help
+```
+for any docs on command
+
+to get messages: receive-message command for receive message API 
+a lot of args BUT can see message in CLI! 
+-message is in JSON 
+
+-can see that console matches up with what is happening, fully integrated 
+-to delete message need to provide receipt handle value we get from message JSON as an arg of the delete-message command
