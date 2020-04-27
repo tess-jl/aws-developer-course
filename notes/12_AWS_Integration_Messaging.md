@@ -328,3 +328,29 @@ Firehose
 -pay for the amount of data through hose 
 
 ### SQS vs. SNS vs. Kinesis 
+-common Q = which is best to use when? 
+
+SQS
+-consumers **pull data**
+-data deleted right after consumption 
+-can have many workers as we want 
+-auto scale throughput
+-no ordering gaurantee (unless FIFO)
+-each message can be delayed
+
+SNS
+-pub/sub paradigm 
+-**push data** to many subs, up to 10 million 
+-data not perisisted
+-up to 10,000 topics
+-auto scale throughput 
+-integrates well with SQS via fan out pattern 
+
+Kinesis 
+-consumers **pull data**
+-as many consumers as want, but only 1/shard 
+-can reprocess data if want 
+-RT, big data analytics and ETL = keywords
+-ordering at the shard level 
+-data expires after X days 
+-must provision throughput! 
