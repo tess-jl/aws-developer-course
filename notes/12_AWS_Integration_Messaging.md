@@ -70,10 +70,23 @@ if no processing within visibility timeout--> message back to queue and other co
 * **DLQ** must be created first and then designated as such
 * in DLQ need to make sure messages are processed before they expire 
 
-**long polling** = when consumer req messages from queue it can optionally wait for some if none are available
+**long polling aka receive message wait time** = when consumer req messages from queue it can optionally wait for some if none are available
 * GREAT b/c **decreases number of API call made to SQS and increase efficiency and latency of app**
 * wait time = 1-20s, 20s=better
 * long polling > short polling
 * enabled at queue level as default OR at API level via **WaitTimeSeconds API**
 
 ### SQS Hands On 
+SQS --> get started --> standard queue 
+* unlimited throughput 
+* different orders of messages etc. 
+
+see SSE settings for encryption using KMS
+--> create queue 
+-get URL, ARN, Name, etc. etc. 
+
+queue actions dropdown has many options
+
+righ click--> send message--> can delay up to 15 mins --> send --> now UI has message! --> view/delete message, see receive count increment 
+
+### DLQ Hands On for redrive policy 
