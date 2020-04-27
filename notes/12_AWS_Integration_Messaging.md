@@ -90,3 +90,10 @@ queue actions dropdown has many options
 righ click--> send message--> can delay up to 15 mins --> send --> now UI has message! --> view/delete message, see receive count increment 
 
 ### DLQ Hands On for redrive policy 
+-might want to keep messages longer to make sure they're processed 
+-need to set a redrive policy on 1st queue to talk and send messages to the DLQ we just created 
+
+configure queue action --> redrive policy set
+-see the redrive policy tab for policy 
+
+### SQS CLI Practice
