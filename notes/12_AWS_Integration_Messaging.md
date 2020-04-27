@@ -164,3 +164,45 @@ APIs to know for exam
 * Batch processing options for: SendMessage, DeleteMessage, ChangeMessageVisibility --> cheaper 
 
 ### SNS 
+-if want to send message to many consumers
+-can do direct integration but it's painful 
+-alternative = **pub/sub** 
+* subscribers get data from SNS topic (one buying service sends one message 1x to SNS topic and this topic sends it to all subscribers)
+
+**event-producer** = what sends 1 message to SNS topic 
+**event-receivers** aka subscriptions = what gets the event, as many of these as we want 
+* each subscriber will be able to get all messages (filter messages too)
+* up to 10,000,000 subscriptions/topic 
+* 100,000 topics limit 
+**subscribers** = many things, an SQS, an HTTP/HTTPS endpoint (with # delivery retires specified), Lambda, emails, SMS messages, mobile notifcations
+
+Why use this? 
+-clean architecture that intregrates with so many services 
+* CloudWatch (alarms)
+* ASG notifications 
+* S3 (bucket events)
+* CloudFormation (upon state changes)
+* etc...
+
+How to publish to SNS? 
+**topic publish** (within AWS server using SDK) 
+* create topic 
+* create at least 1 subscription 
+* publish to the topic 
+**direct publish** (for mobile apps SDK)
+* create platform app 
+* create platform endpoint
+* publish to endpoint 
+* works with all notif deliveries for mobile
+
+**Fan out** = common pattern with SNS and SQS
+-want to push data once in SNS to topic and have it fan out to SQS queues
+* fully decoupled
+* no data loss 
+* ability to add receivers later 
+* SQS allows for delayed processing 
+* SNS allows for retries of work 
+* many workers on one queue or one worker on the other queue 
+--> very popular exam question 
+
+### SNS Hands On
