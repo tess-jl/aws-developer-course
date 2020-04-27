@@ -248,4 +248,26 @@ Shards
 Put Records
 **put records** = producer-side via Kinesis API 
 -way to send data to kinesis
--need to send data via **PutRecord API**  in **partition key** that gets hashed 
+-need to send data via **PutRecord API**  in **partition key** that gets hashed --> used to determine shard Id (way to route data to specific shard)
+* **same key always goes to the same partition** to help ordering for specific key 
+* data only goes to one shard at a time --> when data at shard it gets a **sequence number** (number always increasing)
+* **choose partition key that is highly distributed to help prevent a hot partition (when all data goes to same shard and shard is overwhlemed)** (e.g. many users but we can give a user_id as a partition key because it's distributed)
+* can use batching with PutRecords to reduce cost and increase throughput
+* if get exception called **ProvisionedThroughputExceeded** --> means over the limits, use retires, exponential backoff 
+
+**ProvisionedThroughputExceeded** 
+-get this exception when sending more data than shard can handle (exceeding MS/s or TPS for any shard)
+-need to make sure don't have a hot shard(where partition key is bad)
+-SOLUTION: 
+* retries with backoff
+* increase number of shards
+* ensure parition key good 
+
+Consumers 
+-can use a normal consumer (CLI, SDK, etc.)
+-OR can use **Kinesis Client Library (KCL)** --> Java, Node, Python, Ruby, .NET 
+* uses DynamoDB to checkpoint offsets, track other workers and shre the work amoung shards
+ 
+--> way for consumer to consume from kinesis efficiently 
+
+### Kinesis Hands On 
