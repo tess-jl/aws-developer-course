@@ -271,3 +271,22 @@ Consumers
 --> way for consumer to consume from kinesis efficiently 
 
 ### Kinesis Hands On 
+-always have to pay for it 
+
+-create stream --> ARN, etc. 
+-one shard open 
+-can enable SSE 
+-can retain data for 24hr (or more with more money)
+-can have shard-level metrics 
+
+-in CLI aws kinesis help to show commands 
+```
+aws kinesis list-streams
+```
+see the list of streams 
+-can see shard in CLI 
+
+-when put-record --> returns ShardIf and SequenceNumber
+-to retreive records --> get-shard-iterator and then get-records
+-use the iterator to get the records! 
+-data is **base-64-encoded** so to deal with it can do a base 64 decode freeware or programmatically 
