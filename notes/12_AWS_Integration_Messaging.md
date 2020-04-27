@@ -206,3 +206,46 @@ How to publish to SNS?
 --> very popular exam question 
 
 ### SNS Hands On
+
+### Kinesis Overview 
+**kinesis** = management alternative to Apache Kafka --> big data streaming service that allows for collection of: 
+* app logs 
+* app metrics
+* IoT 
+* clickstreams 
+--> anything RT big data 
+-compatible with many streaming processing frameworks (Spark, NiFi, etc...) --> ways to preform computations in RT on data that arrives via stream 
+-**kinesis data auto replicated to 3 AZs** 
+
+**kinesis streams** = low latency streaming ingest at scale 
+**kinesis analytics** = to preform RT analytics on streams using SQL 
+**kinesis firehose** = to load streams into S3, Redshift, ElasticSearch from AWS 
+
+streams = main focus on exam 
+kinesis = made up of streams 
+-get streams from data producers (click streams, IoT devices, Metrics and logs) 
+-kinesis processes the big data in RT with analytics --> computations 
+-when done, computations moved via Kinesis firehose to a storage location (S3 bucket, Redshift, etc.)
+--> overall allows for quick onboarding of data en masse, analyze, and put into storage
+
+**streams** 
+* divided into ordered **shards aka partitions** (one little queue)
+* to scale up stream add shards 
+* **data retention is default 1 day (up to 7)** for shards
+* **data can be reprocessed/replayed (vs. SQS once data consumed it's gone)**
+* **multiple apps can consume the same stream** 
+* RT processing with scale of throughput b/c can add shards! 
+* once data inserted in Kinesis can't be deleted (aka **immutability**)
+
+Shards
+-one stream = many diff shards 
+-1 **shard** = 1MB/s or 1000 messages/s at write and 2MB for read
+-**provisioned**, so will pay for how many shards I have provisioned 
+-can **batch** messages and calls, therefore can efficiently push into kinesis this way 
+-**reshard/merge** = number of shards changing (increase = reshard, decrease = merge)
+-**records are ordered/shard**
+
+Put Records
+**put records** = producer-side via Kinesis API 
+-way to send data to kinesis
+-need to send data via **PutRecord API**  in **partition key** that gets hashed 
