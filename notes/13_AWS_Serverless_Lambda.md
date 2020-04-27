@@ -69,8 +69,23 @@ Pricing
 -generally very cheap, therefore popular
 
 ### Lambda Hands On 1
+-no charge when code not running
+-integrate with many different backends 
+-more we send events the more we have to pay (cost linked to invocations and how long invocations last)
 
+to create function --> 3 options:
+1. Scratch 
+1. blueprint 
+1. browse app repository 
+-doing hello world python --> choose an execution role (IAM role) --> select basic role for lambda --> create function 
 
+can test function --> configure test event --> test --> result:succeeded shows logs with outputs from function, duration of function, billing, resources configed, memory used, etc. 
+-can also view logs in CloudWatch log group
+
+-also provides a UI with viz of services
+-can also click link to IAM role for this lambda function
+
+### Lambda Configuration
 
 
 
