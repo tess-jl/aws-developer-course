@@ -114,3 +114,25 @@ a lot of args BUT can see message in CLI!
 
 -can see that console matches up with what is happening, fully integrated 
 -to delete message need to provide receipt handle value we get from message JSON as an arg of the delete-message command
+
+### FIFO Queues
+-new offering, not in all regions 
+-**name must be with .fifo extension** 
+-**lower-throughput** but increased liklihood of ordered messages! therefore customer gets all messages in order
+* throughput **either 3,000/s with batching or 300/s**
+-messages sent 1x only 
+-no per message delay (only per-queue delay)
+
+Common exam Qs
+**deduplication** = not sending message twice 
+* each message to FIFO has **MessageDeduplicationId** field (attribute)
+* if message sent twice then deduplication WILL happen on it --> interval = 5 min, if see the duplicate in this time then FIFO will delete one of the messages
+* **content-based duplication** = MessageDeduplicationId is generated as the **SHA-256** (hashing algorithm) of the body (not attributes)
+
+**sequencing** = to make sure perfect FIFO maintained need to have a **MessageGroupId**
+* messages with diff group ID might be received out of order 
+
+Hands On 
+send message to FIFO queue
+
+### SQS Advanced
