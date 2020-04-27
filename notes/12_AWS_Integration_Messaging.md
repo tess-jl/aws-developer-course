@@ -290,3 +290,16 @@ see the list of streams
 -to retreive records --> get-shard-iterator and then get-records
 -use the iterator to get the records! 
 -data is **base-64-encoded** so to deal with it can do a base 64 decode freeware or programmatically 
+
+### Kinesis KCL 
+-kinesis client library = Java library that helps read records from streams with distributed apps sharing the read workload (shared workload between diff instances of app) 
+**Rule: each shard is to be read only by one KCL instance**
+* therefore, 4 shards = max 4 KCL instances
+* **progress of KCL app is checkpointed into DynamoDB table (need IAM access to write to)**
+-KCL can run on: 
+* EC2
+* EB
+* On-premise app 
+**records read in order of a shard but across shards we don't know order** 
+
+**shard-splitting** = adding more shards --> therefore can re-scale the KCL apps and scale up the number of KCLs to match the number of shards
