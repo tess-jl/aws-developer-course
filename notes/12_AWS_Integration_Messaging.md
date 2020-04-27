@@ -27,19 +27,20 @@ SQS = oldest offering of AWS
 
 **STANDARD QUEUE**
 -fully managed 
--scales from 1 message to 10,000 messages/s --> auto 
+-scales from 1 message/s to 10,000 messages/s --> auto 
 -message is data (like JSON)
--default retention = 4 days, set up max= 14 days 
+-**default retention = 4 days, set up max= 14 days**
 -no limit of how many messages can be in queue
--low latency (<10ms)
+-low latency (<10ms) 
 -**horizontal scaling** for # of consumers
 -**can have duplicate messages or out of order messages, rare tho (b/c super high throughput)**
 -**max of 256KB/message**
 
-**DELAY QUEUE**
--consumers don't see messages right away, **up to 15 min**
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html
+
+**DELAY QUEUE (a standard queue when you add a Delay seconds parameter)**
 -default = 0s (producer sends message to queue message available right away)
--**can set new default at queue level** 
+-**can set new default at queue level** --> can make it so consumers don't see messages right away, **up to 15 min**
 -can override default with **DelaySeconds parameter**
 
 what do messages look like? 
@@ -69,6 +70,7 @@ if no processing within visibility timeout--> message back to queue and other co
 * after threshold exceeded (message is faulty) --> goes to a Dead Letter Queue
 * **DLQ** must be created first and then designated as such
 * in DLQ need to make sure messages are processed before they expire 
+
 
 **long polling aka receive message wait time** = when consumer req messages from queue it can optionally wait for some if none are available
 * GREAT b/c **decreases number of API call made to SQS and increase efficiency and latency of app**
@@ -149,7 +151,7 @@ SECURITY
 * **SSE only encrypts the body, not metadata** 
 -IAM policy must allow usage of SQS
 **IAM gives perms for all API calls in account** 
--**SQS queue access policy** = finer grain control, can use IP address to decide who can access
+-**SQS queue access policy** = finer grain control, can use IP address to decide who can access --> can also control the time that the requests come in (e.g. don't want to allow access in middle of the night)
 -**no VPC endpoint** therefore must have wifi for accessing SQS
 
 APIs to know for exam
@@ -160,6 +162,7 @@ APIs to know for exam
 * ReceiveMessage
 * DeleteMessage
 * ChangeMessageVisibility (change timeout)
+* WaitTimeSeconds (long polling)
 
 * Batch processing options for: SendMessage, DeleteMessage, ChangeMessageVisibility --> cheaper 
 
@@ -192,7 +195,7 @@ How to publish to SNS?
 **direct publish** (for mobile apps SDK)
 * create platform app 
 * create platform endpoint
-* publish to endpoint 
+* publish to external endpoint 
 * works with all notif deliveries for mobile
 
 **Fan out** = common pattern with SNS and SQS
@@ -229,6 +232,7 @@ kinesis = made up of streams
 --> overall allows for quick onboarding of data en masse, analyze, and put into storage
 
 **streams** 
+-each stream like a little queue
 * divided into ordered **shards aka partitions** (one little queue)
 * to scale up stream add shards 
 * **data retention is default 1 day (up to 7)** for shards
@@ -266,7 +270,7 @@ Put Records
 Consumers 
 -can use a normal consumer (CLI, SDK, etc.)
 -OR can use **Kinesis Client Library (KCL)** --> Java, Node, Python, Ruby, .NET 
-* uses DynamoDB to checkpoint offsets, track other workers and shre the work amoung shards
+* uses DynamoDB to checkpoint offsets, track other workers and share the work amoung shards
  
 --> way for consumer to consume from kinesis efficiently 
 
@@ -304,6 +308,8 @@ see the list of streams
 
 **shard-splitting** = adding more shards --> therefore can re-scale the KCL apps and scale up the number of KCLs to match the number of shards
 
+In KCL, you can have a maximum of EC2 instances running in parallel equal to the number of shards in your Kinesis Stream.
+
 ### Kinesis Security, Analytics, Firehose
 Security
 -need IAM for access/auth 
@@ -322,7 +328,7 @@ Analytics
 Firehose
 -fully-managed
 -near RT (1 min latency)
--used for loading data into Redshit/S2/Splunk/ElasticSearch
+-used for loading data into Redshit/S3/Splunk/ElasticSearch
 -auto scaling 
 -support for data formats (pay for conversion)
 -pay for the amount of data through hose 
@@ -339,6 +345,7 @@ SQS
 -each message can be delayed
 
 SNS
+-app to app (sync)
 -pub/sub paradigm 
 -**push data** to many subs, up to 10 million 
 -data not perisisted
@@ -354,3 +361,17 @@ Kinesis
 -ordering at the shard level 
 -data expires after X days 
 -must provision throughput! 
+
+REVIEW
+-general messaging models --> messaging common in apps 
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html
+-delay seconds is the queue "timeout" (hidden when it's first added to queue) but visibility timeout (hidden only after it is consumed by consumer)
+-FIFO queues available in all regions yet? 
+-SQS use case --> only need one label/product purchased --> products go in queue --> consumer prints mail tags for packages but only one label/package needed
+
+-topic publish vs direct publish 
+-fan out model --> workers? scalable 
+
+-ways to consume kinesis stream 
+uses DynamoDB to checkpoint offsets, track other workers and share the work amoung shards
+-clickstream
