@@ -6,7 +6,7 @@
 -SO we need infastructure to be code **infastructure as code**
 
 **CloudFormation** = declarative way to outlining AWS infastructure for any resources 
--e.g. create a template with security group, 2 EĆ2s, LB, etc. 
+-e.g. create a template with security group, 2 EC2s, LB, etc. 
 -CloudFormation creates all things with right configs
 
 BENEFITS
@@ -31,8 +31,8 @@ Deploying templates:
 
 Building Blocks
 **Template components** 
-1. **Resources** = aws resources declared in template (MANDATORY), e.g. EC2s, LBS, etc
-1. **Parametrs** = dynamic inputs for template 
+1. **Resources** = aws resources declared in template (MANDATORY), e.g. EC2s, LBS, etc --> each one with a type field and a properties field
+1. **Parameters** = dynamic inputs for template --> pseudoparams = built-in properties
 1. **Mappings** = static vars for template 
 1. **Outputs** = references to what has been created in template
 1. **Conditionals** = if statements that control what resources are created under certain conditions 
@@ -99,7 +99,7 @@ documentation online at AWS
 -all of the code goes under the YAML block **Resources**
 
 FAQs
-can create dynamic amount of resource? No- everything has to be declared, can't preform code generatation 
+can create dynamic amount of resource? No- everything has to be declared, **can't preform code generatation**
 
 is every AWS service support? Almost, only a few that are not (work around AWS Lambda Custom Resources)
 
@@ -144,13 +144,15 @@ IF values needs to be user-specific and don't know exactly what it will be in ad
 -returns named value from a specific key 
 
 ### CloudFormation Outputs
--declares optional **outputs** values that can be imported into other stacks (if exported first)
+-declares optional **outputs** values that can be imported into other stacks 
 -for linking templates, therefore collaboration across stacks
 e.g. network CloudFormation template and output vars are VPC ID and subnets ID
 **CANNOT delete CloudFormation Stack if outputs are referenced by another stack!**
 
 **Outputs:** in YAML
--Export block is optional! for other stacks to import --> via **FN::ImportValue** or **!ImportValue**
+-this block is where key/values are for exporting
+-Export block is optional in a template! 
+-must export for other stacks to import --> via **FN::ImportValue** or **!ImportValue**
 CROSS STACK REFERENCE
 
 ### CloudFormation Conditions 
@@ -173,7 +175,7 @@ when using the condition:
 ### CloudFormation Intrinsic Functions
 Must know for exam: 
 * **!Ref** --> returns val of param, returns ID of resource
-* **!GetAtt** --> returns list of attributes of a resource
+* **!GetAtt** --> returns list of attributes of a resource, things to know about a resource, properties kinda but fixed, built-in
 * **!FindInMap** --> returns named value from a specific key (need to specify MapName, TopLevelKey and SecondLevelKey)
 * **!ImportValue** --> returns value exported from another template (need to give it name)
 * **!Join** --> returns joined values (need to give delimiter name and comma-delimited list of values as args)
@@ -197,3 +199,6 @@ see "UPDATE_FAILED" error message that tells us exactly why and then update roll
 
 Review
 -templates need to be uploaded in S3 before being used in CloudFormation 
+-how does CloudFormation relate to CICD? 
+-know all pseudo params
+-can create dynamic amount of resource? No- everything has to be declared, **can't preform code generatation** --> what does this mean? only making things for creation of stack, not gonna go back and check stack tomorrow

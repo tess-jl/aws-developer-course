@@ -52,7 +52,7 @@ Custom Metrics
 Hands On 
 -CloudWatch console--> metrics --> data vis
 -**widget** --> can name graph, can share it, add to dash 
--should know basic EC2, basic EBS
+-should know basic EC2, basic EB
 
 detailed monitoring--> EC2 console--> ASGs --> monitoring tab --> can "Enable Group Metrics Collection"
 --> click on instance --> monitoring tab --> "Enable Detailed Monitoring" 
@@ -65,7 +65,7 @@ detailed monitoring--> EC2 console--> ASGs --> monitoring tab --> can "Enable Gr
 * **OK** --> no alarm
 * **INSUFFICIENT_DATA** --> unsure if OK or ALARM 
 * **ALARM** --> alarm in place, actions happening/happened
--period of alarm (see Alarm preview when creating alarm) --> time (s) to evaluate metric
+-period of alarm = how often status is checked (see Alarm preview when creating alarm) --> time (s) to evaluate metric
 -high res custom metrics --> either 10 or 30 s
 
 Hands On 
@@ -142,7 +142,7 @@ compatibility
 -ECS
 -ELB 
 -API Gateway 
--EC2 (or any app server, even on-premis)
+-EC2 (or any app server, even on-premise)
 
 How does it work? 
 -leverages **tracing** = end to end way to follow a req
@@ -196,13 +196,13 @@ running a sample app:
 -distributed traces = very cool 
 
 ## X-ray additional exam tips 
-* **X-ray daemon / agent has a config to send traces not only within account but alsocross account** --> need to make sure IAM perms allow agent to assume role --> this allows to have central account for all app tracing 
+* **X-ray daemon / agent has a config to send traces not only within account but also cross account** --> need to make sure IAM perms allow agent to assume role --> this allows to have central account for all app tracing 
 
 **segments** = sent by each app/service to x-ray, all segments together = end-to-end **trace**
 
 **sampling** = way to decrease the amount of req to X-ray, reduces cost 
 
-**annotations** = key/value pairs that can add to traces/segments used to index traces and used to do filtering
+**annotations** = key/value pairs that can add to traces/segments used to **index traces and used to do filtering**
 
 **metadata** = key/value pairs, NOT indexed, NOT used for searching 
 
@@ -211,6 +211,7 @@ Code must be instrumented to use X-ray SDK
 -IAM role must be correct to send traces to x-ray 
 
 X-ray on EC2 OR on-premise
+-EC2s--> Linux system must run X-Ray Daemon 
 -both need to be set up to run, either by IAM roles (EC2), some AWS creds on machine (on-premise)
 
 X-ray on Lambda 
@@ -228,7 +229,7 @@ X-ray on ECS/EKS/Fargate(Docker)
 ### CloudTrail 
 -way to observe API calls 
 -enabled by default 
--gives history of events/API calls within account by: 
+-gives history of events/API calls within account, accessed by: 
 * console
 * SDK 
 * CLI 
@@ -255,3 +256,13 @@ Hands On
 -great for debugging, latency, errors, fault analysis 
 -req tracking accross distributed systems 
 -more granular than the other services
+
+
+REVIEW
+-meeting time SLA ?
+-cloudwatch needs SDK in code? 
+-daemon agent cross account / one account for all tracing
+
+-Code must be instrumented to use X-ray SDK 
+-(Interceptors, handlers, http clients)
+-how do API calls work within the cloud? 
