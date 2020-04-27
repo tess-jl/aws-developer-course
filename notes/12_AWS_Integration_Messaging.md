@@ -303,3 +303,28 @@ see the list of streams
 **records read in order of a shard but across shards we don't know order** 
 
 **shard-splitting** = adding more shards --> therefore can re-scale the KCL apps and scale up the number of KCLs to match the number of shards
+
+### Kinesis Security, Analytics, Firehose
+Security
+-need IAM for access/auth 
+-encyption in flight using HTTPS endpoints 
+-can enable encryption at rest (i.e. SSE) using KMS
+-can encrypt/decypt client-side 
+-can enable VPC endpoints to access kinesis within VPC 
+
+Analytics
+-RT analytics using SQL
+-auto scaling 
+-managed (no servers to provision)
+-only pay for what we consume/compute (unlike streams that are provisioned)
+-can create streams out of the RT queries
+
+Firehose
+-fully-managed
+-near RT (1 min latency)
+-used for loading data into Redshit/S2/Splunk/ElasticSearch
+-auto scaling 
+-support for data formats (pay for conversion)
+-pay for the amount of data through hose 
+
+### SQS vs. SNS vs. Kinesis 
