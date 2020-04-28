@@ -168,6 +168,31 @@ x-ray --> can enable active tracing in Debugging and error handling area --> lam
 * size of env vars = 4KB max 
 
 ### Lambda Versions and Aliases
+**versions**
+* when work on function, working on the version called **$LATEST** (**mutable**)
+* when ready to publish (snapshot latest and create a new version)--> create version (e.g. v1), next publish v2, etc... --> once published = **immutable** --> these versions = code AND configuration (env vars, timeouts, etc) all immutable
+* **each version gets own Amazon Resource Name (ARN)** --> therefore able to access a specific version with ARN
+* create versions to have dev, test, prod envs 
+
+**aliases** = better for setting up diff dev, test, prod envs
+* aliases = **pointers to Lambda function versions (one or two)** --> MUTABLE!
+* can define dev, test, prod aliases and have them point to diff lambda versions 
+* users interact with the dev alias, for example 
+* great because can do a blue/green deployment using aliases and assigning weights to lambda functions versions (can test with traffic) but from user standpoint endpoints are the same (routing to actual versions is just different)
+
+Hands On 
+action--> publish --> snapshot --> version 1 --> can talk to cloudwatch logs, SQSm etc. IMMUTABLE 
+
+want want to expose to user is dev, test, prod endpints --> need to create aliases 
+-create a dev --> now can manage lifecyle of DEV 
+-create prod pointing to v1 --> but we want it to pont to v2! want to shift traffic between two versions with the weighted traffic to see how it works 
+-alias can be managed independently from versions
+
+### Lambda and External Dependencies
+
+
+
+
 
 
 
@@ -176,6 +201,6 @@ x-ray --> can enable active tracing in Debugging and error handling area --> lam
 REVIEW
 -CPU, network, RAM 
 -Image 
-
+-why aliases used instead of versions? 
 
 
