@@ -138,8 +138,23 @@ Hands On
 -can throttle test it --> see "Rate Exceeded" as the result of the test!
 
 ### Lambda Logging, Monitoring, Tracing
+-all logs go to CloudWatch 
+* need right IAM role 
+* Lambda metrics --> in CloudWatch metrics 
+* **need to make sure Lambda function has an execution role with an IAM policy that allows writes to CloudWatch** 
+-can enable integration with X-Ray 
+* can trace Lambda with X-Ray 
+* enable in Lambda config (runs daemon for us)
+* use AWS SDK in Code 
+* **ensure Lambda function has correct IAM execution role** 
 
+Hands On 
+monitoring tab in lambda --> cloudwatch metrics i.e. how many times function invoked, duration (used to set appropriate timeout!), errors, availability, throttles, DL errors, concurrent executions (used to set appropriate concurrency rules)
 
+x-ray --> can enable active tracing in Debugging and error handling area --> lambra role changed to have some x-ray permissions --> can go to IAM to check the perm 
+--> can see the service map in x-ray to look at the lambda service
+
+### Lambda Limits
 
 
 
