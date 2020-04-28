@@ -86,6 +86,39 @@ can test function --> configure test event --> test --> result:succeeded shows l
 -can also click link to IAM role for this lambda function
 
 ### Lambda Configuration
+-**timeout** for how long function will run before failing --> **default = 3s, max=15 min**
+-**env vars**
+-can allocate memory for lambda function (128M to 3G)
+-can deploy within a VPC, assign security groups 
+-IAM role must be attached to Lambda function 
+
+Hands On 
+using the Designer UI can see what the lambda funciton interacts with
+* able to add things that can trigger a lambda function (i.e. many diff services)
+
+for function code 
+-can edit inline, upload a .zip, or upload from S3
+-select the runtime (languages with version)
+
+Env vars 
+-key/value pair modularized from code 
+-allow for a plug and play 
+-can encrypt them 
+
+Tags 
+Descripton 
+Memory (more memory, more CPU, higher cost)
+Timeout (how long function expected to run)
+Network --> allows for selection of a VPC to run in --> if no VPC will have better performance --> if VPC might be slower to start, also need to select subnets with VPC
+Auditing 
+etc. 
+
+if function runs beyond timeout --> see that execution result: failed --> error message declarative as to why
+-set timeout accordingly
+
+### Lambda Concurrency, Throttling, and DLQ
+
+
 
 
 
