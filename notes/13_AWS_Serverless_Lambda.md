@@ -117,6 +117,29 @@ if function runs beyond timeout --> see that execution result: failed --> error 
 -set timeout accordingly
 
 ### Lambda Concurrency, Throttling, and DLQ
+-**concurrency** = **up to 1000 executions** at once in region --> therefore can auto scale up to this many functions running at the same time
+* can be increased through **ticket**
+* can set **reserved concurrency** at the function level (e.g. limit to 100 functions)
+* each invocation over the concurrency limit will trigger a **throttle** 
+
+Throttle behavior 
+-if function is sync --> **ThrottleError-429** 
+* if fails responsible for retrying yourself
+-if function is async --> will **auto retry**, if fails too many times will go to **Dead Letter Queue (DLQ)**
+* if fails once, auto retried twice 
+* if still doesn't work then will go to DLQ if we set it up
+* **DLQ can be either SNS topic or SQS Queue** with **correct IAM execution role**
+* original event payload will be sent to DLQ 
+* easy way to debug 
+
+Hands On 
+-debugging and error handling have been replaced by X-Ray 
+-update IAM perm
+-can throttle test it --> see "Rate Exceeded" as the result of the test!
+
+### Lambda Logging, Monitoring, Tracing
+
+
 
 
 
@@ -124,5 +147,7 @@ if function runs beyond timeout --> see that execution result: failed --> error 
 
 REVIEW
 -CPU, network, RAM 
+-Image 
+
 
 
