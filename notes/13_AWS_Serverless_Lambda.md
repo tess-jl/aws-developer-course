@@ -231,6 +231,32 @@ the /tmp space used when:
 -**temporary, not persistent** --> use S3 if want persistent data
 
 ### Lambda best practices
+**perform heavy duty work outside of function handler**
+* e.g. connect to DBs outside of function handler otherwise everytime function handler invoked will connect to DB
+-same reasoning for: 
+* not initializing AWS SDK in function handler
+* not pulling in dependecies (instead use **execution context**)
+* just put work above the actual function in the file --> done outside of function
+
+**use env vars for**
+* DB connection strings, S3 buckets, etc.
+* anything sensitive like passwords, can also be encrypted using KMS 
+(remember 4KB size max)
+
+**minimize deployment package size to its runtime necessities** 
+* break down function into several functions if too big  
+* recall lambda limits (50MB compressed, 250 not compressed)
+
+**never use recursive code**
+
+**don't put lambda in VPC unless have to** otherwise will take long to initialize 
+
+Hands On
+-see how to alter code to move heavy duty work
+
+### Lambda@Edge
+
+
 
 
 
