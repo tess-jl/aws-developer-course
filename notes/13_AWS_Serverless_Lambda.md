@@ -189,13 +189,28 @@ want want to expose to user is dev, test, prod endpints --> need to create alias
 -alias can be managed independently from versions
 
 ### Lambda and External Dependencies
+popular exam q: how do we bundle external dependencies with lambda function? 
+* if lambda func depends on external libraries (X-ray SDK, Database clients, etc.) --> **need to install packages in codebase and .zip together** 
+* done with npm i --> node_modules dir for Node.js, pip --target options for Python, etc.
+* with .zip --> upload striaght into lambda if < 50MB, otherwise S3 first and reference it
+* Native libraries OK but they need to be compiled on Amazon Linux first
 
+Hands On 
+see the require('aws-xrat-sdk-core') require('aws-sdk') and  library installation in index.js 
+npm i aws-xray-sdk
+```
+zip -r function.zip
+```
+to zip code and dependencies 
 
+--> in lambda console: author a new function, choose Node.js runtime, create a new role
+NOTE editing code inline on GUI does not allow for adding dependencies 
+--> save function (i.e. code uploaded)
+go to IAM role --> attach more policies, give read only access to S3, give write access to x-ray and of course the basic execution role for lambda (auto)
+--> the designer on lambda should reflect these permissions 
+--> ALSO make sure to test function --> works and also look at x-ray to prove that the external library worked 
 
-
-
-
-
+### Lambda and CloudFormation 
 
 
 REVIEW
