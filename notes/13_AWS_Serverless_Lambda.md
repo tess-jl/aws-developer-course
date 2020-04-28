@@ -255,9 +255,37 @@ Hands On
 -see how to alter code to move heavy duty work
 
 ### Lambda@Edge
+-CloudFront = service used to deploy onto **CDN (content delivery network)** so that functions run globally
+* what if wanted to run global AWS lambda alongside this? 
+* or what if wanted to implement request filtering before reaching app? 
 
+--> use Lambda@Edge = means don't deploy functions in a region but in every single cloudFront edge location aka globally 
+-therefore: 
+* more responsive apps 
+* don't need to manage servers
+* customize CDN content 
+* pay for what we use 
 
+Lambda changes CloudFront req and res (4 types of ways):
+1. **viewer req** = after CloudFront receives a req from viewer 
+1. **origin req** = before CloudFront forwards req to origin 
+1. **origin res** = after CloudFront recevies the res from the origin 
+1. **viewer res** = before CloudFRont forwards the res to the viewer 
 
+--> LAMBDA LIKE A MIDDLEWARE?
+
+-can also not even go to origin, Lambda itself could be the "origin" and return a res right away (i.e. generate responses to viewers without ever sending the request to the origin) --> therefore possible to run global response app with CloudFront and Lambda@Edge serverless
+
+Lambda@Edge
+* website security and privacy 
+* dynamic web app at the Edge 
+* search engine optimization (SEO)
+* intelligently route across origins and data centers
+* bot mitigation at Edge (by filtering bad req)
+* RT image transformation 
+* A/B testing 
+* user auth
+* user tracking and analytics
 
 
 
@@ -267,3 +295,14 @@ REVIEW
 -why aliases used instead of versions? 
 -done in the codeblock labeled **Code:** in template --> S3Key key has value that is the zip file and S3Bucket key has value that is the name of the bucket --> BOTH ARE PARAMS?? 
 
+--> LAMBDA LIKE A MIDDLEWARE?
+Lambda@Edge
+* website security and privacy 
+* dynamic web app at the Edge 
+* search engine optimization (SEO)
+* intelligently route across origins and data centers
+* bot mitigation at Edge (by filtering bad req)
+* RT image transformation 
+* A/B testing 
+* user auth
+* user tracking and analytics
