@@ -211,11 +211,33 @@ go to IAM role --> attach more policies, give read only access to S3, give write
 --> ALSO make sure to test function --> works and also look at x-ray to prove that the external library worked 
 
 ### Lambda and CloudFormation 
+-must store lambda .zip in S3 
+-refer to the S3 zip location in CloudFormation code (regions need to be same)
+-done in the codeblock labeled **Code:** in template --> S3Key key has value that is the zip file and S3Bucket key has value that is the name of the bucket --> BOTH ARE PARAMS?? 
+
+Hands On 
+cloudformation template with params --> Fn::GetAtt used and in the Code: subblock in properties blocl see that each key is a refrence to a param
+
+-need to create a new stack in cloudformation and upload the template --> stackname is LambdaThroughCloudFormation --> auto shows params and then enter values of params --> tick box to creat IAM role --> create stack and cloudFormation will provision lambda function for us!
+-so now can go to lambda and see the function from the S3 bucket .zip that was provisioned
+
+### Lambda /tmp directory 
+the /tmp space used when: 
+* function needs to download big file to work 
+* function **needs disk space to perform operations in some way**
+
+-max size 512MB 
+-**content remains even if the execution contect is frozen** --> provides transient cache that can be used for multiple invocations (helpful for troubleshooting)
+-**temporary, not persistent** --> use S3 if want persistent data
+
+### Lambda best practices
+
+
 
 
 REVIEW
 -CPU, network, RAM 
 -Image 
 -why aliases used instead of versions? 
-
+-done in the codeblock labeled **Code:** in template --> S3Key key has value that is the zip file and S3Bucket key has value that is the name of the bucket --> BOTH ARE PARAMS?? 
 
