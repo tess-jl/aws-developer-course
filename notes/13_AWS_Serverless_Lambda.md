@@ -155,6 +155,19 @@ x-ray --> can enable active tracing in Debugging and error handling area --> lam
 --> can see the service map in x-ray to look at the lambda service
 
 ### Lambda Limits
+**execution limits** 
+* memory allocation 128-3008 MB (64MB increments)
+* max execution time 15 min 
+* Disk capacity in the function container = 512MB(in /tmp directory, can write this much data here)
+* concurrency limit = 1000
+
+**deployment limits**
+* lambda function deployment size (compressed .zip) 50 MB max 
+* uncompressed code and dependencies= 250MB max
+* if want to go over 250MB can load files or dependency at startup and write to /tmp directory 
+* size of env vars = 4KB max 
+
+### Lambda Versions and Aliases
 
 
 
