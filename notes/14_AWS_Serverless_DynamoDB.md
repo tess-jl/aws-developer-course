@@ -196,9 +196,14 @@ Hands On
 
 ### DynamoDB Optimistic Concurrency 
 -often on exam 
+-feature for conditional updates or deletes --> means that can be sure when we do an update or delete on an item it hasn't already been updated/deleted before altering it 
+-therefore, DynamoDB = **optimistic locking /concurrency database** 
 
+### DynamoDB DAX
 
 
 REVIEW
 differences between MongoDB and DynamoDB
 * attribute chosen must be **string, number, binary** for LSI --> attribute of what? 
+
+
