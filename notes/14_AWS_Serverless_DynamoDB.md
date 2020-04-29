@@ -166,10 +166,39 @@ Inefficient way of querying= **Scan API**
 -Through console we can see whole range of APIs to use
 
 ### DynamoDB Indexes
+**LSI (Local Secondary Index)** = alternate range key for table, **local to the hash key** 
+* **must be defined at table creation**
+* max 5/table
+* sort key must be 1 scalar attribute 
+* attribute chosen for LSI must be **string, number, binary**
+-**no possibility to add/modify LSI**
 
+**GSI (Global Secondary Index)** = new partition key + optional sort key
+-like a whole new table that is updated based on what the base table has
+-to speed up queries on non-key attributes 
+-define a whole new index --> a new "table" the can project attributes on it 
+* partition key and sort key from original table always projected (KEYS_ONLY)
+* can also add extra attributes to project (INCLDES
+* can use all attributes from main table (ALL
+-must define RCU/WCU for the index 
+-**possibility to add/modify GSI**
 
+Indexes can cause Throttling 
+**if writes throttled on GSI then base table will be throttled** --> true if WCU on base table still good 
+* therefore, choose GSI parition key carefully
+* assign WCU capacity carefully 
+
+**LSI uses same WCU and RCU from base table, therefore no special throttling considerations**
+
+Hands On 
+-shows how Query in console can be done by Index using the LSI created when table was created
+-**power of indexes = able to query on different things!**
+
+### DynamoDB Optimistic Concurrency 
+-often on exam 
 
 
 
 REVIEW
 differences between MongoDB and DynamoDB
+* attribute chosen must be **string, number, binary** for LSI --> attribute of what? 
