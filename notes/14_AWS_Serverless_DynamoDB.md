@@ -48,3 +48,19 @@ Basics
 Exam will ask what is parition key optimal for distribution? --> think rotten banana lab
 
 ### DynamoDB Basics Hands On 
+-gives estimated cost to run table/month 
+-can encrypt data at rest 
+-create table
+-overview tab --> all the provisioned stuff, ARN 
+-items tab --> can add data to our table --> when create items and leave some fields blank they will be null, fine for any field to be null
+**only field that cannot be null (i.e. required for every row) are the partition key and the sort key** 
+-sort key as a timestamp makes things unique! 
+
+### DynamoDB WCU and RCU - Throughput
+
+
+
+
+
+REVIEW
+differences between MongoDB and DynamoDB
