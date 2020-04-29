@@ -100,6 +100,68 @@ e.g. 10 strongly consistent reads/s of 6KB each --> 20RCU b/c have to round up t
 * if RCU issue can use **DynamoDB Accelerator (DAX)**
 
 ### WCU and RCU Hands On 
+-assign these units to table --> use the capacity calculator which helps determine capacities and estimated cost for workload 
+
+**strongly consisten = 2x read capacity as eventually consistent** 
+-if enable auto scaling then can't provision the units, it just auto scales it for us 
+
+### DynamoDB Basic APIs 
+Writing Data 
+**PutItem API** = to write data to DynamoDB (create data or full replace) 
+* consumes WCU
+**UpdateItem API** = update data in DynamoDN (partial update of **attributes**)
+* can also increase **Atomic Counters** 
+**Conditional Writes API** = for conditional writes or updates, if condition not met then reject
+* helps with concurrent access to items
+* no performance impact 
+
+Deleting Data
+**DeleteItem API** = for deleting individual row
+* can also perform conditional delete
+**DeleteTable API** = deletes whole table and all its items 
+* way faster than using DeleteItem on all items 
+
+Batching Writes 
+-efficient --> saves on latency (calls done in parallel), reduced calls done against DynamoDB
+**BatchWriteItem API** = up to 25 items/call 
+* either for PutItem or DeleteItem
+* limit of 16MB of data written
+* max 400KB data/item 
+* possible for part of batch to fail --> **up to me to retry the failed items** again via exponential backoff
+
+Reading Data 
+**GetItem API** = to read based on primary key 
+* primary key = HASH (key alone) or HASH-RANGE (key and sort key)
+* eventually consistent by default 
+* **if want only certain attributes (i.e. not the full item) in the res can use ProjectionExpression** --> saves in network bandwidth 
+**BatchGetItem API** 
+* up to 100 items
+* max 16MB data 
+* saves on latency b/c reading done in parallel
+
+Querying data 
+**Query API** returns items based on: 
+* **PartitionKey** value (**must be a = operator**)
+* **SortKey** value (with optional specification with **=, <, >, <=, >=, Between, Begin**) 
+* **FilterExpression** for further filtering on **client-side**
+--> returns: 
+* up to 1MB data 
+* or number of items specified in **Limit API**
+* can do pagination on result s
+
+-can query a table, local secondary index, or global secondary index 
+
+Inefficient way of querying= **Scan API**
+-every time do scan it scans the ENTIRE table, inefficient (consumes A LOT of RCU!)
+* returns up to 1MB of data, can use pagination to keep reading
+* can use a limit or reduce the size of the result and pause to keep from consuming so many RCUs
+* faster = **parallel scans** --> multiple instances scan multiple partitions at same time, increases RCU and throughput --> faster but expensive --> limit or reduce the size of the result and pause to keep from consuming so many RCUs
+* use a **ProjectionExpression and FilterExpression APIs** alternatively 
+
+
+
+
+
 
 
 REVIEW
