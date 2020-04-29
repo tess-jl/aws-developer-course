@@ -158,7 +158,14 @@ Inefficient way of querying= **Scan API**
 * faster = **parallel scans** --> multiple instances scan multiple partitions at same time, increases RCU and throughput --> faster but expensive --> limit or reduce the size of the result and pause to keep from consuming so many RCUs
 * use a **ProjectionExpression and FilterExpression APIs** alternatively 
 
+### DynamoDB Basic APIs Hands On
+-shows how API calls are built into the UI
+-clicking on id --> does a GetItem 
+-in UI it preforms a scan under the hood
+-can change scan to query --> nice GUI for a query
+-Through console we can see whole range of APIs to use
 
+### DynamoDB Indexes
 
 
 
