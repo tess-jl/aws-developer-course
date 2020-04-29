@@ -200,10 +200,29 @@ Hands On
 -therefore, DynamoDB = **optimistic locking /concurrency database** 
 
 ### DynamoDB DAX
+**DAX (DynamoDB Accelerator)** = seamless cache for DynamoDB, no application re-write
+* apps work the same when we enable DAX except NOW **all writes go through DAX to DynamoDB cluster**
+* allows for **ms latency for cached reads and queries**--> solves the hot key problem (too many reads)
+* default = 5min TTL (how long items live in cache)
+* max 10 nodes/cache cluster
+* multi AZ (3 nodes min recommended for production)
+* secure (encryption at rest with KMS, VPC, IAM, CloudTrail...)
+--> easy, simple way to improve app performance at minimal cost 
+
+Hands On 
+DynamoDB console --> create a DAX, select cluster size, etc. etc. 
+-DAX not in free tier
+
+### DynamoDB Streams
+
+
+
 
 
 REVIEW
 differences between MongoDB and DynamoDB
 * attribute chosen must be **string, number, binary** for LSI --> attribute of what? 
+
+-TTL?
 
 
