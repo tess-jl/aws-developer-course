@@ -91,6 +91,26 @@ resources --> select endpoint --> change res for example --> integration res edi
 NOW need to action --> deploy API to actually see the changes 
 
 ### API Gateway Swagger
+**Open API fka Swagger** = common way of defining RESTful APIs using API definition as code --> written in either YAML or JSON 
+* can import OpenAPI 3.0 spec to API Gateway and it will just generate an API for us! 
+when this happens aut get: 
+* methods
+* reqs
+* integration req 
+* res
+* **AWS extensions for API Gateway** --> way to set up every option in the gateway with the extension 
+-can also export a current API from Gateway using OpenAPI spec
+-can generate SDK for our apps 
+
+Hands On
+stages --> dev--> export tab --> Swagger --> get whole YAML file that represents our API therefore our **API as code** 
+
+create new API --> example API uses a Swagger File for API called PetStore API 
+-create a stage for this --> deploy API to dev stage
+
+### API Gateway Caching
+
+
 
 
 REVIEW
