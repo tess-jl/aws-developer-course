@@ -64,7 +64,17 @@ How do we use stage variables?
 * ~ blue/green deployment with Lambda and Gateway
 
 ### API Gateway Stages and Deployment Hands On
+actions--> deploy API to stage called "dev" --> now whole API lives under the dev stage in UI 
+* NOW we have a URL we can use to invoke our stage! --> can see the res from lambda! 
+* shows how we've built and deployed a RESTful API already 
+
+-add stage var named alias with value dev 
+-can export API as a lot of things 
+-deployment hisotry
+
+### API Gateway Mappings
 
 
 REVIEW
 -can the gateway be thought of as a router? 
+-Why backslash in the URL for API Gateway deployed?? 
