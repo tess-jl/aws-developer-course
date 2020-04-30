@@ -228,7 +228,23 @@ Hands On
 * can open up the logs and look at the details of the logs!!
 
 ### DynamoDB TTL 
+**TTL (Time to Live)** = auto delete an item after an expiration date/time 
+* define a column and based on columns the items that have an expiration date will expire and get deleted
+* **free, deletions do not use WCU/RCU**
+* background task done by Dynamo service itself 
+* **helps reduce storage and manage the table size** 
+* **TTL enabled/row** --> define a TTL column and then DynamoDB deletes them within a given time 
+* typically deletes within 48hrs of expiration 
+* deleted items also deleted in GSI, LSI 
+* streams used for recovery of these deleted items
 
+Hands On 
+time to epoch --> epoch converter freeware --> get timestamp 
+-create a table with some items set to expire at timestamps 
+**Time to Live Attribute** = config where we list the column to look for TTL 
+-can preview the TTL --> enable TTL
+
+### DynamoDB CLI 
 
 
 
@@ -236,6 +252,5 @@ REVIEW
 differences between MongoDB and DynamoDB
 * attribute chosen must be **string, number, binary** for LSI --> attribute of what? 
 
--TTL?
 
 
