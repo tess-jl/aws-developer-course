@@ -245,6 +245,30 @@ time to epoch --> epoch converter freeware --> get timestamp
 -can preview the TTL --> enable TTL
 
 ### DynamoDB CLI 
+**--projection-expression** = list of attributes to retrieve from table, maybe just a subset of attributes 
+**--filter-expression** = filtering of table 
+
+general CLI paginaiton options for DynamoDB / S3
+**Optimization**
+* **--page-size** = for getting full dataset but each API call will req less data (helps to avoid timeouts)
+**Pagination** 
+* **--max-items** = for max number of items in res --> get a token in res called **NextToken**
+* **--starting-token** parameter in CLU = to specify the last received NextToken to go to next page
+
+Hands On 
+```
+aws dynamodb scan --table-name [name] --projection-expression "[column], [column]" --region [region]
+```
+therefore only getting a couple of the columns from this table! 
+```
+aws dynamodb scan --table-name UserPosts --filter-expression "user_id = :u" --expression-attribute-values '{ ":u": {"S":"124usersoi3"}}' --region us-east-1
+```
+should filter fust for one result 
+
+etc. see the code/dynamodb dir for more
+
+### DynamoDb Transactions
+
 
 
 
