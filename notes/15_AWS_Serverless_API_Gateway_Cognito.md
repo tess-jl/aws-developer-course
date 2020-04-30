@@ -146,6 +146,27 @@ stage --> logs/tracing tab
 --> can see how each lambda funciton calls things --> whole vis of how things are working and can see patterns
 
 ### API Gateway Others
+**CORS** = must be enable when you recive API calls from another domain 
+-need to enable **OPTIONS pre-flight req with:**
+1. **Access-Control-Allow-Methods**
+1. **Access-Control-Allow-Headers**
+1. **Access-Control-Allow-Origin**
+-can enable CORS via API Gateway console
+
+Hands On 
+action --> enable CORS
+
+can set **Usage Plans** and **API Keys**
+-if have customers and want to limit API usage --> usage plan for throttling  
+* throttling = setting over capacity and burst capacity 
+* quotas = API reqs / day / week or / month
+* associate with whatever API stage we want
+
+for each usage plan need 1 API Key 
+* 1/customer 
+* able to track usage/key
+
+### API Gateway Security 
 
 
 REVIEW
