@@ -37,3 +37,34 @@ MyFirstAPI --> resources, stages, authorizers, gateway reponses, models, resourc
 **methods** = CRUD
 
 ### API Gateway Stages and Deployment
+common misconception = **when make changes in API gateway it does not mean they're effective right away!! NEED TO DEPLOY!**
+--> changes are deployed to **stages**, can have as many as we want (whatever naming we want, dev, test, prod, etc.)
+* each stage independent from one another, own configs
+* stages can be rolled back (history of deployments kept)
+
+Why use stages? 
+-can change the gateway behavior depending on variables
+-b/c can have **stage vars** = like env vars for Gateway --> used to change config 
+Can use Stage Variables for: 
+* lambda function ARN
+* HTTP endpoint 
+* parameter mapping templates, etc.
+Use cases: 
+* config HTTP endpoints that stages talk to (dev, test, prod, etc.)
+* pass config params down to lambda function through mapping templates so that function knows if it's in dev, test, prod
+**stage vars are passed to the "context" object in lambda** --> therefore have ways to get these vars back in lambda 
+
+How do we use stage variables? 
+-common pattern = with **lambda aliases**
+* API Gateway will auto invoke the right lambda function 
+
+**Canary Deployment** = a test deployment, can be done at any stage but usually prod
+* choose the % of traffic the canary channel receives, small percentage goes to new version/channel 
+* metrics and logs for channels are separate 
+* ~ blue/green deployment with Lambda and Gateway
+
+### API Gateway Stages and Deployment Hands On
+
+
+REVIEW
+-can the gateway be thought of as a router? 
