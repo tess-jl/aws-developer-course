@@ -124,7 +124,28 @@ go to stage --> enable cache --> capcity by increments --> set time, etc.
 -**per-key invalidation** by clients via header **Cache-Control: max-age=0** requires auth 
 
 ### API Gateway Monitoring 
+-can have Logging, Monitoring, and Tracing 
+-integrated with **CloudWatch Logs**
+* need to **enable CloudWatch logging at stage level (via Log Level)**
+* can override settings on API basis (e.g. ERROR, DEBUG, INFO logs)
+* log contains info about req/res body --> helpful for debugging 
+**CloudWatch Metrics** 
+* metrics/stage
+* can enable detailed metrics 
+**X-Ray**
+* enable tracing to get extra info about reqs to API Gateway
 
+API Gateway + X-Ray + Lambda = full picture
+
+Hands On 
+stage --> logs/tracing tab 
+-if save it won't work! **need to provide CloudWatch log rol ARN for this gateway** --> go to IAM, create new role, copy ARN and put in gateway console
+-invoke URL from stage a few times--> can now see logs --> cloudwatch console log streams for this --> can see the res body before transformation 
+
+-can also go to x-ray and see the service map--> talks to gateway and the endpoint (this is the current tracing)
+--> can see how each lambda funciton calls things --> whole vis of how things are working and can see patterns
+
+### API Gateway Others
 
 
 REVIEW
