@@ -25,3 +25,15 @@ Inside of VPC:
 * EC2 endpoints
 
 ### API Gateway Basics Hands On 
+gives an example API but we're creating a new API 
+MyFirstAPI --> resources, stages, authorizers, gateway reponses, models, resource policy, docs, settings 
+-create a CRUD method with any verb
+-can choose integration type -> whether a lambda, an HTTP, a mock, etc.
+-go to lambda service to create a lambda function for it--> api-example-root-get TestEvent function
+-can test! tells us latency, status, body etc. 
+-create another lambda function for the /houses endpoint --> api-example-houses-get
+--> in 1 API have integrated 2 lambda functions 
+**resources** = the path (e.g. /houses) in API
+**methods** = CRUD
+
+### API Gateway Stages and Deployment
