@@ -73,6 +73,24 @@ actions--> deploy API to stage called "dev" --> now whole API lives under the de
 -deployment hisotry
 
 ### API Gateway Mappings
+**mapping templates** = for modifying reqs or res, can: 
+* rename params 
+* modify body content 
+* add headers
+* map JSON to XML for sending to backend or back to client 
+-uses **Velocity Template Language (VTL)** (uses for loop, if statements, etc.)
+* can filter output results (remove unnecessary data)
+
+--> can edit in **integration req or res** 
+
+Hands On 
+if wanted Dev API not to return JSON but to return XML 
+resources --> select endpoint --> change res for example --> integration res edit 
+-choose mapping template --> choose empty model --> save
+-do a test and see that the res body is a XML 
+NOW need to action --> deploy API to actually see the changes 
+
+### API Gateway Swagger
 
 
 REVIEW
