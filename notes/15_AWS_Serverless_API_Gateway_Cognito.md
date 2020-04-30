@@ -167,6 +167,45 @@ for each usage plan need 1 API Key
 * able to track usage/key
 
 ### API Gateway Security 
+3 aspects: 
+1. IAM permissions 
+1. Lambda Authorizers
+1. Cognito User Pool 
+
+IAM Permissions 
+* IAM policy auth --> attach to User or Role 
+* API Gateway verifies IAM perms passed by calling the REST API 
+* good to provide API access within own infastructure 
+* leverages **Sig v4** capability where IAM cred are in one header and header is passed on to API Gateway 
+-no added cost
+
+**Lambda Authorizer fka Custom Authorizers** 
+* uses **lambda to validate token being passed in header in req**
+* option to **cache result of auth**
+* used when have 3rd party type auth (Oauth, SAML, etc..)
+* **Lambda must return IAM policy for user that declares whether or not user can call API** 
+
+**Cognito User Pools** 
+* Cognito manages fully user lifecycle 
+* API Gateway will verify identity auto from cognito 
+* free, auto implement
+* **helps with authentification NOT authorization** 
+--> Facebook or Google pools, e.g.
+
+Summary 
+IAM: when there are users or roles already in AWS account 
+* does authentication and authorization via IAM 
+* Sig v4
+Custom Authorizer: when there are 3rd party tokens
+* does authentication and authorization via IAM policy 
+* flexible for what IAM policy returned 
+* pay / lambda invocation 
+Cognito User Pool: when manage own user pool (backed by big apps already)
+* no custom code 
+* must implement authorization layer on the backend (big apps for the authentication)
+
+### Cognito Overview
+
 
 
 REVIEW
