@@ -214,7 +214,20 @@ DynamoDB console --> create a DAX, select cluster size, etc. etc.
 -DAX not in free tier
 
 ### DynamoDB Streams
+-changes in DynamoDb (create, update, delete) can end up in DynamoDB Stream --> changelog of the changes to the table --> stream read by Lambda
+* with lambda can do whatever we want in RT in response --> welcome email, analytics, insert into ElasticSearch, etc. 
+* could implement cross region replication using streams 
+* only 24hr of data retention of stream 
 
+Hands On 
+-create a lambda function to react to the stream 
+-see DynamoDB trigger section 
+-go to IAM service to make sure this lambda function gets a new role --> add policies accordingly 
+-designer GUI should show DynamoDB for lambda function --> see last processing result = OK therefore trigger worked 
+-can also see that Cloudwatch logs shows this lambda function logs 
+* can open up the logs and look at the details of the logs!!
+
+### DynamoDB TTL 
 
 
 
