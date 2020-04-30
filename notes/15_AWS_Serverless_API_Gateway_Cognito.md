@@ -109,7 +109,21 @@ create new API --> example API uses a Swagger File for API called PetStore API
 -create a stage for this --> deploy API to dev stage
 
 ### API Gateway Caching
+**caching API res** = reducing number of calls to backend, therefore reduced latency for many calls 
+* default TTL = 300s (5min), min=0s, max=3600s (1hr)
+* 1 cache/stage 
+* can encrypt cache 
+* size = 0.5GB-237GB 
+* possible to override cache settings for specific methods, therefore control over what gets cached 
+* able to flush entire cache (invalidate it) immediately via console or API call 
 
+**can clients invalidate aka clear cache? YES, if they're authorized to do it via IAM** via header **Cache-Control: max-age=0**
+
+Hands On
+go to stage --> enable cache --> capcity by increments --> set time, etc. 
+-**per-key invalidation** by clients via header **Cache-Control: max-age=0** requires auth 
+
+### API Gateway Monitoring 
 
 
 
