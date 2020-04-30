@@ -268,6 +268,21 @@ should filter fust for one result
 etc. see the code/dynamodb dir for more
 
 ### DynamoDb Transactions
+-new Nov 2018 
+-similar to transaction in PostgreSQL 
+**transaction** = ability to C, U, D multiple rows in different tables at the same time 
+* **all or nothing** operation 
+
+write modes = standard, transactional
+read modes = eventual consistency, strong consistency, transactional 
+
+transactional mode **consumes 2x WCU/RCU**
+
+What is it and when should we use it? = for exam 
+e.g. account balance and bank transaction table = use case --> write to both tables or none 
+
+### DynamoDB Security and other features
+
 
 
 
