@@ -282,8 +282,21 @@ What is it and when should we use it? = for exam
 e.g. account balance and bank transaction table = use case --> write to both tables or none 
 
 ### DynamoDB Security and other features
+Security 
+* VPC endpoints available (i.e. dynamoDB without internet)
+* full-acess controlled by IAM 
+* encryption at rest via KMS
+* encryption in transit via SSL / TLS 
 
+Backup and restore features 
+* point in time restore (like RDS), no performance impact 
 
+Global tables (not just one region)
+* multi-region, fully-replicated, high performance (relies on streams)
+
+can use amazon DMS to migrate data to dynamoDB (from Mongo, Oracle, mySQL, S3, etc.)
+
+can launch a local dynamoDB on laptop for dev
 
 
 
