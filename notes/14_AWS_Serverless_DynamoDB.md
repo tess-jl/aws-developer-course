@@ -303,6 +303,3 @@ can launch a local dynamoDB on laptop for dev
 REVIEW
 differences between MongoDB and DynamoDB
 * attribute chosen must be **string, number, binary** for LSI --> attribute of what? 
-
-
-
