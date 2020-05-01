@@ -23,4 +23,8 @@ SAM Recipe
 **change set** = how cloudformation should take the existing state and move it to next state based on modifications
 
 ### Installing the SAM CLI 
+can install a nice CLI to develop locally via aws-sam-cli --> see corresponding GitHub 
+* need Docker, Python, AWS CLI 
+* use python to install CLI 
 
+### Creating First SAM Project
