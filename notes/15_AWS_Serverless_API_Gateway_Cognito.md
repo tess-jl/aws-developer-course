@@ -21,8 +21,8 @@ Outside of VPC:
 * any AWS service (EC2, LBs, etc.)
 * proxy from API Gateway to external and publicly-accessible HTTP endpoints
 Inside of VPC: 
-* Lambda 
-* EC2 endpoints
+* Lambda inside of VPC
+* EC2 endpoints inside VPC
 
 ### API Gateway Basics Hands On 
 gives an example API but we're creating a new API 
@@ -81,7 +81,7 @@ actions--> deploy API to stage called "dev" --> now whole API lives under the de
 -uses **Velocity Template Language (VTL)** (uses for loop, if statements, etc.)
 * can filter output results (remove unnecessary data)
 
---> can edit in **integration req or res** 
+--> can edit via **integration req or res** 
 
 Hands On 
 if wanted Dev API not to return JSON but to return XML 
@@ -139,7 +139,7 @@ API Gateway + X-Ray + Lambda = full picture
 
 Hands On 
 stage --> logs/tracing tab 
--if save it won't work! **need to provide CloudWatch log rol ARN for this gateway** --> go to IAM, create new role, copy ARN and put in gateway console
+-if save it won't work! **need to provide CloudWatch log role ARN for this gateway** --> go to IAM, create new role, copy ARN and put in gateway console
 -invoke URL from stage a few times--> can now see logs --> cloudwatch console log streams for this --> can see the res body before transformation 
 
 -can also go to x-ray and see the service map--> talks to gateway and the endpoint (this is the current tracing)
@@ -175,11 +175,12 @@ for each usage plan need 1 API Key
 IAM Permissions 
 * IAM policy auth --> attach to User or Role 
 * API Gateway verifies IAM perms passed by calling the REST API 
-* good to provide API access within own infastructure 
+* good to provide API access within own infastructure --> security solutions for people in the actual account
 * leverages **Sig v4** capability where IAM cred are in one header and header is passed on to API Gateway 
 -no added cost
 
 **Lambda Authorizer fka Custom Authorizers** 
+* first need to create lambda function that does authorizing and authenticating the caller
 * uses **lambda to validate token being passed in header in req**
 * option to **cache result of auth**
 * used when have 3rd party type auth (Oauth, SAML, etc..)
@@ -219,9 +220,14 @@ goal = to give users identity so that they can interact with our app --> use Cog
 * can verify emails, phone numbers, add MFA 
 * can enable **Federated Identities** (Facebook, Google, SAML) --> can allow user to login to one of these apps and we can get this identity into our user pool 
 * get back a JWT to verify identity of someone 
-* can be **integrated with API Gateway for auth** 
+* can be **integrated with API Gateway for authentication** 
+--> general members in the public who we want to give access to API Gateway
 
-**Cognito Identity Pools aka Federated Identity**
+**Cognito Identity Pools aka Federated Identity** --> for giving access to the resources direcly (endpoints)
+* can integrate with CUP 
+* get temp AWS cred back from CIP --> e.g. temp access to write to bucket 
+
+-deprecated and replaced by AppSync
 
 
 
@@ -230,3 +236,4 @@ REVIEW
 -Why backslash in the URL for API Gateway deployed?? 
 -SAML
 -CUP 
+**stage vars are passed to the "context" object in lambda** --> therefore have ways to get these vars back in lambda 

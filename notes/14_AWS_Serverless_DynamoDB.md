@@ -88,8 +88,6 @@ e.g. 10 strongly consistent reads/s of 6KB each --> 20RCU b/c have to round up t
 
 **WCU and RCU are spread evenly throughout partitions**
 
-LISA AND I STOPPED HERE
-
 **ProvisionedThroughputException**
 -exceeded RCU or WCU
 -why? 
@@ -104,7 +102,7 @@ LISA AND I STOPPED HERE
 ### WCU and RCU Hands On 
 -assign these units to table --> use the capacity calculator which helps determine capacities and estimated cost for workload 
 
-**strongly consisten = 2x read capacity as eventually consistent** 
+**strongly consistent = 2x read capacity as eventually consistent** 
 -if enable auto scaling then can't provision the units, it just auto scales it for us 
 
 ### DynamoDB Basic APIs 
@@ -114,7 +112,7 @@ Writing Data
 **UpdateItem API** = update data in DynamoDN (partial update of **attributes**)
 * can also increase **Atomic Counters** 
 **Conditional Writes API** = for conditional writes or updates, if condition not met then reject
-* helps with concurrent access to items
+* helps with concurrent access to items (don't want someone to update something that's already been updated)
 * no performance impact 
 
 Deleting Data
@@ -154,6 +152,7 @@ Querying data
 -can query a table, local secondary index, or global secondary index 
 
 Inefficient way of querying= **Scan API**
+-**when what you're looking for is not a primary key, sort key, LSI, GSI**
 -every time do scan it scans the ENTIRE table, inefficient (consumes A LOT of RCU!)
 * returns up to 1MB of data, can use pagination to keep reading
 * can use a limit or reduce the size of the result and pause to keep from consuming so many RCUs
@@ -168,6 +167,9 @@ Inefficient way of querying= **Scan API**
 -Through console we can see whole range of APIs to use
 
 ### DynamoDB Indexes
+-indexes = fast when knowing location we want 
+https://www.essentialsql.com/what-is-a-database-index/
+
 **LSI (Local Secondary Index)** = alternate range key for table, **local to the hash key** 
 * **must be defined at table creation**
 * max 5/table
@@ -180,8 +182,8 @@ Inefficient way of querying= **Scan API**
 -to speed up queries on non-key attributes 
 -define a whole new index --> a new "table" the can project attributes on it 
 * partition key and sort key from original table always projected (KEYS_ONLY)
-* can also add extra attributes to project (INCLDES
-* can use all attributes from main table (ALL
+* can also add extra attributes to project (INCLDES)
+* can use all attributes from main table (ALL)
 -must define RCU/WCU for the index 
 -**possibility to add/modify GSI**
 
@@ -202,7 +204,7 @@ Hands On
 -therefore, DynamoDB = **optimistic locking /concurrency database** 
 
 ### DynamoDB DAX
-**DAX (DynamoDB Accelerator)** = seamless cache for DynamoDB, no application re-write
+**DAX (DynamoDB Accelerator)** = seamless cache for DynamoDB, don't have to remake whole application to enable DAX
 * apps work the same when we enable DAX except NOW **all writes go through DAX to DynamoDB cluster**
 * allows for **ms latency for cached reads and queries**--> solves the hot key problem (too many reads)
 * default = 5min TTL (how long items live in cache)
@@ -220,6 +222,8 @@ DynamoDB console --> create a DAX, select cluster size, etc. etc.
 * with lambda can do whatever we want in RT in response --> welcome email, analytics, insert into ElasticSearch, etc. 
 * could implement cross region replication using streams 
 * only 24hr of data retention of stream 
+--> **how we would replicate DBs across regions** --> 24hr retention of data in stream --> lambda functions can be used to help re-create the table 
+
 
 Hands On 
 -create a lambda function to react to the stream 
@@ -238,7 +242,7 @@ Hands On
 * **TTL enabled/row** --> define a TTL column and then DynamoDB deletes them within a given time 
 * typically deletes within 48hrs of expiration 
 * deleted items also deleted in GSI, LSI 
-* streams used for recovery of these deleted items
+* streams used for recovery of these deleted items (within 24hrs)
 
 Hands On 
 time to epoch --> epoch converter freeware --> get timestamp 
@@ -317,3 +321,8 @@ parition key always hashed? parition and sort always hashed? --> **output from t
 
 **WCU and RCU are spread evenly throughout partitions**
 
+**hot keys** vs **hot partitions** 
+
+**Atomic Counters** 
+
+ElastiCache vs DAX
