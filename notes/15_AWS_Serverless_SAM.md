@@ -51,3 +51,10 @@ NOW use CodeDeploy --> creates change set --> change set fails b/c need to add a
 NOW stack should be in cloudformation --> check right region --> can see that this stack is being created --> see that function and IAM role created --> can also see lambda function deployed!
 
 ### SAM API Gateway 
+-need to modify template.yaml to add API Gateway configuration 
+-change lambda function too 
+-check example on GitHub for microservice endpoint
+NOW a lot more resources created for us automatically 
+see API Gateway --> see the API and the endpoints --> test and now see error --> now can redeploy from CLI and can then re-test
+
+### SAM DynamoDB 
