@@ -58,3 +58,17 @@ NOW a lot more resources created for us automatically
 see API Gateway --> see the API and the endpoints --> test and now see error --> now can redeploy from CLI and can then re-test
 
 ### SAM DynamoDB 
+-adding a DynamoDb to this makes our app fully serverless 
+-create client outside of the handler 
+-update the template.yaml to make a simple DynamoDB table
+-need to give lambda function access to table --> need to add IAM policies to do this
+
+-update handler so that it does a scans the table and returns the scan result
+-redeploy 
+-cloudformation shows that dynamoDB table was also created!
+-check that lambda function works properly (see that envs there, IAM roles there (role allows lambda access to the table's associated APIs))
+-test the lambda function and it works 
+
+
+REVIEW
+-databases aka client terminology 
