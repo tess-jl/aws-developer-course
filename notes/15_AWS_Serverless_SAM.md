@@ -23,8 +23,19 @@ SAM Recipe
 **change set** = how cloudformation should take the existing state and move it to next state based on modifications
 
 ### Installing the SAM CLI 
+https://github.com/awslabs/aws-sam-cli
 can install a nice CLI to develop locally via aws-sam-cli --> see corresponding GitHub 
 * need Docker, Python, AWS CLI 
 * use python to install CLI 
 
 ### Creating First SAM Project
+```
+sam init
+```
+creates a lot of files for us but need to specify a lot 
+
+Instead can do it file by file: 
+look at examples: https://github.com/aws-samples/serverless-app-examples 
+-need tample.yaml, app.py, and commands.sh 
+
+### Deploying SAM Project 
