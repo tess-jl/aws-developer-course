@@ -39,3 +39,15 @@ look at examples: https://github.com/aws-samples/serverless-app-examples
 -need tample.yaml, app.py, and commands.sh 
 
 ### Deploying SAM Project 
+-adding to commands.sh file --> need to specify the S3 bucket, template file, output template file
+-run commands in CLI 
+aws cloudformation = sam package 
+
+NOW code auto updated by cloudformation package to point to the right S3 bucket --> check bucket to see that file was uploaded! 
+NOW use CodeDeploy --> creates change set --> change set fails b/c need to add a capability 
+```
+--capabilities CAPABILITY_IAM
+```
+NOW stack should be in cloudformation --> check right region --> can see that this stack is being created --> see that function and IAM role created --> can also see lambda function deployed!
+
+### SAM API Gateway 
