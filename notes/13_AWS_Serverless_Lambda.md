@@ -24,7 +24,7 @@ AWS takes care of server architecture management for all of them :)
 ### Lambda Overview
 with EC2 instances provisioned in the cloud --> limited by RAM and CPU, continuously running, BUT for scaling need to step up intervention, need to add/remove servers i.e. **managed the servers**
 VS.
-Lambda --> **virtual functions** therefore no servers to manage but **short executions**, run on demand, scale within milliseconds, scaling automated, by default meant to scale to load that is happenign 
+Lambda --> **virtual functions** therefore no servers to manage but **short executions**, run on demand, scale within milliseconds, scaling automated, by default meant to scale to load that is happening 
 
 Benefits: 
 * pricing easy --> **pay per req and compute time**
@@ -89,7 +89,7 @@ can test function --> configure test event --> test --> result:succeeded shows l
 -**timeout** for how long function will run before failing --> **default = 3s, max=15 min**
 -**env vars**
 -can allocate memory for lambda function (128M to 3G)
--can deploy within a VPC, assign security groups 
+-can deploy within a VPC (has it's own network IP address), assign security groups 
 -IAM role must be attached to Lambda function 
 
 Hands On 
@@ -118,7 +118,7 @@ if function runs beyond timeout --> see that execution result: failed --> error 
 
 ### Lambda Concurrency, Throttling, and DLQ
 -**concurrency** = **up to 1000 executions** at once in region --> therefore can auto scale up to this many functions running at the same time
-* can be increased through **ticket**
+* can be increased through **ticket** --> need to submit a special ticket to AWS
 * can set **reserved concurrency** at the function level (e.g. limit to 100 functions)
 * each invocation over the concurrency limit will trigger a **throttle** 
 
@@ -157,7 +157,7 @@ x-ray --> can enable active tracing in Debugging and error handling area --> lam
 ### Lambda Limits
 **execution limits** 
 * memory allocation 128-3008 MB (64MB increments)
-* max execution time 15 min 
+* max execution time 15 min, default 3s
 * Disk capacity in the function container = 512MB(in /tmp directory, can write this much data here)
 * concurrency limit = 1000
 
@@ -192,7 +192,7 @@ want want to expose to user is dev, test, prod endpints --> need to create alias
 popular exam q: how do we bundle external dependencies with lambda function? 
 * if lambda func depends on external libraries (X-ray SDK, Database clients, etc.) --> **need to install packages in codebase and .zip together** 
 * done with npm i --> node_modules dir for Node.js, pip --target options for Python, etc.
-* with .zip --> upload striaght into lambda if < 50MB, otherwise S3 first and reference it
+* with .zip --> upload striaght into lambda if **< 50MB**, otherwise S3 first and reference it
 * Native libraries OK but they need to be compiled on Amazon Linux first
 
 Hands On 
@@ -211,7 +211,7 @@ go to IAM role --> attach more policies, give read only access to S3, give write
 --> ALSO make sure to test function --> works and also look at x-ray to prove that the external library worked 
 
 ### Lambda and CloudFormation 
--must store lambda .zip in S3 
+-**must store lambda .zip in S3**
 -refer to the S3 zip location in CloudFormation code (regions need to be same)
 -done in the codeblock labeled **Code:** in template --> S3Key key has value that is the zip file and S3Bucket key has value that is the name of the bucket --> BOTH ARE PARAMS?? 
 
@@ -255,7 +255,7 @@ Hands On
 -see how to alter code to move heavy duty work
 
 ### Lambda@Edge
--CloudFront = service used to deploy onto **CDN (content delivery network)** so that functions run globally
+-CloudFront (on Edge) = service used to deploy onto **CDN (content delivery network)** so that functions run globally
 * what if wanted to run global AWS lambda alongside this? 
 * or what if wanted to implement request filtering before reaching app? 
 
@@ -270,7 +270,7 @@ Lambda changes CloudFront req and res (4 types of ways):
 1. **viewer req** = after CloudFront receives a req from viewer 
 1. **origin req** = before CloudFront forwards req to origin 
 1. **origin res** = after CloudFront recevies the res from the origin 
-1. **viewer res** = before CloudFRont forwards the res to the viewer 
+1. **viewer res** = before CloudFront forwards the res to the viewer 
 
 --> LAMBDA LIKE A MIDDLEWARE?
 
@@ -292,6 +292,7 @@ Lambda@Edge
 REVIEW
 -CPU, network, RAM 
 -Image 
+-Drivers (Node.js drivers)
 -why aliases used instead of versions? 
 -done in the codeblock labeled **Code:** in template --> S3Key key has value that is the zip file and S3Bucket key has value that is the name of the bucket --> BOTH ARE PARAMS?? 
 
@@ -306,3 +307,15 @@ Lambda@Edge
 * A/B testing 
 * user auth
 * user tracking and analytics
+
+Lambda
+-can deploy within a VPC (has it's own network IP address), assign security groups 
+
+-when do things get removed from the /tmp directory
+-lambda will re-use function whenver possible --> if functions being called multiple time in a row or in parallel
+
+lambda file vs handler --> what is considered the function 
+
+**CDN (content delivery network)**
+
+CloudWatch Events --> can configure lambda to be invoked in response to an event --> WATCH VIDEO!!

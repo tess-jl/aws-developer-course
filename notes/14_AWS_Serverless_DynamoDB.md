@@ -34,12 +34,12 @@ Basics
 * each table has a **primary key** (decided at time of DB creation)
 * max size of row = 400KB 
 -**Datatypes supported**: 
-* scalar types (string, num, binary, boolean, null)
-* document types (List, Map) as attributes
+* scalar types (string, num, binary, boolean, null) as primary key, sort key, or attributes
+* document types (List, Map) only as attributes
 * set types (String set, num set, binary set), allows us to do nested stuff 
 
 **primary key** options: 
-1. **partition key only (HASH)** --> MUST be unique for each item, must be "diverse" so data is distributed across many partitions like userId
+1. **partition key only (this key is hashed to determine parition placement)** --> MUST be unique for each item, must be "diverse" so data is distributed across many partitions like userId
 1. **partition key and sort key** --> more DynamoDB-specific, **combo must be unique**
 --> data grouped by partition key 
 --> data sorted by **sort key (aka range key)**
@@ -87,6 +87,8 @@ e.g. 10 strongly consistent reads/s of 6KB each --> 20RCU b/c have to round up t
 * partition key goes through hashing algorithm to know which parition the data goes to 
 
 **WCU and RCU are spread evenly throughout partitions**
+
+LISA AND I STOPPED HERE
 
 **ProvisionedThroughputException**
 -exceeded RCU or WCU
@@ -303,3 +305,15 @@ can launch a local dynamoDB on laptop for dev
 REVIEW
 differences between MongoDB and DynamoDB
 * attribute chosen must be **string, number, binary** for LSI --> attribute of what? 
+
+can do **event-driven programming** with DynamoDB streams
+
+-**Datatypes supported**: 
+* scalar types (string, num, binary, boolean, null) as primary key, sort key, or attributes
+* document types (List, Map) only as attributes
+* set types (String set, num set, binary set), allows us to do nested stuff 
+
+parition key always hashed? parition and sort always hashed? --> **output from the hash function determines the parition in which the item will be stored**
+
+**WCU and RCU are spread evenly throughout partitions**
+

@@ -205,9 +205,28 @@ Cognito User Pool: when manage own user pool (backed by big apps already)
 * must implement authorization layer on the backend (big apps for the authentication)
 
 ### Cognito Overview
+goal = to give users identity so that they can interact with our app --> use Cognito
+**Cognito User Pools** 
+* sign-in functionality for users
+* integrated with API Gateway 
+**Cognito Identity Pools aka Federated Identity** = for providing AWS cred to user so that they can access AWS resources directly 
+* can integrate with User Pools as an identity provider 
+**Cognito Sync** = for synchronizing data from device to cognito 
+* may be deprecated and replced by **AppSync** 
+
+**Cognito User Pools (CUP)** = serverless DB for user for mobile apps  
+* simple login 
+* can verify emails, phone numbers, add MFA 
+* can enable **Federated Identities** (Facebook, Google, SAML) --> can allow user to login to one of these apps and we can get this identity into our user pool 
+* get back a JWT to verify identity of someone 
+* can be **integrated with API Gateway for auth** 
+
+**Cognito Identity Pools aka Federated Identity**
 
 
 
 REVIEW
 -can the gateway be thought of as a router? 
 -Why backslash in the URL for API Gateway deployed?? 
+-SAML
+-CUP 
