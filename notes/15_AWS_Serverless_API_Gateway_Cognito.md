@@ -224,10 +224,20 @@ goal = to give users identity so that they can interact with our app --> use Cog
 --> general members in the public who we want to give access to API Gateway
 
 **Cognito Identity Pools aka Federated Identity** --> for giving access to the resources direcly (endpoints)
-* can integrate with CUP 
-* get temp AWS cred back from CIP --> e.g. temp access to write to bucket 
+General idea: idea = trade in a login for an identity provider and eventually get temp AWS creds
+How? 
+* by logging into **federated identity provider (Google, FB, etc. or even CUP)** or can choose to remain anonymous 
+* get creds back from a federated identity pool, cred include a pre-defined IAM policy stating permissions (get temp AWS cred back from CIP)
 
--deprecated and replaced by AppSync
+e.g. temp access to write to S3 bucket 
+
+**Congito Sync** = to store preferences, config, state of app 
+* cross-device syncronization
+* offline capability (will synchronize when back online)
+* for it to work need **Federated Identity Pools** in Cognito, NOT CUP
+* data stored in data sets up to 1MB 
+* up to 20 data sets to synchronize
+* **deprecated --> should use AppSync now**
 
 
 
@@ -235,5 +245,5 @@ REVIEW
 -can the gateway be thought of as a router? 
 -Why backslash in the URL for API Gateway deployed?? 
 -SAML
--CUP 
+-CUP vs. CIP vs. Federated identity pools 
 **stage vars are passed to the "context" object in lambda** --> therefore have ways to get these vars back in lambda 
