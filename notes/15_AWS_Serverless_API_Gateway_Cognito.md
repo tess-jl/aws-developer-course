@@ -247,3 +247,5 @@ REVIEW
 -SAML
 -CUP vs. CIP vs. Federated identity pools 
 **stage vars are passed to the "context" object in lambda** --> therefore have ways to get these vars back in lambda 
+-ElastiCache vs Stage cache 
+-domain vs network 
