@@ -78,7 +78,19 @@ see API Gateway --> see the API and the endpoints --> test and now see error -->
 
 **Serverless Application Repository = templates made by people, SAM packages! see an actual SAM template here!**
 
+### SAM Policy Templates 
+aka Serverless Model Policy Templates 
+* list of templates used to **apply perms to Lambda functions**
+* see docs for full list of templates 
+
+e.g. S3ReadPolicy = template that gives read-only to objects in S3
+e.g. SQSPollerPolicy = allows to poll an SQS queue
+
+--> instead of creating an IAM role manually can just alter the **Policies:** codeblock of the YAML SAM template and include these policies directly!! much more declarative about what our functions should do --> auto makes the IAM roles via deployment
+
+
 
 
 REVIEW
 -databases aka client terminology 
+**Serverless Application Repository = templates made by people, SAM packages! see an actual SAM template here!**
