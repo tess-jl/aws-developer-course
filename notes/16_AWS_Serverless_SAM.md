@@ -4,7 +4,7 @@
 
 ### SAM Overview
 -**SAM (Serverless Application Model)** = serverless development framework used to write and deploy serverless apps
-* all config = YAML CloudFormation code
+* all config = YAML CloudFormation code (or JSON)
 * supports anything that CloudFormation uses (outputs, mappings, params, resources, etc.)
 * 2 commands to deploy to AWS 
 * SAM can use CodeDeploy to deploy Lambda functions
@@ -17,10 +17,15 @@ SAM Recipe
 1. AWS::Serverless::Function --> Lambda
 1. AWS::Serverless::Api --> API Gateway
 1. AWS::Serverless::SimpleTable --> DynamoDB
-* package with cloudfomration package or **sam package**
-* deploy with cloudformation deploy or **sam deploy** 
+2 different commands from CLI: 
+* package with commands cloudfomration package or **sam package**
+* deploy with commands cloudformation deploy or **sam deploy** 
 
-**change set** = how cloudformation should take the existing state and move it to next state based on modifications
+**change set** = how cloudformation should take the existing state and move it to next state based on modifications --> allows us to preview the changes
+
+https://aws.amazon.com/blogs/compute/implementing-safe-aws-lambda-deployments-with-aws-codedeploy/
+
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html
 
 ### Installing the SAM CLI 
 https://github.com/awslabs/aws-sam-cli
@@ -94,3 +99,6 @@ e.g. SQSPollerPolicy = allows to poll an SQS queue
 REVIEW
 -databases aka client terminology 
 **Serverless Application Repository = templates made by people, SAM packages! see an actual SAM template here!**
+
+--> can reference a SAM template in a CloudFormation template by transform section 
+-can a SAM file reference another SAM file? 
