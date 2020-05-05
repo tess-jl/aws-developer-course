@@ -55,3 +55,21 @@ Docker containers need to be managed
 1. **EKS** = Amazon's managed Kubernetes platform (open source) (Kubernetes = popular container management system)
 
 ### ECS Clusters
+**ECS Cluters** = logical grouping of EC2 instances 
+* instances we launch will run an **ECS Agent** = Docker container --> will register the instance with the ECS cluster
+* EC2 instances here = special, don't run plain Amazon Linux 2 AMI, instead use AMI specifically for ECS
+
+Hands on 
+ECS console --> create cluster--> (trying to push us to use Fargate) --> use EC2 Linux and Networking API with ASG --> use t2 micro instance type 
+-EC2 AMI ID = the same ID as the ECS AMI 
+-GUI walks through all services and config --> launch cluster
+
+ECS instance = linked to EC2 instance- it's in specific AZs
+* CPU available = the VCPU have on machine, will be shared between different containers --> same princple for memory 
+
+EC2 console --> ASGs --> the cluster came with ASG
+* launch configuration = special for ECS, has User Data --> therefore when instance starts it knows to register to this cluster! 
+* has SG
+
+SSH into the machine --> the ecs.config file has code that shows how it knows which cluster to register to --> how does it register? Docker does it --> the agent is registering our instance into the ECS service!
+* can also look at the Docker logs via CLI 
