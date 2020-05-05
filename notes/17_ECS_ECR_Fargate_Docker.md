@@ -73,3 +73,21 @@ EC2 console --> ASGs --> the cluster came with ASG
 
 SSH into the machine --> the ecs.config file has code that shows how it knows which cluster to register to --> how does it register? Docker does it --> the agent is registering our instance into the ECS service!
 * can also look at the Docker logs via CLI 
+
+### ECS Task Definition 
+**ECS Task Definition** = metadata (JSON) to tell ECS how to run a Docker container, includes: 
+* Image Name 
+* Port Binding for Container and Host 
+* Memory and CPU required 
+* Env vars 
+* Networking info 
+
+actual server, e.g. Apache, has port 80 but it is mapped to a host port of 8080 --> why? b/c any traffic to 8080 will be mapped to 80 now 
+
+Hands On 
+create new task def --> task role = important (if exam asks why container cant talk to S3, etc. it's because it's missing a role) --> task execution role --> choose memory and CPU --> choose image (e.g. httpd apache for us)
+* port mappings = host = 8080, check what's exposed within the container 
+--> have container name httpd from image etc. --> click create 
+-tag 1 
+
+### ECS Service
