@@ -7,6 +7,7 @@ ECS:
 * Tasks Definition
 ECR
 Fargate for how ECS can be done in serverless way
+https://aws.amazon.com/blogs/compute/building-blocks-of-amazon-ecs/
 
 ### What is Docker? 
 **Docker** = software dev platform used to deploy apps
@@ -91,3 +92,22 @@ create new task def --> task role = important (if exam asks why container cant t
 -tag 1 
 
 ### ECS Service
+-to run task need to define an **ECS Service** = will define how many tasks should run and how they should run 
+* also ensure # of tasks desired is running across the fleet of EC2 instances
+* can be linked to any LB if needed 
+
+Hands On 
+cluster --> create a service --> launch type, task def
+* daemon vs replica for service type --> daemon is when want to run something across all instances
+* configure network --> LB --> ASG --> review
+view service --> service will launch the httpd task 
+
+cluster --> can see that task is running 
+```
+docker ps
+```
+can see what has happened 
+-scale service to run 2 tasks --> update service 
+**can only have 1 task/ECS instance!** so instead need to scale our cluster --> create another t2micro that will appear when scaling up 
+
+### ECS Service with LB 
