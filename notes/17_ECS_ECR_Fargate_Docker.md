@@ -214,10 +214,51 @@ EC2 --> can see the new ASG from this, can see new LB
 ECS console --> can see how there is a new cluster created for us--> see tasks --> both point to same task def --> click on task def and see that EB auto created a task def for us --> can see that the task does run 2 containers (b/c multi container mode)
 
 ### ECS Summary and Exam Tips
+ECS = used to run Docker containers
+3 types: 
+1. **ECS Classic** = to provision EC2s to run Docker containers on 
+1. **Fargate** = ECS serverless, no EC2 provisioning 
+1. **EKS** = ECS for Kubernetes 
+
+ECS Classic 
+* must config EC2s 
+* must have file /etc/ecs/ecs.config with cluster name 
+* EC2s need to be configured with right AMI and AMI runs ECS agent --> agent registers instance to ECS cluster 
+* EC2 instances can run multiple constainers on the same type (by not specifying host port and need an ALB with dynamic port mapping and EC2s have security group that allows from from ALB on all ports)
+* ECS tasks can have IAM roles to execute actions
+* security groups on instance --> ONLY operates on instance level NOT task level, can not attach SG to a task 
+**ECR** = used to store Docker images, tightly integrated with IAM 
+* push via 2 commands --> login and push CLI commands
+* pull with login and pull 
+-"aws ecr get-login" generates a docker login command 
+**if Docker image cannot be pulled check IAM** 
+
+Fargate 
+* serverless 
+* AWS provisions containers for us and assigns them ENI (network interfaces)
+* Fargate containers are provisioned by the container spec (all we do is input the RAM and CPU)
+* Fargate tasks can have IAM roles 
+
+**ECS integrations**
+X-Ray --> need to be running X-Ray as a 2nd container within the task def 
+* can use the ready-to-use AWS image from Docker Hub or can use docs 
+CloudWatch logs --> need to setup logging at the task def level 
+* each container will have a different log stream 
+
+**CLI to know**
+-login
+-push 
+-pull 
+-create a service: "aws ecs create-service" 
+-build and docker image: "docker build -t demo" 
+
+### ECS Section Clean Up
 
 
 
 
 REVIEW 
 -when to use EB vs other services 
--
+-* security groups on instance --> ONLY operates on instance level NOT task level, can not attach SG to a task
+
+-AWS provisions containers for us and assigns them ENI 
