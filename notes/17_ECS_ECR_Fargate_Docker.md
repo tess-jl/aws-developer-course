@@ -168,4 +168,20 @@ docker build -t [nameOfImage] .
 --> EC2 instances are able to pull the data from ECR b/c has right IAM perms (if look at policy can see it's able to read all resources from ECR, why it's able to pull Docker image from ECR, it's quite privileged!)
 
 ### Fargate 
+-before fargate every time launch ECS cluster have to create our own EC2 instances, if need to scale we need to add instances and scale services, manage our own infastructure!
+NOW = **Fargate** = serverless way to do same thing
+* don't have to provision EC2 instances, **just have to create a task definition and AWS will run containers for me**
+* **to scale just increase the number of tasks!**
+--> revolutionary --> the way to run Docker Image in the cloud 
+
+Hands On 
+-create a new cluster --> networking only --> powered by Fargate 
+-current task def is not compatible with Fargate --> create new task def with launch type Fargate --> select task configs (RAM and CPU) --> add container  and AWS takes care of rest 
+
+-create a Service for this --> configs --> config network --> add it to ALB --> create service 
+-NO EC2 instance within Fargate service!! will do this behind the scenes 
+
+-go to DNS in browser --> see the DockerName that is running **ecs-fargate-...** and the **"NetworkMode" : "awspc"** also shows it's Fargate 
+
+### ECS and X-Ray 
 
