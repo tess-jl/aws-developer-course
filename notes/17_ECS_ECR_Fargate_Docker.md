@@ -111,3 +111,19 @@ can see what has happened
 **can only have 1 task/ECS instance!** so instead need to scale our cluster --> create another t2micro that will appear when scaling up 
 
 ### ECS Service with LB 
+-change task def but DO NOT specify a host port (only specify port for container), therefore it becomes random --> able to work with a LB 
+- with random port #s hard to direct traffic! but **ALB can do it via dynamic port forwarding**
+
+Hands On 
+-leave host port as empty in def (port 0, means undefined, random)
+-update service to the updated task def
+-can see via curl in CLI that two instances / apps are running but need to be LB'd 
+-cannot add LB as go along --> needs to be set on service creation 
+
+create new service --> ALB (for **dynamic host port mapping** with route dynamically, very smart) -> create new LB for this and then create new IAM role for security group 
+
+to delete a service --> update for 0 number of tasks and then delete 
+
+get DNS name aka URL for LB --> put in browser to show how ALB redirecting to instances via dynamic port mapping 
+
+### ECR Part 1
