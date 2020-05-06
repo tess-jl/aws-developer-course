@@ -184,4 +184,11 @@ Hands On
 -go to DNS in browser --> see the DockerName that is running **ecs-fargate-...** and the **"NetworkMode" : "awspc"** also shows it's Fargate 
 
 ### ECS and X-Ray 
+intagrate ECS with X-ray, 3 patterns: 
+1. **ECS Cluster with X-Ray Container as a Daemon** 
+1. **ECS Cluster with X-Ray Container as a "Side Car"** 
+1. **Fargate Cluster X-Ray Container as a "Side-Car"**
 
+e.g. Task Def code--> see the code block with PortMappings (need containerPort with value 2000, portocol with value "udp") and the env var **"AWS_XRAY_DAEMON_ADDRESS"** with proper port value **"xray-daemon:2000"**--> how X-Ray SDk will know how to find the X-Ray daemon --> finally look at the **links** code blick and have **"xray-daemon"** 
+
+### ECS and Multi Docker Beanstalk 
