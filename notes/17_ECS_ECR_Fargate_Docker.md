@@ -127,3 +127,32 @@ to delete a service --> update for 0 number of tasks and then delete
 get DNS name aka URL for LB --> put in browser to show how ALB redirecting to instances via dynamic port mapping 
 
 ### ECR Part 1
+-so far only been using the public Docker images but now want to use ECR, a private repo, therefore we'll be able to build and push our own image 
+**ECR(Elastic Container Registry)** = private Docker image repo 
+* access controlled via IAM perms
+* need to run push/pull commands to Docker repo --> first use 
+```
+$(aws ecr get-login --no-include-email --region us-east-1)
+```
+gives a huge docker login --> generates a temp Docker login against an ECR repo --> when has $() syntax it WILL log in 
+
+then:
+```
+docker push [ECR_URL]
+```
+or pull with same syntax 
+
+Hands On 
+-see Dockerfile in /code 
+-bootstrap will run to pick up some meta data 
+-in directory with these files
+```
+docker build -t [nameOfImage] .
+```
+--> now have built out first Docker Image 
+--> NOW need to push to ECS first! 
+-run command to tag (rename) image 
+--> docker push command will push it into the ECR --> in repo can see the tag, Image URL, etc. 
+* to download this image run same exact login command and then do the docker pull command with right image name and right tags! 
+
+### ECR Part 1
