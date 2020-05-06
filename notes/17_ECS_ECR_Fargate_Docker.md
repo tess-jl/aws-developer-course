@@ -192,3 +192,32 @@ intagrate ECS with X-ray, 3 patterns:
 e.g. Task Def code--> see the code block with PortMappings (need containerPort with value 2000, portocol with value "udp") and the env var **"AWS_XRAY_DAEMON_ADDRESS"** with proper port value **"xray-daemon:2000"**--> how X-Ray SDk will know how to find the X-Ray daemon --> finally look at the **links** code blick and have **"xray-daemon"** 
 
 ### ECS and Multi Docker Beanstalk 
+-EB can be run in either single or multi Docker Container Modes 
+* with multi can run multiple containers/EC2 instances in EB 
+
+running in EB will create: 
+* ECS Cluster 
+* EC2 instances, configured to use the ECS
+* LB 
+* task defs and execution 
+--> just need to provide **Dockerrun.aws.json** in root of source code!! 
+
+-need to create Docker images in advance because EB doesn't create them for us --> need to be stored somewhere to use them like ECR
+
+-with multiple containers in one ECS cluster and ASG the LB can take in diff URLs and point them to the right containers 
+
+Hands On 
+EB console --> new env --> base config --> multi-container Docker --> create env --> go to URL and now we can see how it was deployed! 
+
+EC2 --> can see the new ASG from this, can see new LB 
+
+ECS console --> can see how there is a new cluster created for us--> see tasks --> both point to same task def --> click on task def and see that EB auto created a task def for us --> can see that the task does run 2 containers (b/c multi container mode)
+
+### ECS Summary and Exam Tips
+
+
+
+
+REVIEW 
+-when to use EB vs other services 
+-
