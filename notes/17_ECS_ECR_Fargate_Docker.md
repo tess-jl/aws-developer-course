@@ -253,6 +253,12 @@ CloudWatch logs --> need to setup logging at the task def level
 -build and docker image: "docker build -t demo" 
 
 ### ECS Section Clean Up
+-delete Fargate service --> "delete me" 
+-delete cluster demo --> "delete me" 
+-delete the entire CloudFormation stack created for us for the Cluster 
+-go to LB --> delete 
+-go to target groups and delete them
+etc... 
 
 
 
