@@ -268,3 +268,7 @@ REVIEW
 -* security groups on instance --> ONLY operates on instance level NOT task level, can not attach SG to a task
 
 -AWS provisions containers for us and assigns them ENI 
+
+security groups do not matter when an instance registers with the ECS service
+
+Set the host and port of the X-Ray daemon listener. By default, the SDK uses 127.0.0.1:2000 for both trace data (UDP) and sampling (TCP). Use this variable if you have configured the daemon to listen on a different port or if it is running on a different host.
