@@ -55,7 +55,7 @@ Docker containers need to be managed
 1. **Fargate** Amazon's own for Serverless
 1. **EKS** = Amazon's managed Kubernetes platform (open source) (Kubernetes = popular container management system)
 
-### ECS Clusters
+### ECS (Elastic Container service) Clusters
 **ECS Cluters** = logical grouping of EC2 instances 
 * instances we launch will run an **ECS Agent** = Docker container --> will register the instance with the ECS cluster
 * EC2 instances here = special, don't run plain Amazon Linux 2 AMI, instead use AMI specifically for ECS
@@ -66,7 +66,7 @@ ECS console --> create cluster--> (trying to push us to use Fargate) --> use EC2
 -GUI walks through all services and config --> launch cluster
 
 ECS instance = linked to EC2 instance- it's in specific AZs
-* CPU available = the VCPU have on machine, will be shared between different containers --> same princple for memory 
+* CPU available = the vCPU have on machine, will be shared between different containers --> same princple for memory 
 
 EC2 console --> ASGs --> the cluster came with ASG
 * launch configuration = special for ECS, has User Data --> therefore when instance starts it knows to register to this cluster! 
@@ -98,7 +98,9 @@ create new task def --> task role = important (if exam asks why container cant t
 
 Hands On 
 cluster --> create a service --> launch type, task def
+SCHEDULING:
 * daemon vs replica for service type --> daemon is when want to run something across all instances
+
 * configure network --> LB --> ASG --> review
 view service --> service will launch the httpd task 
 
@@ -108,7 +110,9 @@ docker ps
 ```
 can see what has happened 
 -scale service to run 2 tasks --> update service 
-**can only have 1 task/ECS instance!** so instead need to scale our cluster --> create another t2micro that will appear when scaling up 
+**can only have 1 task/ECS instance (1 task on an EC2 machine)! with daemon** so instead need to scale our cluster --> create another t2micro that will appear when scaling up 
+
+**when upload a new task def--> ECS scheduler auto starts new containers using updated image and stop containers with previous version**
 
 ### ECS Service with LB 
 -change task def but DO NOT specify a host port (only specify port for container), therefore it becomes random --> able to work with a LB 
@@ -181,19 +185,24 @@ Hands On
 -create a Service for this --> configs --> config network --> add it to ALB --> create service 
 -NO EC2 instance within Fargate service!! will do this behind the scenes 
 
--go to DNS in browser --> see the DockerName that is running **ecs-fargate-...** and the **"NetworkMode" : "awspc"** also shows it's Fargate 
+-go to DNS in browser --> see the DockerName that is running **ecs-fargate-...** and the **"NetworkMode" : "awsvpc"** also shows it's Fargate 
 
 ### ECS and X-Ray 
 intagrate ECS with X-ray, 3 patterns: 
-1. **ECS Cluster with X-Ray Container as a Daemon** 
+1. **ECS Cluster with X-Ray Container as a Daemon** --> schedule it as a task 
 1. **ECS Cluster with X-Ray Container as a "Side Car"** 
 1. **Fargate Cluster X-Ray Container as a "Side-Car"**
 
-e.g. Task Def code--> see the code block with PortMappings (need containerPort with value 2000, portocol with value "udp") and the env var **"AWS_XRAY_DAEMON_ADDRESS"** with proper port value **"xray-daemon:2000"**--> how X-Ray SDk will know how to find the X-Ray daemon --> finally look at the **links** code blick and have **"xray-daemon"** 
+e.g. Task Def code--> see the code block with PortMappings (need containerPort with value 2000, portocol with value "udp") and the env var **"AWS_XRAY_DAEMON_ADDRESS"** with proper port value **"xray-daemon:2000"**--> how X-Ray SDK will know how to find the X-Ray daemon --> finally look at the **links** code blick and have **"xray-daemon"** 
+
+
+
 
 ### ECS and Multi Docker Beanstalk 
 -EB can be run in either single or multi Docker Container Modes 
-* with multi can run multiple containers/EC2 instances in EB 
+* with multi can run multiple containers/EC2 instances in EB
+
+--> ideal for leveraging containers but want simplicity of deploying apps from dev to prod by uploading image
 
 running in EB will create: 
 * ECS Cluster 
@@ -272,3 +281,15 @@ REVIEW
 security groups do not matter when an instance registers with the ECS service
 
 Set the host and port of the X-Ray daemon listener. By default, the SDK uses 127.0.0.1:2000 for both trace data (UDP) and sampling (TCP). Use this variable if you have configured the daemon to listen on a different port or if it is running on a different host.
+
+ECS Service
+
+commands different now: 
+$(aws ecr get-login --no-include-email --region us-east-1)
+
+intagrate ECS with X-ray, 3 patterns: 
+1. **ECS Cluster with X-Ray Container as a Daemon** --> schedule it as a task 
+1. **ECS Cluster with X-Ray Container as a "Side Car"** 
+1. **Fargate Cluster X-Ray Container as a "Side-Car"**
+
+--> ideal for leveraging containers but want simplicity of deploying apps from dev to prod by uploading image
