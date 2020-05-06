@@ -155,4 +155,17 @@ docker build -t [nameOfImage] .
 --> docker push command will push it into the ECR --> in repo can see the tag, Image URL, etc. 
 * to download this image run same exact login command and then do the docker pull command with right image name and right tags! 
 
-### ECR Part 1
+### ECR Part 2
+-need to update service --> create new task def that will represent the service --> update it to the new image name from ECR
+* now the image will not be pulled from Docker hub but from the ECR
+--> update the service for the new task 
+
+-can look at the ALB in the LB console and see the target groups --> see how some tasks are draining, a rolling restart
+
+-get the DNS from the LB --> in browser --> can see if works! 
+-can see if refresh how LB is redirect to different tasks 
+
+--> EC2 instances are able to pull the data from ECR b/c has right IAM perms (if look at policy can see it's able to read all resources from ECR, why it's able to pull Docker image from ECR, it's quite privileged!)
+
+### Fargate 
+
