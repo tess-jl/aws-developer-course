@@ -76,3 +76,22 @@ KMS console --> use KMS to encrypt and decrypt secrets for a lambda function
 create lambda function --> before the handler use the env var and make a decrypt call for the variable so that it is secure --> API calls won't work until we add KMS perm for the IAM role, add inline policy for this resource (use ARN for our key)--> now when we test lambda function it works --> checkout cloudwatch logs for what happened! 
 
 ### Encryption SDK Overview
+-need to know when we should be using it 
+-if KMS hasa a limit of 4KB how does it do it? 
+--> via envelope encryption, very cumbersome to implement 
+* instead use **AWS Encryption SDK** that helps us use Envelope Encryption (VERY different from the **S3 encryption SDK**) --> can be used as a CLI tool! 
+
+Exam--> know that anything > 4KB of data that needs to be encrypted to use Encryption SDK, Envelope Encryption, **GenerateDataKey API**
+
+*How does Encryption SDK work?*
+-client uses CLI or SDK, has a big file --> make GenerateDataKey API call to KMS --> KMS checks IAM perms good then 1) generates Data Key (DEK) and 2) encrypt data key with CMK --> **plain text data key and encrypted data key** sent back to client
+
+plain text data key = for client-side encryption --> get an encrypted file via this data key --> NOW delete the plain text DEK --> file file has the encrypted file and the encrypted DEK 
+--> because 2 levels of encryption = envelope encryption
+
+*How does Decryption of envelope data work?*
+client with encrypted data makes call to Decrypt API in KMS--> KMS will check IAM perm and KMS will decrypt using CMK and send back the decrypted, plain text data key to client 
+
+client uses plain text DEK to decyrpt the big file client side 
+
+### Encryption SDK Hands On 
