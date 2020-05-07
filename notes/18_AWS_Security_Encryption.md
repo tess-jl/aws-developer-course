@@ -20,6 +20,59 @@
 * could leverage **envelope encryption** 
 
 ### KMS Overview 
+**key management system (KMS)** = a store, an easy way to control access to data (AWS manages keys)
+* behind most encryption within AWS 
+* fully integrated with IAM for authorization 
+* can use CLI / SDK to perform encrytion with KMS
 
+integrated with: 
+* EBS for encryting volumes
+* S3 SSE of objects 
+* Redshift encrypting data 
+* RDS encrypting data 
+* SSM Parameter store 
+etc... 
 
+Anytime need to share sensitive info (i.e. DB passwords, creds, private key of SSL cert) --> use KMS 
+* **Customer Master Key (CMK)** = used to encrypt data, managed by KMS --> can NEVER be retrieved by the user --> can be rotated for extra security 
 
+NEVER store secrets in plain text, code
+* can send secrets to KMS to encrypt them and then encrypted secrets could be stored in code / env vars 
+* only people who can decrypt secrets are those with IAM perms to do so via KMS 
+* **KMS can only encrypt max 4KB data/call**
+
+data > 4KB --> MUST use envelope encryption 
+
+give someone access to KMS:
+* **key policy allows the user**
+* **IAM policy allows the API calls** 
+
+KMS gives us ability to manage keys and policies (even though we never see keys themself), can: 
+* Create keys
+* Set Rotation policies 
+* Disable keys 
+* Enable keys 
+* Audit key usage via CloudTrail
+--> 3 types of CMK: 
+1. **AWS Managed Service Default CMK** = free 
+1. **User Keys created in KMS** = $1/month 
+1. **User Keys imported** = must be 256-but mymmetric key, $1/month 
+AND pay for APU calls to KMS ($0.03/10,000 calls)
+
+How does KMS work? 
+-many APIs--> Encrypt API and Decrypt API: 
+* if we have a password --> use Encrypt API to send secret to KMS and we use a CMK in KMS to encrypt (KMS checks if client has perm via IAM, performs encryption) --> KMS performs encrypted secret!
+* if we want to decrypt the password --> make API call to Decrypt API --> goes to KMS and uses same CMK for encryptions (checks IAM perms, does decryption) --> KMS sends back decrypted password 
+
+### KMS and Lambda Practice 
+KMS console --> use KMS to encrypt and decrypt secrets for a lambda function 
+**AWS managed keys** --> created and managed by AWS whenever we enable encryption for a service (we don't have direct access to these keys!!)
+
+**Customer managed keys** = where we will create a key via KMS --> etc etc --> review and edit key policy (JSON) that shows permissions, what IAM permissions are enabled to allow access to the key itself--> finish
+* see ARN
+* alias 
+* status, etc. 
+
+create lambda function --> before the handler use the env var and make a decrypt call for the variable so that it is secure --> API calls won't work until we add KMS perm for the IAM role, add inline policy for this resource (use ARN for our key)--> now when we test lambda function it works --> checkout cloudwatch logs for what happened! 
+
+### Encryption SDK Overview
