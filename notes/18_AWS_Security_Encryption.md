@@ -95,3 +95,15 @@ client with encrypted data makes call to Decrypt API in KMS--> KMS will check IA
 client uses plain text DEK to decyrpt the big file client side 
 
 ### Encryption SDK Hands On 
+https://aws-encryption-sdk-cli.readthedocs.io/en/latest/
+
+install the AWS encryption SDK for CLI 
+```
+pip install aws-encryption-sdk-cli
+```
+use full ARN of our key to run commands 
+-encrypt and decrypt commands --> see example for how used 
+
+metadata = JSON doc. can be used for summary of what happened but not needed
+
+### SSM Parameters Store Overview 
