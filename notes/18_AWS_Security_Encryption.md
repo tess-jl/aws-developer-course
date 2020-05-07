@@ -106,4 +106,41 @@ use full ARN of our key to run commands
 
 metadata = JSON doc. can be used for summary of what happened but not needed
 
-### SSM Parameters Store Overview 
+### SSM Parameter Store Overview 
+**AWS Systems Manager Parameter Store Service** = secure storage for config and secrets (e.g. DB passwords), way to centralize params for AWS account
+* one of the most underutilized services in AWS
+* OPTIONAL **Seamless Encryption** using KMS
+* serverless, scalable, durable, easy SDK, free
+* version tracking of configs/secrets 
+* config management done via IAM (restrict who can use which passwords) and using path
+* notifs with CloudWatch Events
+* integration with CloudFormation
+
+store can be used to do encrypted configuration using KMS behind the scenes --> therefore simplified way of using KMS 
+
+*Store Hierarchy* 
+the scaffolding pattern 
+-can be organized however we want but should be a convention! 
+**hierarchy convention used with the GetParameters API or GetParametersByPath API** with a lambda function, for example 
+--> therefore can differentiate diff params for diff envs 
+
+### SSM Parameter Store Hands On (CLI)
+system manager --> parameter store 
+param in demo = db URL --> type = String, value = some URL --> create param 
+
+create another param --> DB password --> type = SecureString (therefore encrypted), use AWS KMS key or key made before --> value = some password --> create param
+
+create another DB URL param and password but for prod env
+
+--> now 4 params, we can access them using the CLI 
+```
+aws ssm get-parameters --names [paramNames]
+```
+can see how the password is encrypted --> can use the special ---with-decryption in the command and now the password in the res will be decrypted! will only work if you have access to KMS 
+
+```
+aws ssm get-parameters-by-path --names [pathName]
+```
+--> will query for all params under that path (why the tree is nice! can get all the secrets at once)
+
+### SSM Parameter Store Hands On (Lambda)
