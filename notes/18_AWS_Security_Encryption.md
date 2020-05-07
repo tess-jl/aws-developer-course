@@ -144,3 +144,12 @@ aws ssm get-parameters-by-path --names [pathName]
 --> will query for all params under that path (why the tree is nice! can get all the secrets at once)
 
 ### SSM Parameter Store Hands On (Lambda)
+-create lambda function with python runtime, add IAM execution role (role needs extra permissions to read and write to the parameter store! need to add specific ARNs to role) --> see the designer in the console to see that the function has access to the right services
+
+define ssm client outside handler in lambda function --> make it so that in handler we get the DB URL and pass 
+--> test function and see that it returns things but the password is encrypted --> if try to add the right flag to decrypt it won't work unless KMS has the right IAM role access  
+-fix by going to IAM and adding inline policy so that KMS can decrypt (therefore should be seeing KMS in the console)
+
+trick for switching between Dev and Prod via env vars! therefore only one lambda function needed for all envs
+
+### IAM Best Practices and STS
