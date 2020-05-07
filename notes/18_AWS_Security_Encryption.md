@@ -153,3 +153,30 @@ define ssm client outside handler in lambda function --> make it so that in hand
 trick for switching between Dev and Prod via env vars! therefore only one lambda function needed for all envs
 
 ### IAM Best Practices and STS
+*General* 
+* NEVER use Root credentials, enable MFA for Root Account 
+* Grant least privilege --> each Group / User / Role shoul dhave the minimum level of permission it needs to work 
+* NEVER grant a policy with "*" access to a service 
+* Monitor API calls in CloudTrail (esp denied calls)
+* NEVER store IAM key creds on any machine besides a personal computer or on-premise server
+* On-premise server: call STS to obtain temp security creds
+
+*IAM Roles* 
+* EC2 machines should have own roles 
+* each lambda function = own role 
+* ECS Tasks need to have own roles (**ECS_ENABLE_TASK_IAM_ROLE=true**)
+* CodeBuild should have it's own service role 
+* 1 role / app or function DO NOT REUSE ROLES!
+
+*Cross Account Access* 
+* Make an IAM Role for another AWS account to access (define which accounts can access yours)
+* Use **STS (Security Token Service)** to retrieve creds and impersonate the IAM Role you have access to via **AssumeRole API** 
+* creds via STS = valid for 5min-1hr
+
+### Advanced IAM
+
+
+
+
+REVIEW 
+* Use **STS (Security Token Service)** to retrieve creds and impersonate the IAM Role you have access to 
