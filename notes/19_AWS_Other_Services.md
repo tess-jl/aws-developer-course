@@ -118,3 +118,5 @@ SSL termination on a load balancer --> what is it?
 
 SSL policies 
 
+two way TLS communication
+
