@@ -3,3 +3,4 @@
 -exam will ask very basic level questions about CloudFront, Step Functions and SWF, SES, ACM
 
 ### Section Overview
+-remember the general ideas of CloudFront, Step Functions and SWF, SES, ACM, no hands on or in depth
