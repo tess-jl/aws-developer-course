@@ -72,6 +72,33 @@ e.g. with bucket on other side of world instead of user talking directly to buck
 **Database Migration Service (DMS)** = quickly enable us to load data on to any of these DBs
 
 ### Amazon Certificate Manager (ACM)
+**Amazon Certificate Manager (ACM)** = used to host public SSL certificates in AWS, can either: 
+* buy own certificates and upload them via CLI 
+* have ACM provision and renew public SSL certs for me for free 
+ACM loads SSL certs onto: 
+* LBs (including LBs created by EB)
+* CloudFront distributions 
+* APIs on API Gateways
+
+--> SSL certs are annoying to manage manually so ACM is great way to do it 
+**ACM helps with SSL termination on the service with the SSL cert** therefore further reqs that are happening to other services internally on the backend can be done on HTTP (HTTPS no longer)
+* therefore less CPU cost on EC2s because don't have to encrypt/decrypt payload and don't have to manage SSL certs for EC2s
+
+Hands on 
+open ACM console --> req public cert from amazon --> add domain name --> choose DNS validation to validate that we do own domain name (in this case it's in Route53) --> need to create a CNAME record in DNS config for validation to work
+-just have record created in Route 53 for us --> create the CNAME record for us
+-wait for validation --> cert issued
+
+use certificate in EB--> create an env that leverages that cert --> add the SSL cert in custom config --> create EB app 
+-LB should have our SSL cert to access our env from there 
+-created but need to have CNAME record to create the right domain name for our app --> route 53 --> go to domain --> create CNAME record NOW check in browser and it has right domain name with HTTPS
+
+-verify that cert in use by going to ACM --> can also go to ELB console --> look at the listeners 
+
+
+
+
+
 
 REVIEW 
 -RTMP protocol
@@ -87,4 +114,7 @@ OLTP
 Aurora and Aurora Serverless --> thought Aurora always serverless? 
 OLAP = analytic processsing --> Data warehousing / Data lake
 
+SSL termination on a load balancer --> what is it? 
+
+SSL policies 
 
