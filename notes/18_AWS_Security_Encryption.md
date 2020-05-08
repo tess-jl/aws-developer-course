@@ -174,6 +174,34 @@ trick for switching between Dev and Prod via env vars! therefore only one lambda
 * creds via STS = valid for 5min-1hr
 
 ### Advanced IAM
+*Evaluation of Policies, simplified*
+1. If there is explicit DENY in policy, end decision with DENY 
+1. If there is explicit ALLOW, end decision with ALLOW 
+1. Otherwise, DENY
+--> see visual for default deny logic 
+
+*How do IAM polcies work with S3 bucket policies?* 
+IAM policies are attached to users, roles, groups --> vs. S3 bucket policies are attached to buckets 
+**when evaluating if an IAM Principal can perform an operation on a bucket the UNION of the assigned IAM policies and S3 Bucket Policies will be evaluated** 
+--> see examples
+
+*Dynamic Policies with IAM*
+e.g. how we do assign a folder in an S3 bucket /home/<user> where each user can read/write to their own directory only? Options: 
+1. Create IAM policy that allows user1 to have access to /home/user1 and so on for every single user (tedius, 1 IAM policy/user! DOESN'T SCALE)
+1. Create ONE dynamic policy in IAM --> leverages a special policy variable (**${aws:username}**) --> replaced by value of username at runtime!
+--> one dynamic policy can be attached to each user! one policy for every user that is customized on a per user basis = the way to do it!
+
+*Inline vs. Managed Policies* 
+3 kinds of policies in AWS: 
+1. **AWS Managed Policy** = maintained by AWS, good for power users, admins; updated in case of new services or APIs
+1. **Customer Managed Policy** = best practice, re-usable, better for granular permission settings, can be appliced to many principals; version controlled (rollback, central change management)
+1. **Inline Policy** = directly within a principal, strict 1:1 relationship between policy:principal; not version controlled; if delete IAM principal the policy will be deleted;not able to specify many many different things, no policy >2KB
+
+Hands On 
+-see IAM policy console --> can filter by policy types (only managed types)
+-only find inline policies in the User IAM tab --> there can add inline policy to a service 
+
+
 
 
 
