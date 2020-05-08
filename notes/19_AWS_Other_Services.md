@@ -37,6 +37,18 @@ e.g. with bucket on other side of world instead of user talking directly to buck
 * OLDER than Step Functions, so only use case for SWF now is: **if need external signals to intervene in process** or if **need child processes that return values to parent processes** 
 
 ### AWS SES
+**Simple Email Service (SES)** = to send or receive emails to people
+-send using either: 
+* SMTP interface
+* AWS SDK 
+-receive email integrates with: 
+* S3
+* SNS
+* Lambda
+-integrated with IAM for allowing to send emails 
+
+### Summary of Databases (OLTP, OLAP, NOSQL, CACHE)
+
 
 
 
@@ -47,3 +59,5 @@ REVIEW
 -concept of **activity step** and **decision step** 
 
 -OLDER than Step Functions, so only use case for SWF now is: **if need external signals to intervene in process** or if **need child processes that return values to parent processes** ??? 
+
+-SMTP interface
