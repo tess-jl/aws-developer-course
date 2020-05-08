@@ -48,9 +48,30 @@ e.g. with bucket on other side of world instead of user talking directly to buck
 -integrated with IAM for allowing to send emails 
 
 ### Summary of Databases (OLTP, OLAP, NOSQL, CACHE)
+**RDS** = for relational databases, transaction processing (OLTP), SQL
+* PostgreSQL, MySQL, Oracle.. 
+* Aurora and Aurora Serverless
+* provisioned
 
+**DynamoDB** = NoSQL DB 
+* Managed, Key Value, Document store 
+* serverless (we just provision capacity)
 
+**ElastiCache** = in-memory DB 
+* Redis or Memchached
+* great for storing state in memory 
+* caching 
 
+**RedShift** = OLAP, analytic processing 
+* **Data warehousing / Data lake**
+* analytics queries 
+
+**Neptune** = graph database 
+* newer
+
+**Database Migration Service (DMS)** = quickly enable us to load data on to any of these DBs
+
+### Amazon Certificate Manager (ACM)
 
 REVIEW 
 -RTMP protocol
@@ -61,3 +82,9 @@ REVIEW
 -OLDER than Step Functions, so only use case for SWF now is: **if need external signals to intervene in process** or if **need child processes that return values to parent processes** ??? 
 
 -SMTP interface
+
+OLTP
+Aurora and Aurora Serverless --> thought Aurora always serverless? 
+OLAP = analytic processsing --> Data warehousing / Data lake
+
+
