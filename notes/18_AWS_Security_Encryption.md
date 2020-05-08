@@ -208,3 +208,6 @@ Hands On
 
 REVIEW 
 * Use **STS (Security Token Service)** to retrieve creds and impersonate the IAM Role you have access to 
+
+-we can use the aws managed service keys in KMS
+-When evaluating an IAM policy of an EC2 instance doing actions on S3, the union of both the IAM policy of the EC2 instance and the bucket policy of the S3 bucket are taken into account.
