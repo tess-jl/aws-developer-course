@@ -24,6 +24,7 @@
 * behind most encryption within AWS 
 * fully integrated with IAM for authorization 
 * can use CLI / SDK to perform encrytion with KMS
+* uses CMK that is never used by the client (Amazon knows what these keys are but we never get access to them)
 
 integrated with: 
 * EBS for encryting volumes
@@ -57,7 +58,7 @@ KMS gives us ability to manage keys and policies (even though we never see keys 
 1. **AWS Managed Service Default CMK** = free 
 1. **User Keys created in KMS** = $1/month 
 1. **User Keys imported** = must be 256-but mymmetric key, $1/month 
-AND pay for APU calls to KMS ($0.03/10,000 calls)
+AND **pay for API calls to KMS ($0.03/10,000 calls)**
 
 How does KMS work? 
 -many APIs--> Encrypt API and Decrypt API: 
@@ -77,7 +78,7 @@ create lambda function --> before the handler use the env var and make a decrypt
 
 ### Encryption SDK Overview
 -need to know when we should be using it 
--if KMS hasa a limit of 4KB how does it do it? 
+-if KMS has a a limit of 4KB how does it do it? 
 --> via envelope encryption, very cumbersome to implement 
 * instead use **AWS Encryption SDK** that helps us use Envelope Encryption (VERY different from the **S3 encryption SDK**) --> can be used as a CLI tool! 
 
@@ -86,13 +87,18 @@ Exam--> know that anything > 4KB of data that needs to be encrypted to use Encry
 *How does Encryption SDK work?*
 -client uses CLI or SDK, has a big file --> make GenerateDataKey API call to KMS --> KMS checks IAM perms good then 1) generates Data Key (DEK) and 2) encrypt data key with CMK --> **plain text data key and encrypted data key** sent back to client
 
-plain text data key = for client-side encryption --> get an encrypted file via this data key --> NOW delete the plain text DEK --> file file has the encrypted file and the encrypted DEK 
+plain text data key = for client-side encryption --> get an encrypted file via this data key --> NOW delete the plain text DEK --> file has the encrypted file and the encrypted DEK 
 --> because 2 levels of encryption = envelope encryption
+
+-when call GenerateDataKey Api --> 2 fields in res 1) plain text 2) encrypted data key that's stored in the file
+ 
 
 *How does Decryption of envelope data work?*
 client with encrypted data makes call to Decrypt API in KMS--> KMS will check IAM perm and KMS will decrypt using CMK and send back the decrypted, plain text data key to client 
 
-client uses plain text DEK to decyrpt the big file client side 
+client uses plain text DEK to decrypt the big file client side 
+
+
 
 ### Encryption SDK Hands On 
 https://aws-encryption-sdk-cli.readthedocs.io/en/latest/
@@ -110,13 +116,15 @@ metadata = JSON doc. can be used for summary of what happened but not needed
 **AWS Systems Manager Parameter Store Service** = secure storage for config and secrets (e.g. DB passwords), way to centralize params for AWS account
 * one of the most underutilized services in AWS
 * OPTIONAL **Seamless Encryption** using KMS
-* serverless, scalable, durable, easy SDK, free
+* serverless, scalable, durable, easy SDK, 10,000 params for free (max 4KB)
+* paid tier = 8KB max and parameter policies
 * version tracking of configs/secrets 
 * config management done via IAM (restrict who can use which passwords) and using path
 * notifs with CloudWatch Events
 * integration with CloudFormation
 
 store can be used to do encrypted configuration using KMS behind the scenes --> therefore simplified way of using KMS 
+* only **secrets manager service** allows for rotation of secrets
 
 *Store Hierarchy* 
 the scaffolding pattern 
@@ -155,7 +163,7 @@ trick for switching between Dev and Prod via env vars! therefore only one lambda
 ### IAM Best Practices and STS
 *General* 
 * NEVER use Root credentials, enable MFA for Root Account 
-* Grant least privilege --> each Group / User / Role shoul dhave the minimum level of permission it needs to work 
+* Grant least privilege --> each Group / User / Role should have the minimum level of permission it needs to work 
 * NEVER grant a policy with "*" access to a service 
 * Monitor API calls in CloudTrail (esp denied calls)
 * NEVER store IAM key creds on any machine besides a personal computer or on-premise server
@@ -174,6 +182,7 @@ trick for switching between Dev and Prod via env vars! therefore only one lambda
 * creds via STS = valid for 5min-1hr
 
 ### Advanced IAM
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html
 *Evaluation of Policies, simplified*
 1. If there is explicit DENY in policy, end decision with DENY 
 1. If there is explicit ALLOW, end decision with ALLOW 
@@ -211,3 +220,5 @@ REVIEW
 
 -we can use the aws managed service keys in KMS
 -When evaluating an IAM policy of an EC2 instance doing actions on S3, the union of both the IAM policy of the EC2 instance and the bucket policy of the S3 bucket are taken into account.
+
+AWS-managed vs customer managed -- why choose one or the other
