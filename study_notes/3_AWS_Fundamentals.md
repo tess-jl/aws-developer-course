@@ -3,16 +3,14 @@
 ### IAM Service overview
 -AWS consoles are region-scoped (excpt IAM and S3)
 -root account should never be used (and shared)
--multifactor auth can be set up 
--best to give users minimal amount of permissions needed to do job (least privilege principles)
+-MFA
+-least privilege principle
 
 -identity and access managemnet
 1. users
 1. groups = groups of users
 1. roles  = what we give to machines
 1. policies = JSON docs that define what users, groups, roles can do
-
-
 
 -Big enterprises use IAM Federation (when a company uses AWS)--> one can log in with company credentials --> identity feds use the SAML (security assertion markup language) standard(active directory)
 
@@ -21,7 +19,6 @@
 IAM credentials KEPT SECRET- NEVER WRITE IN CODE!
 Never use root account except for initial setup--> never use ROOT IAM CREDENTIALS! 
 
-
 ### EC2 Service
 -EC2 consists of:
 1. renting virtual machines (EC2)
@@ -29,32 +26,21 @@ Never use root account except for initial setup--> never use ROOT IAM CREDENTIAL
 1. Distributing load across machines (ELB)
 1. Scaling the services using an auto-scaling group (ASG)
 
--when start an instance have to have its operating system somewhere --> it's on a disc --> called storage = **EBS volume**
+-when start an instance have to have its operating system on **EBS volume**
 -when launch an instance can have tags (key/value pairs which allow you to identify instance and classify it)
-**security group** = firewall around the instance --> make sure we can SSH into the instance
-
--when lauch we need a key pair that allows us to SSH into the instance we just launched
--once instance is going, if it's not free, billing starts
-
 
 ### SSH 
--we have our EC2 machine via AWS with a public IP address and port 22--> want to access it with my machine--> we will access via CLI and port 22 
+-we have our EC2 machine via AWS with a public IP address and port 22 
 
-HOW TO:
--In instance console--> public IP, public DNS--> how we can connect over the web! --> copy the public IP address--> click on security group--> inbound rules--> check tcp protocol 
--open a terminal 
+ --> copy the public IP address--> click on security group--> inbound rules--> check tcp protocol 
+
 -"ssh ec2-user@" followed by IP --> see that permission is denied --> because we *need to use the key pair file that downloaded immediately after I launched the instance* 
 -**"AWS course Tess$ ssh -i EC2tutorial.pem ec2-user@[IP address]"**
--get a warning about unprotected private key file --> permission is 0644 --> private key can link --> will say bad permissions
--to fix: "chmod 0400 EC2tutorial.pem" and then rerun "ssh -i EC2tutorial.pem ec2-user@[IP address]" in CL --> NOW have SSH'd into the Amazon Linux 2 AMI, we're in the machine 
+-get a warning about unprotected private key file --> permission is 0644 --> private key can link --> will say bad permissions --> fix: "chmod 0400 EC2tutorial.pem" and then rerun "ssh -i EC2tutorial.pem ec2-user@[IP address]" in CL --> NOW have SSH'd into the Amazon Linux 2 AMI, we're in the machine 
 
-
-### EC2 Instance Connect (alternative to SSH from the CLI)
-HOW TO:
--go to EC2 console on AWS --> click connect button next to launch instance --> see options for how to connect and select EC2 instance connection, a browser-based instance connection --> ec2-user --> click connect --> in! 
--STILL need SSH port 22 rule in instance for this to work
 
 ### Security Groups
+**security group** = firewall around the instance --> make sure we can SSH into the instance
 -**default: all inbound traffic blocked, all outbound traffic allowed**
 -fundamental of AWS network security--> **act as a firewall to control how traffic will be allowed into my EC2 machines**
 -controls inbound and outbound traffic --> regulate access to ports, authorized IP ranges 
@@ -109,7 +95,7 @@ default: private IP on EC2 machine for internal AWS network AND a public IP for 
 
 ### Private vs. Public vs. Elastic IP Hands On 
 -been using a public IP to SSH 
--*private IP cannot be used to SS*H--> b/c not in the same network as EC2 instance 
+-*private IP cannot be used to SSH*--> b/c not in the same network as EC2 instance 
 -when we stop the EC2 instance--> public IP not shown at all--> private is the same --> restart the instance --> public IP has changed therefore need to update the SSH command
 
 HOW TO: Connect our EC2 instance to elastic IP
@@ -118,7 +104,6 @@ HOW TO: Connect our EC2 instance to elastic IP
 
 
 ### EC2 User Data
-
 -possible to bootstrap our instances using an EC2 User data script
 -bootstrapping = launching commands when the machine starts 
 -EC2 user data made to automate boot tasks (e.g. installing updates, software, whatever!)
