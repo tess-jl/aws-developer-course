@@ -54,9 +54,10 @@ HOW TO:
 -go to EC2 console on AWS --> click connect button next to launch instance --> see options for how to connect and select EC2 instance connection, a browser-based instance connection --> ec2-user --> click connect --> in! 
 -STILL need SSH port 22 rule in instance for this to work
 
-### Intro to Security Groups
--fundamental of AWS network security--> **control how traffic will be allowed into my EC2 machines**
--controls inbound and outbound traffic 
+### Security Groups
+-**default: all inbound traffic blocked, all outbound traffic allowed**
+-fundamental of AWS network security--> **act as a firewall to control how traffic will be allowed into my EC2 machines**
+-controls inbound and outbound traffic --> regulate access to ports, authorized IP ranges 
 -use "allow", "inbound", "outbound" ports 
 -inbound has our SSH rule
 -default all traffic is allowed outbound
@@ -65,33 +66,26 @@ HOW TO:
 -click edit --> add custom TCP rule--> to add back the inbound SSH rule! 
 -*ANYTIME you get a timeout on any machine, on any port--> Most likely a security group issue!*
 
-### Deeper Dive into Security Groups 
--act as firewalls for EC2 instances - these groups live outside the EC2!!
--regulate access to ports, authorized IP ranges 
 
 -security groups can be attached to multiple instances
 -an instance can also have multiple security groups 
--security groups are locked to a region/VPC combo
+-*security groups are locked to a region/VPC combo*
 
--good practice to have one separate security group specfically for SSH access!! since SSH is more complicated 
+-good practice to have one separate security group specfically for SSH access! since SSH is more complicated 
 
--if NO timeout and there is a "connected refused" error then the security group worked! the traffic went through the security group and the app itself has an error 
+-*if NO timeout and there is a "connected refused" error then the security group worked! the traffic went through the security group and the app itself has an error* 
 
--default: all inbound traffic blocked, all outbound traffic allowed
-
-HOW TO: reference security groups from other security groups 
+HOW TO: *reference security groups from other security groups* 
 -attach security groups according to how you want the instances to communicate
 -why? we can allow instances to connect straight through via matching security groups--> directionality of connectivity is determined this way (a lot like a very simple neural network!)
 
-### Private vs Public IPv4)
--issue of security 
+### Private vs Public IPv4
 -neworking --> 2 sorts of IP--> IPv4 and IPV3
 -IPv4 --> 4 #s separated by 3 dots --> most common 
 -IPv6 --> less common --> long strange of numbers and then letters --> more for IoT
--we will use only IPv4 in this course but AWS supports IPv6 too!
--IPv4 --> 3.7 billion addresses in public space
+-AWS supports both
 
--public server--> public IP
+-*public server--> public IP*
 -private network (like a company) --> private IP range --> all computers in the private network can talk to one another using the private IP 
 -the private network can also talk to other public networks
 -public IP unique across whole internet, can be access across the whole internet--> public IPs can be geolocate easily 
@@ -100,7 +94,7 @@ VS
 -private network machines usually connect to interet via internet gateway (a proxy)
 -only a specified range of IPs can be used as private IPs 
 
-Elastic IPs --> when you start/stop Ec2 instance it can change it's public IP!!--> if we need a fixed public IP for the instance--> need something called an Elastic IP address --> a public IPv4 IP can own as long as it is not deleted --> can attach it to only one instance at a time 
+**Elastic IPs** --> when you start/stop EC2 instance it can change it's public IP!!--> if we need a fixed public IP for the instance--> need something called an **Elastic IP address** = a public IPv4 IP can own as long as it is not deleted --> can attach it to only one instance at a time 
 -can mask the failure of an instance or software by rapidly remapping the address to another instance in your account 
 -can only have 5 elastic IPs in the AWS account
 -overall, try to avoid using, poor architectural choice
@@ -115,28 +109,14 @@ default: private IP on EC2 machine for internal AWS network AND a public IP for 
 
 ### Private vs. Public vs. Elastic IP Hands On 
 -been using a public IP to SSH 
--private IP cannot be used to SSH--> b/c not in the same network as EC2 instance 
+-*private IP cannot be used to SS*H--> b/c not in the same network as EC2 instance 
 -when we stop the EC2 instance--> public IP not shown at all--> private is the same --> restart the instance --> public IP has changed therefore need to update the SSH command
 
 HOW TO: Connect our EC2 instance to elastic IP
 -elastic IPs in the bottom left--> allocate a new address--> IP is not attached to anything --> right click and associate the elastic IP with the instance that is running--> now the public IP listed on the instance is our elastic IP
 -this elastic IPv4 will remain even if the instance is stopped!
 
-### Install Apache on EC2
--Apache web server to display a webpage--> create an index.html that shows the hostname of our machine
--"sudo su" --> elevates rights on machine 
--"yum update -y" --> forces machine to update itself  
--install httpd "yum install -y httpd.x86_64" --> start this service --> "systemctl start httpd.service" --> enabled across reboots --> "systemctl enable httpd.service"
--"curl localhost:80" --> get giant html page in CLI --> we want to have this in a web browser --> if we go to the public IP address on port 80 we see that it looks like a timeout--> THEREFORE probably an error with the security group!
--because security group only allows port 22 but our apache server was started on port 80 it will not be able to access the EC2! So go into security group and add a new rule to make HTTP traffic via port 80 able to be inbound on our EC2
--should see the Apache test page! this page says how we can now add content to the directory /var/www/html/
--"echo "Hello World" > /var/www/html/index.html"
 
--just displayed our first webpage!! 
-
--"echo "Hello World from $(hostname -f)" > /var/www/html/index.html" --> hostname -f is the internal DNS 
-
--can automate this installation using EC2 user data, see: 
 ### EC2 User Data
 
 -possible to bootstrap our instances using an EC2 User data script
